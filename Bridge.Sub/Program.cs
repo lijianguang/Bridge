@@ -1,4 +1,5 @@
-﻿using Bridge.ActiveMQ;
+﻿using Bridge;
+using Bridge.ActiveMQ;
 using Bridge.Core;
 using Bridge.Sub;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +18,7 @@ await Host.CreateDefaultBuilder(args)
         services.AddBridgeServices();
 
         services.AddActiveMQServices(context.Configuration);
+
     })
     .Build()
     .RunAsync();

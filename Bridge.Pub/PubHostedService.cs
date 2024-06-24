@@ -124,13 +124,27 @@ namespace Bridge.Pub
             {
                 tasks.Add(Task.Run(() =>
                 {
-                    var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                    var result = publisher.PublishAndWaitReplyAsync<MsgTmp, MsgTmp>(MQType.ActiveMQ, MQNames.Queue2, "Test1", new MsgTmp { Name = "A", Age = 1 }).Result;
+                    try
+                    {
+                        var publisher = _serviceProvider.GetRequiredService<IPublisher>();
+                        var result1 = publisher.PublishAndWaitReplyAsync<MsgTmp, MsgTmp>(MQType.ActiveMQ, MQNames.Queue2, "Test1", new MsgTmp { Name = "A", Age = 1 }).Result;
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
                 }));
                 tasks.Add(Task.Run(() =>
                 {
-                    var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                    var result = publisher.PublishAndWaitReplyAsync<MsgTmp, IEnumerable<MsgTmp>>(MQType.ActiveMQ, MQNames.Queue1, "Test1", new MsgTmp { Name = "A", Age = 1 }).Result;
+                    try
+                    {
+                        var publisher = _serviceProvider.GetRequiredService<IPublisher>();
+                        var result = publisher.PublishAndWaitReplyAsync<MsgTmp, IEnumerable<MsgTmp>>(MQType.ActiveMQ, MQNames.Queue1, "Test1", new MsgTmp { Name = "A", Age = 1 }).Result;
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
                 }));
 
             }

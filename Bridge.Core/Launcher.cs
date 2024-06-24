@@ -29,7 +29,7 @@ namespace Bridge.Core
                 });
                 var context = mqContextBuilder.Build();
                 await Task.Factory.StartNew(async () => await pipelineEntry(context), default, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
-                return (context.Response.NeedReply, context.Response.Body);
+                return (context.Request.NeedReply, context.Response.Body);
             }
         }
 

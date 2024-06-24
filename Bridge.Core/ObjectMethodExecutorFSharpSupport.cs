@@ -33,13 +33,6 @@ namespace Bridge.Core
             var awaiterResultType = possibleFSharpAsyncType.GetGenericArguments().Single();
             awaitableType = typeof(Task<>).MakeGenericType(awaiterResultType);
 
-            // coerceToAwaitableExpression = (object fsharpAsync) =>
-            // {
-            //     return (object)FSharpAsync.StartAsTask<TResult>(
-            //         (Microsoft.FSharp.Control.FSharpAsync<TResult>)fsharpAsync,
-            //         FSharpOption<TaskCreationOptions>.None,
-            //         FSharpOption<CancellationToken>.None);
-            // };
             var startAsTaskClosedMethod = _fsharpAsyncStartAsTaskGenericMethod
                 .MakeGenericMethod(awaiterResultType);
             var coerceToAwaitableParam = Expression.Parameter(typeof(object));
