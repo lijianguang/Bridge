@@ -14,7 +14,7 @@ namespace Bridge.Core
         {
             if(context.Request.Body != null)
             {
-                var body = _messageConverter.Deserialize<MessageBody>(context.Request.Body);
+                var body = _messageConverter.Deserialize<RequestBody>(context.Request.Body);
                 context.Request.NeedReply = body.NeedReply;
                 context.Request.Payload = (type) =>  body.Payload is JToken jtoken ? jtoken.ToObject(type) : default;
                 context.Request.ActionName = body.ActionName;

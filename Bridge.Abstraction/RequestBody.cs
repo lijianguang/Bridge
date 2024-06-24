@@ -1,6 +1,6 @@
 ﻿namespace Bridge
 {
-    public sealed class MessageBody
+    public sealed class RequestBody
     {
         public required string ActionName { get; set; }
         public required bool NeedReply { get; set; }
