@@ -40,7 +40,7 @@ namespace Bridge.ActiveMQ
                             IDestination destination = destinationResolver.ResolveDestinationName(session, queueName);
                             await producer.SendAsync(destination, requestMessage);
                         }
-                        IMessage reply = await consumer.ReceiveAsync(TimeSpan.FromSeconds(60));
+                        IMessage reply = await consumer.ReceiveAsync(TimeSpan.FromSeconds(20));
                         ITextMessage replyMessage = (ITextMessage)reply;
 
                         Console.WriteLine(replyMessage.Text);
