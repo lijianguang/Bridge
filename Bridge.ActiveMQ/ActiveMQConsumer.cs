@@ -41,17 +41,27 @@ namespace Bridge.ActiveMQ
                                 var result = await callback(textMessage.Text);
                                 if (result.NeedReply)
                                 {
-                                    IDestination replyDestination = message.NMSReplyTo;
-                                    if (replyDestination != null)
+                                    try
                                     {
-                                        ITextMessage response = await session.CreateTextMessageAsync(result.ReplyMessage);
-                                        response.NMSCorrelationID = message.NMSCorrelationID;
-                                        using (IMessageProducer producer = await session.CreateProducerAsync(replyDestination))
+                                        IDestination replyDestination = message.NMSReplyTo;
+                                        if (replyDestination != null)
                                         {
-                                            await producer.SendAsync(response);
+                                            ITextMessage response = await session.CreateTextMessageAsync(result.ReplyMessage);
+                                            response.NMSCorrelationID = message.NMSCorrelationID;
+                                            using (IMessageProducer producer = await session.CreateProducerAsync(replyDestination))
+                                            {
+                                                await producer.SendAsync(response);
+                                            }
                                         }
                                     }
-                                    Console.WriteLine("need reply: " + result.ReplyMessage);
+                                    catch(Exception ex)
+                                    {
+                                        Console.WriteLine("Error occurred: " + ex.Message);
+                                    }
+                                    finally
+                                    {
+                                        Console.WriteLine("need reply: " + result.ReplyMessage);
+                                    }
                                 }
                                 else
                                 {

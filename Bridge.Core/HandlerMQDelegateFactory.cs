@@ -21,7 +21,7 @@
 
                 var invoker = new HandlerActionInvoker(context.RequestServices!, descriptor, models);
                 context.Response.NeedReply = context.Request.NeedReply;
-                context.Response.Body = await invoker.InvokeAsync();
+                context.Response.Body = new ResponseBody() { Payload =  await invoker.InvokeAsync(), StatusCode = MQStatusCode.OK };
             };
         }
     }

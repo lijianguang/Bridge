@@ -11,6 +11,6 @@
 
         public MQContext MQContext { get { return _context; } }
         public bool NeedReply { get; set; }
-        public object? Body { get; set; }
+        public ResponseBody Body { get; set; } = new ResponseBody() { StatusCode = MQStatusCode.BadRequest };
     }
 }

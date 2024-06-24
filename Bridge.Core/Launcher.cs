@@ -17,7 +17,7 @@ namespace Bridge.Core
             _mqActionDescriptorProvider = mqActionDescriptorProvider;
         }
 
-        private async Task<(bool, object?)> ProcessMQMessageAsync(MQType mqType, string queueName, string message, MQDelegate pipelineEntry)
+        private async Task<(bool, ResponseBody)> ProcessMQMessageAsync(MQType mqType, string queueName, string message, MQDelegate pipelineEntry)
         {
             using (IServiceScope scope = _serviceProvider.CreateScope())
             {

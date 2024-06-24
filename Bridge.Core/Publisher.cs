@@ -1,4 +1,6 @@
-﻿namespace Bridge.Core
+﻿using Newtonsoft.Json.Linq;
+
+namespace Bridge.Core
 {
     public class Publisher : IPublisher
     {
@@ -27,10 +29,17 @@
             var replyMessage = await _mqProducerFactory.Create(mqType)
                 .SendAndWaitReplyAsync(queueName, _messageConverter.Serialize(new RequestBody { ActionName = actionName, NeedReply = true, Payload = data }));
 
-            return string.IsNullOrEmpty(replyMessage) ? default : _messageConverter.Deserialize<TR>(replyMessage);
+            var responseBody = _messageConverter.Deserialize<ResponseBody>(replyMessage);
+
+            if(responseBody.StatusCode == MQStatusCode.InternalServerError)
+            {
+                throw responseBody.Payload is JToken jtokenException ? jtokenException.ToObject<Exception>()! : new Exception("Unknown exception.");
+            }
+
+            return responseBody.Payload is JToken jtoken ? jtoken.ToObject<TR>() : default;
         }
 
-        public async Task<TR?> PublishAndWaitReplyAsync<TR>(MQType mqType, string queueName, string actionName)
+        public async Task<TR?> PublishAndWaitReplyAsync<TR>(MQType mqType, string queueName, string actionName) 
         {
             return await PublishAndWaitReplyAsync<object, TR>(mqType, queueName, actionName, default(object));
         }

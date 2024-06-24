@@ -20,6 +20,7 @@ namespace Bridge.Sub
         public Task StartAsync(CancellationToken cancellationToken)
         {
             var _pipelineEntry = _mqPipelineBuilder
+                .UseMiddleware<MQExceptionHandlerMiddleware>()
                 .UseMiddleware<MQAnalyseRequestBodyMiddleware>()
                 .UseMiddleware<MQEndpointRoutingMiddleware>()
                 .UseMiddleware<MQEndpointMiddleware>()

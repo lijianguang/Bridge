@@ -33,7 +33,7 @@
             }
         }
 
-        public async Task SubscribeAsync(MQType mqType, string queueName, Func<string, Task<(bool, object?)>> processMQMessageAsync)
+        public async Task SubscribeAsync(MQType mqType, string queueName, Func<string, Task<(bool, ResponseBody?)>> processMQMessageAsync)
         {
             var consumer = ResolveConsumer(mqType, queueName);
             await consumer.ReceiveAsync(queueName, async (message) => {
@@ -42,7 +42,7 @@
             });
         }
 
-        public async Task SubscribeMulticastAsync(MQType mqType, string queueName, Func<string, Task<(bool, object?)>> processMQMessageAsync)
+        public async Task SubscribeMulticastAsync(MQType mqType, string queueName, Func<string, Task<(bool, ResponseBody?)>> processMQMessageAsync)
         {
             var consumer = ResolveConsumer(mqType, queueName);
             await consumer.ReceiveMulticastAsync(queueName, async (message) => {

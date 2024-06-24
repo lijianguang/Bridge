@@ -10,6 +10,7 @@ namespace Bridge.Sub
         [MQAction("Test1")]
         public async Task<MsgTmp> Test1(MsgTmp msg)
         {
+            throw new NotImplementedException("hello world.");
             return await Task.Run(() =>
             {
                 msg.Name = "updated";

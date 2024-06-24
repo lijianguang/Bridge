@@ -20,7 +20,7 @@ namespace Bridge.ActiveMQ
             _nmsconnectionPool = nmsconnectionPool;
         }
 
-        public async Task<string?> SendAndWaitReplyAsync(string queueName, string message)
+        public async Task<string> SendAndWaitReplyAsync(string queueName, string message)
         {
             var connection = _connectionPool.GetAlive();
             try
@@ -41,10 +41,10 @@ namespace Bridge.ActiveMQ
                             await producer.SendAsync(destination, requestMessage);
                         }
                         IMessage reply = await consumer.ReceiveAsync(TimeSpan.FromSeconds(60));
-                        ITextMessage? replyMessage = reply as ITextMessage;
+                        ITextMessage replyMessage = (ITextMessage)reply;
 
-                        Console.WriteLine(replyMessage?.Text);
-                        return replyMessage?.Text;
+                        Console.WriteLine(replyMessage.Text);
+                        return replyMessage.Text;
                     }
                 }
             }
