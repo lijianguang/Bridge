@@ -12,14 +12,12 @@ namespace Bridge.Sub
         {
             return await Task.Run(() =>
             {
-                msg.Name = "updated";
-                msg.Age = 19;
                 return msg;
             });
         }
 
         [MQAction("Test2")]
-        public void Test2(MsgTmp msg)
+        public void Test2(IEnumerable<MsgTmp> msgs)
         {
 
         }

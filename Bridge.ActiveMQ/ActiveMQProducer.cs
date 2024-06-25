@@ -2,9 +2,7 @@
 using Apache.NMS.ActiveMQ;
 using Apache.NMS.AMQP;
 using Microsoft.Extensions.ObjectPool;
-using Microsoft.Extensions.Options;
 using Spring.Messaging.Nms.Support.Destinations;
-using System;
 
 namespace Bridge.ActiveMQ
 {
@@ -40,9 +38,14 @@ namespace Bridge.ActiveMQ
                             IDestination destination = destinationResolver.ResolveDestinationName(session, queueName);
                             await producer.SendAsync(destination, requestMessage);
                         }
+                        DateTime utcNow = DateTime.UtcNow;
                         IMessage reply = await consumer.ReceiveAsync(TimeSpan.FromSeconds(20));
+                        if (reply == null)
+                        {
+                            throw new Exception($"Request Timeout. Waiting from {utcNow} to {DateTime.UtcNow}, Queue: {queueName}, NMSCorrelationID: {requestMessage.NMSCorrelationID}");
+                        }
+                        await reply.AcknowledgeAsync();
                         ITextMessage replyMessage = (ITextMessage)reply;
-
                         Console.WriteLine(replyMessage.Text);
                         return replyMessage.Text;
                     }

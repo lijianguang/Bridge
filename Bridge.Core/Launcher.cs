@@ -28,8 +28,8 @@ namespace Bridge.Core
                     context.Request.Body = message;
                 });
                 var context = mqContextBuilder.Build();
-                await Task.Factory.StartNew(async () => await pipelineEntry(context), default, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
-                return (context.Request.NeedReply, context.Response.Body);
+                await pipelineEntry(context);
+                return (context.Request.NeedReply, context.Response.Body!);
             }
         }
 
