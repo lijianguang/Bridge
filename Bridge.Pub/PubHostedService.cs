@@ -17,6 +17,14 @@ namespace Bridge.Pub
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            //var count = 30000;
+            //Loop:
+            //var publisher = _serviceProvider.GetRequiredService<IPublisher>();
+            //publisher.PublishAsync(MQType.ActiveMQ, MQNames.Queue2, "Test2", new List<MsgTmp>() { new MsgTmp { Name = "A", Age = 1 } }).Wait();
+
+            //Thread.Sleep(count);
+            //count += 10000;
+            //goto Loop;
             var timer = new Stopwatch();
             timer.Start();
 
@@ -127,7 +135,7 @@ namespace Bridge.Pub
 
             }
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 100; i++)
             {
                 threads.Add(new Thread(() =>
                 {
