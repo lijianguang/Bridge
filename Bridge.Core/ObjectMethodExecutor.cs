@@ -308,7 +308,7 @@ namespace Bridge.Core
 
             // If we need to pass the method call result through a coercer function to get an
             // awaitable, then do so.
-            var coercedMethodCall = coercedAwaitableInfo.RequiresCoercion
+            var coercedMethodCall = coercedAwaitableInfo.RequiresCoercion && coercedAwaitableInfo.CoercerExpression != null
                 ? Expression.Invoke(coercedAwaitableInfo.CoercerExpression, methodCall)
                 : (Expression)methodCall;
 

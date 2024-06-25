@@ -8,16 +8,16 @@ namespace Bridge.Core
     internal static class ObjectMethodExecutorFSharpSupport
     {
         private static readonly object _fsharpValuesCacheLock = new object();
-        private static Assembly _fsharpCoreAssembly;
-        private static MethodInfo _fsharpAsyncStartAsTaskGenericMethod;
-        private static PropertyInfo _fsharpOptionOfTaskCreationOptionsNoneProperty;
-        private static PropertyInfo _fsharpOptionOfCancellationTokenNoneProperty;
+        private static Assembly? _fsharpCoreAssembly;
+        private static MethodInfo? _fsharpAsyncStartAsTaskGenericMethod;
+        private static PropertyInfo? _fsharpOptionOfTaskCreationOptionsNoneProperty;
+        private static PropertyInfo? _fsharpOptionOfCancellationTokenNoneProperty;
 
         [UnconditionalSuppressMessage("Trimmer", "IL2060", Justification = "Reflecting over the async FSharpAsync<> contract.")]
         public static bool TryBuildCoercerFromFSharpAsyncToAwaitable(
             Type possibleFSharpAsyncType,
-            out Expression coerceToAwaitableExpression,
-            out Type awaitableType)
+            out Expression? coerceToAwaitableExpression,
+            out Type? awaitableType)
         {
             var methodReturnGenericType = possibleFSharpAsyncType.IsGenericType
                 ? possibleFSharpAsyncType.GetGenericTypeDefinition()
@@ -33,7 +33,7 @@ namespace Bridge.Core
             var awaiterResultType = possibleFSharpAsyncType.GetGenericArguments().Single();
             awaitableType = typeof(Task<>).MakeGenericType(awaiterResultType);
 
-            var startAsTaskClosedMethod = _fsharpAsyncStartAsTaskGenericMethod
+            var startAsTaskClosedMethod = _fsharpAsyncStartAsTaskGenericMethod!
                 .MakeGenericMethod(awaiterResultType);
             var coerceToAwaitableParam = Expression.Parameter(typeof(object));
             coerceToAwaitableExpression = Expression.Lambda(
@@ -41,15 +41,15 @@ namespace Bridge.Core
                     Expression.Call(
                         startAsTaskClosedMethod,
                         Expression.Convert(coerceToAwaitableParam, possibleFSharpAsyncType),
-                        Expression.MakeMemberAccess(null, _fsharpOptionOfTaskCreationOptionsNoneProperty),
-                        Expression.MakeMemberAccess(null, _fsharpOptionOfCancellationTokenNoneProperty)),
+                        Expression.MakeMemberAccess(null, _fsharpOptionOfTaskCreationOptionsNoneProperty!),
+                        Expression.MakeMemberAccess(null, _fsharpOptionOfCancellationTokenNoneProperty!)),
                     typeof(object)),
                 coerceToAwaitableParam);
 
             return true;
         }
 
-        private static bool IsFSharpAsyncOpenGenericType(Type possibleFSharpAsyncGenericType)
+        private static bool IsFSharpAsyncOpenGenericType(Type? possibleFSharpAsyncGenericType)
         {
             var typeFullName = possibleFSharpAsyncGenericType?.FullName;
             if (!string.Equals(typeFullName, "Microsoft.FSharp.Control.FSharpAsync`1", StringComparison.Ordinal))
@@ -63,7 +63,7 @@ namespace Bridge.Core
                 {
                     // Since we've already found the real FSharpAsync.Core assembly, we just have
                     // to check that the supplied FSharpAsync`1 type is the one from that assembly.
-                    return possibleFSharpAsyncGenericType.Assembly == _fsharpCoreAssembly;
+                    return possibleFSharpAsyncGenericType?.Assembly == _fsharpCoreAssembly;
                 }
                 else
                 {
@@ -77,11 +77,11 @@ namespace Bridge.Core
         [UnconditionalSuppressMessage("Trimmer", "IL2026", Justification = "Reflecting over the async FSharpAsync<> contract")]
         [UnconditionalSuppressMessage("Trimmer", "IL2055", Justification = "Reflecting over the async FSharpAsync<> contract")]
         [UnconditionalSuppressMessage("Trimmer", "IL2072", Justification = "Reflecting over the async FSharpAsync<> contract")]
-        private static bool TryPopulateFSharpValueCaches(Type possibleFSharpAsyncGenericType)
+        private static bool TryPopulateFSharpValueCaches(Type? possibleFSharpAsyncGenericType)
         {
-            var assembly = possibleFSharpAsyncGenericType.Assembly;
-            var fsharpOptionType = assembly.GetType("Microsoft.FSharp.Core.FSharpOption`1");
-            var fsharpAsyncType = assembly.GetType("Microsoft.FSharp.Control.FSharpAsync");
+            var assembly = possibleFSharpAsyncGenericType?.Assembly;
+            var fsharpOptionType = assembly?.GetType("Microsoft.FSharp.Core.FSharpOption`1");
+            var fsharpAsyncType = assembly?.GetType("Microsoft.FSharp.Control.FSharpAsync");
 
             if (fsharpOptionType == null || fsharpAsyncType == null)
             {
@@ -122,9 +122,9 @@ namespace Bridge.Core
             return _fsharpCoreAssembly != null;
         }
 
-        private static bool TypesHaveSameIdentity(Type type1, Type type2)
+        private static bool TypesHaveSameIdentity(Type type1, Type? type2)
         {
-            return type1.Assembly == type2.Assembly
+            return type1.Assembly == type2?.Assembly
                 && string.Equals(type1.Namespace, type2.Namespace, StringComparison.Ordinal)
                 && string.Equals(type1.Name, type2.Name, StringComparison.Ordinal);
         }

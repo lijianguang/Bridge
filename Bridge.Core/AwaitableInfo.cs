@@ -39,13 +39,13 @@ namespace Bridge.Core
         [UnconditionalSuppressMessage("Trimmer", "IL2070", Justification = "Reflecting over the async Task types contract")]
         [UnconditionalSuppressMessage("Trimmer", "IL2075", Justification = "Reflecting over the async Task types contract")]
         public static bool IsTypeAwaitable(
-            Type type,
+            Type? type,
             out AwaitableInfo awaitableInfo)
         {
             // Based on Roslyn code: http://source.roslyn.io/#Microsoft.CodeAnalysis.Workspaces/Shared/Extensions/ISymbolExtensions.cs,db4d48ba694b9347
 
             // Awaitable must have method matching "object GetAwaiter()"
-            var getAwaiterMethod = type.GetMethod("GetAwaiter", Everything, Type.EmptyTypes);
+            var getAwaiterMethod = type?.GetMethod("GetAwaiter", Everything, Type.EmptyTypes);
 
             if (getAwaiterMethod is null)
             {

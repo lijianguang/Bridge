@@ -4,11 +4,8 @@ namespace Bridge.Core
 {
     public class MQExceptionHandlerMiddleware : IMQMiddleware
     {
-        private readonly IMessageConverter _messageConverter;
-
-        public MQExceptionHandlerMiddleware(IMessageConverter messageConverter)
+        public MQExceptionHandlerMiddleware()
         {
-            _messageConverter = messageConverter;
         }
 
         public Task InvokeAsync(MQContext context, MQDelegate next)
@@ -51,7 +48,10 @@ namespace Bridge.Core
         }
         private async Task HandleException(MQContext context, ExceptionDispatchInfo edi)
         {
-            context.Response.Body = new ResponseBody() { Payload = edi.SourceException, StatusCode = MQStatusCode.InternalServerError };
+            await Task.Run(() =>
+            {
+                context.Response.Body = new ResponseBody() { Payload = edi.SourceException, StatusCode = MQStatusCode.InternalServerError };
+            });
         }
     }
 }

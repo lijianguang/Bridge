@@ -6,8 +6,8 @@ namespace Bridge.Core
     internal readonly struct CoercedAwaitableInfo
     {
         public AwaitableInfo AwaitableInfo { get; }
-        public Expression CoercerExpression { get; }
-        public Type CoercerResultType { get; }
+        public Expression? CoercerExpression { get; }
+        public Type? CoercerResultType { get; }
         public bool RequiresCoercion => CoercerExpression != null;
 
         public CoercedAwaitableInfo(AwaitableInfo awaitableInfo)
@@ -17,7 +17,7 @@ namespace Bridge.Core
             CoercerResultType = null;
         }
 
-        public CoercedAwaitableInfo(Expression coercerExpression, Type coercerResultType, AwaitableInfo coercedAwaitableInfo)
+        public CoercedAwaitableInfo(Expression? coercerExpression, Type? coercerResultType, AwaitableInfo coercedAwaitableInfo)
         {
             CoercerExpression = coercerExpression;
             CoercerResultType = coercerResultType;
