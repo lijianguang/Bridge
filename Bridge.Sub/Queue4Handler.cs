@@ -2,8 +2,8 @@
 
 namespace Bridge.Sub
 {
-    [MQHandler(MQType.ActiveMQ, MQNames.Topic2, true)]
-    public class Topic2Handler : MQHandlerBase
+    [MQHandler(MQType.ActiveMQ, MQNames.Queue4, true)]
+    public class Queue4Handler : MQHandlerBase
     {
         [MQAction("Test1")]
         public void Test1(MsgTmp msg)
