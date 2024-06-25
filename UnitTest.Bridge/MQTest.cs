@@ -1,5 +1,3 @@
-using Bridge;
-using Bridge.Message;
 using Bridge.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,9 +6,7 @@ using Bridge.Sub;
 using System.Diagnostics;
 using Microsoft.Extensions.ObjectPool;
 using Apache.NMS.ActiveMQ;
-using System;
 using Apache.NMS;
-using System.Reflection.Emit;
 
 namespace UnitTest.Bridge
 {
@@ -57,21 +53,12 @@ namespace UnitTest.Bridge
                     for (int j = 0; j < 10; j++)
                     {
                         //var connection = connectionPool.GetAlive();
-
                         //connectionPool.ReturnDead(connection);
 
                         IConnectionFactory factory = new ConnectionFactory("failover:(tcp://127.0.0.1:61616)");
                         var connection = (Connection)factory.CreateConnection("admin", "admin");
                         connection.Start();
-                        //using (ISession session = connection.CreateSession(AcknowledgementMode.AutoAcknowledge))
-                        //{
-                        //    IDestination destination = session.GetQueue("queue1");
-                        //    using (IMessageProducer producer = session.CreateProducer(destination))
-                        //    {
-                        //        ITextMessage textMessage = producer.CreateTextMessage("test");
-                        //        producer.Send(textMessage);
-                        //    }
-                        //}
+
                         connection.Stop();
                         connection.Dispose();
                     }

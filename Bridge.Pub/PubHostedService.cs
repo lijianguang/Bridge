@@ -132,13 +132,13 @@ namespace Bridge.Pub
                 threads.Add(new Thread(() =>
                 {
                     var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                    publisher.PublishMulticastAsync(MQType.ActiveMQ, MQNames.Topic1, "Test1", new MsgTmp { Name = "A", Age = 1 }).Wait();
+                    publisher.PublishMulticastAsync(MQType.ActiveMQ, MQNames.Queue3, "Test1", new MsgTmp { Name = "A", Age = 1 }).Wait();
                 }));
 
                 threads.Add(new Thread(() =>
                 {
                     var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                    publisher.PublishMulticastAsync(MQType.ActiveMQ, MQNames.Topic2, "Test1", new MsgTmp { Name = "A", Age = 1 }).Wait();
+                    publisher.PublishMulticastAsync(MQType.ActiveMQ, MQNames.Queue4, "Test1", new MsgTmp { Name = "A", Age = 1 }).Wait();
                 }));
             }
 

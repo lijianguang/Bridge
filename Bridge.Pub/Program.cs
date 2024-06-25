@@ -1,7 +1,5 @@
-﻿using Bridge;
-using Bridge.ActiveMQ;
+﻿using Bridge.ActiveMQ;
 using Bridge.Core;
-using Bridge.Message;
 using Bridge.Pub;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
