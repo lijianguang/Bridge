@@ -12,12 +12,10 @@ namespace Bridge.Core
 
         public Task InvokeAsync(MQContext context, MQDelegate next)
         {
-            if(context.Request.Body != null)
+            if(context.Message != null)
             {
-                var body = _messageConverter.Deserialize<RequestBody>(context.Request.Body);
-                context.Request.NeedReply = body.NeedReply;
-                context.Request.Payload = (type) =>  body.Payload is JToken jtoken ? jtoken.ToObject(type) : default;
-                context.Request.ActionName = body.ActionName;
+                context.Request.Body = _messageConverter.Deserialize<RequestBody>(context.Message);
+                context.Request.Payload = (type) => context.Request.Body.Payload is JToken jtoken ? jtoken.ToObject(type) : default;
             }
 
             return next(context);

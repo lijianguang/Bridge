@@ -28,6 +28,7 @@ namespace Bridge.Core
             services.AddTransient<IPublisher, Publisher>();
             services.AddTransient<IProducerFactory, ProducerFactory>();
             services.AddTransient<IProducerDescriptorProvider, ProducerDescriptorProvider>();
+            services.AddTransient<IReplyMessageProcesser, ReplyMessageProcesser>();
 
             services.AddTransient<ISubscriber, Subscriber>();
             services.AddTransient<IConsumerFactory, ConsumerFactory>();
