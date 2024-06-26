@@ -21,11 +21,10 @@ namespace Bridge.Core
         {
             using (IServiceScope scope = _serviceProvider.CreateScope())
             {
-                var mqContextBuilder = new MQContextBuilder(mqType, queueName);
+                var mqContextBuilder = new MQContextBuilder(mqType, queueName, message);
                 mqContextBuilder.Configure((context) =>
                 {
                     context.RequestServices = scope.ServiceProvider;
-                    context.Request.Body = message;
                 });
                 var context = mqContextBuilder.Build();
                 await pipelineEntry(context);

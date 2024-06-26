@@ -4,9 +4,9 @@
     {
         private readonly MQContext _mqContext;
 
-        public MQContextBuilder(MQType mqType, string queueName)
+        public MQContextBuilder(MQType mqType, string queueName, string message)
         {
-            _mqContext = new MQContext(mqType, queueName);
+            _mqContext = new MQContext(mqType, queueName, message);
         }
 
         public void Configure(Action<MQContext> configureContext)
