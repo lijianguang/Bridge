@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json.Linq;
-
-namespace Bridge.Core
+﻿namespace Bridge.Core
 {
     public class Publisher : IPublisher
     {
         private readonly IProducerFactory _mqProducerFactory;
         private readonly IMessageConverter _messageConverter;
+        private readonly IReplyMessageProcesser _replyMessageProcesser; 
 
-        public Publisher(IProducerFactory mqProducerFactory, IMessageConverter messageConverter)
+        public Publisher(IProducerFactory mqProducerFactory, IMessageConverter messageConverter, IReplyMessageProcesser replyMessageProcesser)
         {
             _mqProducerFactory = mqProducerFactory;
             _messageConverter = messageConverter;
+            _replyMessageProcesser = replyMessageProcesser;
         }
 
         public async Task PublishAsync<T>(MQType mqType, string queueName, string actionName, T? data)
@@ -29,14 +29,7 @@ namespace Bridge.Core
             var replyMessage = await _mqProducerFactory.Create(mqType)
                 .SendAndWaitReplyAsync(queueName, _messageConverter.Serialize(new RequestBody { ActionName = actionName, NeedReply = true, Payload = data }));
 
-            var responseBody = _messageConverter.Deserialize<ResponseBody>(replyMessage);
-
-            if(responseBody.StatusCode == MQStatusCode.InternalServerError)
-            {
-                throw responseBody.Payload is JToken jtokenException ? jtokenException.ToObject<Exception>()! : new Exception("Unknown exception.");
-            }
-
-            return responseBody.Payload is JToken jtoken ? jtoken.ToObject<TR>() : default;
+            return _replyMessageProcesser.Process<TR>(replyMessage);
         }
 
         public async Task<TR?> PublishAndWaitReplyAsync<TR>(MQType mqType, string queueName, string actionName) 
