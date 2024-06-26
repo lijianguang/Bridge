@@ -25,14 +25,14 @@ namespace Bridge.ActiveMQ
             {
                 using (ISession session = await connection.CreateSessionAsync(AcknowledgementMode.AutoAcknowledge))
                 {
-                    ITemporaryQueue queue = session.CreateTemporaryQueue();
-                    using (IMessageConsumer consumer = session.CreateConsumer(queue))
+                    ITemporaryQueue queue = await session.CreateTemporaryQueueAsync();
+                    using (IMessageConsumer consumer = await session.CreateConsumerAsync(queue))
                     {
                         ITextMessage requestMessage = await session.CreateTextMessageAsync(message);
                         requestMessage.NMSReplyTo = queue;
                         string correlationId = Guid.NewGuid().ToString();
                         requestMessage.NMSCorrelationID = correlationId;
-                        using (IMessageProducer producer = session.CreateProducer())
+                        using (IMessageProducer producer = await session.CreateProducerAsync())
                         {
                             NmsDestinationAccessor destinationResolver = new NmsDestinationAccessor();
                             IDestination destination = destinationResolver.ResolveDestinationName(session, queueName);
