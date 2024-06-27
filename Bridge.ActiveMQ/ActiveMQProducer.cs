@@ -26,13 +26,13 @@ namespace Bridge.ActiveMQ
                 using (ISession session = await connection.CreateSessionAsync(AcknowledgementMode.AutoAcknowledge))
                 {
                     ITemporaryQueue queue = session.CreateTemporaryQueue();
-                    using (IMessageConsumer consumer = session.CreateConsumer(queue))
+                    using (IMessageConsumer consumer = await session.CreateConsumerAsync(queue))
                     {
                         ITextMessage requestMessage = await session.CreateTextMessageAsync(message);
                         requestMessage.NMSReplyTo = queue;
                         string correlationId = Guid.NewGuid().ToString();
                         requestMessage.NMSCorrelationID = correlationId;
-                        using (IMessageProducer producer = session.CreateProducer())
+                        using (IMessageProducer producer = await session.CreateProducerAsync())
                         {
                             NmsDestinationAccessor destinationResolver = new NmsDestinationAccessor();
                             IDestination destination = destinationResolver.ResolveDestinationName(session, queueName);
@@ -44,7 +44,6 @@ namespace Bridge.ActiveMQ
                         {
                             throw new Exception($"Request Timeout. Waiting from {utcNow} to {DateTime.UtcNow}, Queue: {queueName}, NMSCorrelationID: {requestMessage.NMSCorrelationID}");
                         }
-                        await reply.AcknowledgeAsync();
                         ITextMessage replyMessage = (ITextMessage)reply;
                         Console.WriteLine(replyMessage.Text);
                         return replyMessage.Text;

@@ -54,7 +54,7 @@ namespace Bridge.ActiveMQ
                                             }
                                         }
                                     }
-                                    catch(Exception ex)
+                                    catch (Exception ex)
                                     {
                                         Console.WriteLine("Error occurred: " + ex.Message);
                                     }
