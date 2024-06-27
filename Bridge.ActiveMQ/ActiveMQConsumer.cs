@@ -36,6 +36,7 @@ namespace Bridge.ActiveMQ
                         while (_isAlive)
                         {
                             IMessage message = await consumer.ReceiveAsync();
+                            await message.AcknowledgeAsync();
                             if (message is ITextMessage textMessage)
                             {
                                 var result = await callback(textMessage.Text);
@@ -101,6 +102,7 @@ namespace Bridge.ActiveMQ
                         while (_isAlive)
                         {
                             IMessage message = await consumer.ReceiveAsync();
+                            await message.AcknowledgeAsync();
                             if (message is ITextMessage textMessage)
                             {
                                 var result = await callback(textMessage.Text);
