@@ -14,7 +14,7 @@ namespace Bridge.Core
 
             services.AddTransient<IHandlerActionInvoker, HandlerActionInvoker>();
             services.AddTransient<IHandlerMQDelegateFactory, HandlerMQDelegateFactory>();
-            services.AddTransient<IMQHandlerActionDescriptorProvider, MQHandlerActionDescriptorProvider>();
+            services.AddSingleton<IMQHandlerActionDescriptorProvider, MQHandlerActionDescriptorProvider>();
             services.AddTransient<IMQHandlerActivatorProvider, MQHandlerActivatorProvider>();
             services.AddTransient<IMQHandlerFactoryProvider, MQHandlerFactoryProvider>();
 
@@ -27,12 +27,12 @@ namespace Bridge.Core
 
             services.AddTransient<IPublisher, Publisher>();
             services.AddTransient<IProducerFactory, ProducerFactory>();
-            services.AddTransient<IProducerDescriptorProvider, ProducerDescriptorProvider>();
+            services.AddSingleton<IProducerDescriptorProvider, ProducerDescriptorProvider>();
             services.AddTransient<IReplyMessageProcesser, ReplyMessageProcesser>();
 
             services.AddTransient<ISubscriber, Subscriber>();
             services.AddTransient<IConsumerFactory, ConsumerFactory>();
-            services.AddTransient<IConsumerDescriptorProvider, ConsumerDescriptorProvider>();
+            services.AddSingleton<IConsumerDescriptorProvider, ConsumerDescriptorProvider>();
         }
 
         public static void AddMiddlewares(this IServiceCollection services, ServiceLifetime lifetime = ServiceLifetime.Transient)
