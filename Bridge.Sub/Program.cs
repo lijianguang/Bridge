@@ -1,5 +1,4 @@
-﻿using Bridge;
-using Bridge.ActiveMQ;
+﻿using Bridge.ActiveMQ;
 using Bridge.Core;
 using Bridge.Sub;
 using Microsoft.Extensions.Configuration;

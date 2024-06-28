@@ -1,7 +1,4 @@
-﻿using Amqp;
-using Apache.NMS;
-using Apache.NMS.ActiveMQ;
-using Apache.NMS.AMQP;
+﻿using Apache.NMS.AMQP;
 using Microsoft.Extensions.ObjectPool;
 
 namespace Bridge.ActiveMQ

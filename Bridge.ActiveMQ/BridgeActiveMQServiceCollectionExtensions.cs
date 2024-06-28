@@ -1,11 +1,9 @@
-﻿using Apache.NMS;
-using Apache.NMS.ActiveMQ;
+﻿using Apache.NMS.ActiveMQ;
 using Apache.NMS.AMQP;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.ObjectPool;
 using Microsoft.Extensions.Options;
-using System;
 
 namespace Bridge.ActiveMQ
 {
