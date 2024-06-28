@@ -1,9 +1,11 @@
-﻿using Apache.NMS.ActiveMQ;
+﻿using Apache.NMS;
+using Apache.NMS.ActiveMQ;
 using Apache.NMS.AMQP;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.ObjectPool;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace Bridge.ActiveMQ
 {
@@ -34,12 +36,30 @@ namespace Bridge.ActiveMQ
                 var provider = serviceProvider.GetRequiredService<ObjectPoolProvider>();
                 return provider.Create(policy);
             });
+
+            services.AddSingleton<ObjectPool<Session>>(serviceProvider =>
+            {
+                var connection = serviceProvider.GetRequiredService<ObjectPool<Connection>>().GetAliveConnection();
+                var policy = new QueueSessionPooledObjectPolicy(connection);
+                var provider = serviceProvider.GetRequiredService<ObjectPoolProvider>();
+                return provider.Create(policy);
+            });
+
+            services.AddSingleton<ObjectPool<NmsSession>>(serviceProvider =>
+            {
+                var connection = serviceProvider.GetRequiredService<ObjectPool<NmsConnection>>().GetAliveConnection();
+                var policy = new TopicSessionPooledObjectPolicy(connection);
+                var provider = serviceProvider.GetRequiredService<ObjectPoolProvider>();
+                return provider.Create(policy);
+            });
         }
 
         public static void ReleaseActiveMQResource(this IServiceProvider services)
         {
             var connectionPool = services.GetRequiredService<ObjectPool<Connection>>();
             var nmsConnectionPool = services.GetRequiredService<ObjectPool<NmsConnection>>();
+            var sessionPool = services.GetRequiredService<ObjectPool<Session>>();
+            var nmsSessionPool = services.GetRequiredService<ObjectPool<NmsSession>>();
             if (connectionPool is IDisposable disposablePool)
             {
                 disposablePool.Dispose();
@@ -47,6 +67,14 @@ namespace Bridge.ActiveMQ
             if (nmsConnectionPool is IDisposable disposableNmsPool)
             {
                 disposableNmsPool.Dispose();
+            }
+            if (sessionPool is IDisposable disposableSessionPool)
+            {
+                disposableSessionPool.Dispose();
+            }
+            if (nmsSessionPool is IDisposable disposableNmsSessionPool)
+            {
+                disposableNmsSessionPool.Dispose();
             }
         }
     }

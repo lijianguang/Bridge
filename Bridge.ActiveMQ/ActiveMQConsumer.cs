@@ -8,15 +8,15 @@ namespace Bridge.ActiveMQ
     [ConsumerMapping(MQType.ActiveMQ)]
     public class ActiveMQConsumer : IConsumer
     {
-        private readonly ObjectPool<Connection> _connectionPool;
-        private readonly ObjectPool<NmsConnection> _nmsconnectionPool;
+        private readonly ObjectPool<Session> _sessionPool;
+        private readonly ObjectPool<NmsSession> _nmsSessionPool;
         private bool _isAlive = true;
 
-        public ActiveMQConsumer(ObjectPool<Connection> connectionPool,
-            ObjectPool<NmsConnection> nmsconnectionPool)
+        public ActiveMQConsumer(ObjectPool<Session> sessionPool,
+            ObjectPool<NmsSession> nmsSessionPool)
         {
-            _connectionPool = connectionPool;
-            _nmsconnectionPool = nmsconnectionPool;
+            _sessionPool = sessionPool;
+            _nmsSessionPool = nmsSessionPool;
         }
         public void Dispose()
         {
@@ -25,54 +25,51 @@ namespace Bridge.ActiveMQ
 
         public async Task ReceiveAsync(string queueName, Func<string, Task<(bool NeedReply, string ReplyMessage)>> callback)
         {
-            var connection = _connectionPool.GetAlive();
+            var session = _sessionPool.GetAliveSession();
             try
             {
-                using (ISession session = await connection.CreateSessionAsync(AcknowledgementMode.AutoAcknowledge))
+                IDestination destination = await session.GetQueueAsync(queueName);
+                using (IMessageConsumer consumer = await session.CreateConsumerAsync(destination))
                 {
-                    IDestination destination = await session.GetQueueAsync(queueName);
-                    using (IMessageConsumer consumer = await session.CreateConsumerAsync(destination))
+                    while (_isAlive)
                     {
-                        while (_isAlive)
+                        IMessage message = await consumer.ReceiveAsync();
+                        await message.AcknowledgeAsync();
+                        if (message is ITextMessage textMessage)
                         {
-                            IMessage message = await consumer.ReceiveAsync();
-                            await message.AcknowledgeAsync();
-                            if (message is ITextMessage textMessage)
+                            var result = await callback(textMessage.Text);
+                            if (result.NeedReply)
                             {
-                                var result = await callback(textMessage.Text);
-                                if (result.NeedReply)
+                                try
                                 {
-                                    try
+                                    IDestination replyDestination = message.NMSReplyTo;
+                                    if (replyDestination != null)
                                     {
-                                        IDestination replyDestination = message.NMSReplyTo;
-                                        if (replyDestination != null)
+                                        ITextMessage response = await session.CreateTextMessageAsync(result.ReplyMessage);
+                                        response.NMSCorrelationID = message.NMSCorrelationID;
+                                        using (IMessageProducer producer = await session.CreateProducerAsync(replyDestination))
                                         {
-                                            ITextMessage response = await session.CreateTextMessageAsync(result.ReplyMessage);
-                                            response.NMSCorrelationID = message.NMSCorrelationID;
-                                            using (IMessageProducer producer = await session.CreateProducerAsync(replyDestination))
-                                            {
-                                                await producer.SendAsync(response);
-                                            }
+                                            await producer.SendAsync(response);
                                         }
                                     }
-                                    catch (Exception ex)
-                                    {
-                                        Console.WriteLine("Error occurred: " + ex.Message);
-                                    }
-                                    finally
-                                    {
-                                        Console.WriteLine("need reply: " + result.ReplyMessage);
-                                    }
                                 }
-                                else
+                                catch (Exception ex)
                                 {
-                                    Console.WriteLine("don't need reply: " + result.ReplyMessage);
+                                    Console.WriteLine("Error occurred: " + ex.Message);
+                                }
+                                finally
+                                {
+                                    Console.WriteLine("need reply: " + result.ReplyMessage);
                                 }
                             }
-                            else if (message == null)
+                            else
                             {
-                                break;
+                                Console.WriteLine("don't need reply: " + result.ReplyMessage);
                             }
+                        }
+                        else if (message == null)
+                        {
+                            break;
                         }
                     }
                 }
@@ -83,35 +80,30 @@ namespace Bridge.ActiveMQ
             }
             finally
             {
-                _connectionPool.ReturnDead(connection);
+                _sessionPool.ReturnSuspendedSession(session);
             }
-            
         }
 
         public async Task ReceiveMulticastAsync(string topicName, Func<string, Task<(bool NeedReply, string ReplyMessage)>> callback)
         {
-            var connection = _nmsconnectionPool.GetAlive();
+            var nmsSession = _nmsSessionPool.GetAliveNmsSession();
             try
             {
-                await connection.StartAsync();
-                using (ISession session = await connection.CreateSessionAsync(AcknowledgementMode.AutoAcknowledge))
+                IDestination destination = await nmsSession.GetTopicAsync($"topic://{topicName}");
+                using (IMessageConsumer consumer = await nmsSession.CreateConsumerAsync(destination))
                 {
-                    IDestination destination = await session.GetTopicAsync($"topic://{topicName}");
-                    using (IMessageConsumer consumer = await session.CreateConsumerAsync(destination))
+                    while (_isAlive)
                     {
-                        while (_isAlive)
+                        IMessage message = await consumer.ReceiveAsync();
+                        await message.AcknowledgeAsync();
+                        if (message is ITextMessage textMessage)
                         {
-                            IMessage message = await consumer.ReceiveAsync();
-                            await message.AcknowledgeAsync();
-                            if (message is ITextMessage textMessage)
-                            {
-                                var result = await callback(textMessage.Text);
-                                Console.WriteLine("Received message: " + textMessage.Text);
-                            }
-                            else if (message == null)
-                            {
-                                break;
-                            }
+                            var result = await callback(textMessage.Text);
+                            Console.WriteLine("Received message: " + textMessage.Text);
+                        }
+                        else if (message == null)
+                        {
+                            break;
                         }
                     }
                 }
@@ -122,7 +114,7 @@ namespace Bridge.ActiveMQ
             }
             finally
             {
-                _nmsconnectionPool.ReturnDead(connection);
+                _nmsSessionPool.ReturnSuspendedNmsSession(nmsSession);
             }
         }
     }
