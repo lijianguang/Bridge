@@ -2,7 +2,6 @@
 using Bridge.Message;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 using System.Diagnostics;
 
 namespace Bridge.Pub
@@ -17,9 +16,6 @@ namespace Bridge.Pub
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            var timer = new Stopwatch();
-            timer.Start();
-
             var threads = new List<Thread>();
             foreach (var q in new[] { MQNames.Queue1, MQNames.Queue2 })
             {
@@ -28,72 +24,72 @@ namespace Bridge.Pub
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test2", new List<MsgTmp>() { new MsgTmp { Name = "A", Age = 1 } }).Wait();
+                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test2", new List<MsgTmp>() { new MsgTmp { Name = "A", Age = 1 } });
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test2", new List<MsgTmp>() { new MsgTmp { Name = "A", Age = 1 } }).Wait();
+                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test2", new List<MsgTmp>() { new MsgTmp { Name = "A", Age = 1 } });
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test3").Wait();
+                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test3");
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test3").Wait();
+                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test3");
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test4").Wait();
+                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test4");
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test4").Wait();
+                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test4");
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test5", 5).Wait();
+                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test5", 5);
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test5", 5).Wait();
+                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test5", 5);
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test6").Wait();
+                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test6");
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test6").Wait();
+                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test6");
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test7", 5).Wait();
+                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test7", 5);
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test7", 5).Wait();
+                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test7", 5);
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test8", 9).Wait();
+                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test8", 9);
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test8", 9).Wait();
+                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test8", 9);
                     }));
                 }
             }
@@ -127,10 +123,15 @@ namespace Bridge.Pub
                 }));
             }
 
+            var timer = new Stopwatch();
+            timer.Start();
+
             threads.ForEach(t =>
             {
+                Thread.Sleep(new Random().Next(1, 10));
                 t.Start();
             });
+
             checkAlive:
             var existAlive = false;
             threads.ForEach(t =>
@@ -145,9 +146,7 @@ namespace Bridge.Pub
                 goto checkAlive;
             }
 
-            //B: Run stuff you want timed
             timer.Stop();
-
             TimeSpan timeTaken = timer.Elapsed;
             string foo = "Time taken: " + timeTaken.ToString(@"m\:ss\.fff");
             Console.WriteLine(foo);

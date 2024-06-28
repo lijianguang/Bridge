@@ -8,7 +8,7 @@ namespace Bridge.Sub1
         [MQAction("Test1")]
         public void Test1(MsgTmp msg)
         {
-
+            Thread.Sleep(new Random().Next(10, 200));
         }
     }
 }
