@@ -19,7 +19,7 @@ namespace Bridge.ActiveMQ
 
             services.Configure<ActiveMQOptions>(configuration.GetSection(ActiveMQOptions.ActiveMQ));
 
-            services.AddSingleton<ObjectPoolProvider>(new DefaultObjectPoolProvider() { MaximumRetained = 1000});
+            services.AddSingleton<ObjectPoolProvider>(new DefaultObjectPoolProvider() { MaximumRetained = 1000 });
 
             services.AddSingleton<ObjectPool<Connection>>(serviceProvider =>
             {
@@ -56,18 +56,11 @@ namespace Bridge.ActiveMQ
 
         public static void ReleaseActiveMQResource(this IServiceProvider services)
         {
-            var connectionPool = services.GetRequiredService<ObjectPool<Connection>>();
-            var nmsConnectionPool = services.GetRequiredService<ObjectPool<NmsConnection>>();
             var sessionPool = services.GetRequiredService<ObjectPool<Session>>();
             var nmsSessionPool = services.GetRequiredService<ObjectPool<NmsSession>>();
-            if (connectionPool is IDisposable disposablePool)
-            {
-                disposablePool.Dispose();
-            }
-            if (nmsConnectionPool is IDisposable disposableNmsPool)
-            {
-                disposableNmsPool.Dispose();
-            }
+            var connectionPool = services.GetRequiredService<ObjectPool<Connection>>();
+            var nmsConnectionPool = services.GetRequiredService<ObjectPool<NmsConnection>>();
+
             if (sessionPool is IDisposable disposableSessionPool)
             {
                 disposableSessionPool.Dispose();
@@ -75,6 +68,14 @@ namespace Bridge.ActiveMQ
             if (nmsSessionPool is IDisposable disposableNmsSessionPool)
             {
                 disposableNmsSessionPool.Dispose();
+            }
+            if (connectionPool is IDisposable disposablePool)
+            {
+                disposablePool.Dispose();
+            }
+            if (nmsConnectionPool is IDisposable disposableNmsPool)
+            {
+                disposableNmsPool.Dispose();
             }
         }
     }

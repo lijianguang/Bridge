@@ -17,7 +17,6 @@ namespace Bridge.ActiveMQ
             }
             return connection;
         }
-
         public static void ReturnSuspendedConnection<T>(this ObjectPool<T> defaultObjectPool, T connection) where T : class, Apache.NMS.IConnection
         {
             if (connection.IsStarted)
@@ -36,7 +35,6 @@ namespace Bridge.ActiveMQ
             }
             return session;
         }
-
         public static void ReturnSuspendedSession<T>(this ObjectPool<T> defaultObjectPool, T session) where T : Apache.NMS.ActiveMQ.Session
         {
             if (session.Started)
@@ -45,6 +43,7 @@ namespace Bridge.ActiveMQ
             }
             defaultObjectPool.Return(session);
         }
+        
         public static T GetAliveNmsSession<T>(this ObjectPool<T> defaultObjectPool) where T : NmsSession
         {
             var session = defaultObjectPool.Get();
@@ -54,7 +53,6 @@ namespace Bridge.ActiveMQ
             }
             return session;
         }
-
         public static void ReturnSuspendedNmsSession<T>(this ObjectPool<T> defaultObjectPool, T session) where T : NmsSession
         {
             if (session.IsStarted)

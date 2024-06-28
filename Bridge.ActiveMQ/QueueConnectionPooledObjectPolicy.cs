@@ -1,7 +1,6 @@
 ﻿using Apache.NMS;
 using Apache.NMS.ActiveMQ;
 using Microsoft.Extensions.ObjectPool;
-using Microsoft.Extensions.Options;
 
 namespace Bridge.ActiveMQ
 {
