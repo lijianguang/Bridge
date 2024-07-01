@@ -57,14 +57,6 @@ namespace Bridge.ActiveMQ
                                 {
                                     Console.WriteLine("Error occurred: " + ex.Message);
                                 }
-                                finally
-                                {
-                                    Console.WriteLine("need reply: " + result.ReplyMessage);
-                                }
-                            }
-                            else
-                            {
-                                Console.WriteLine("don't need reply: " + result.ReplyMessage);
                             }
                         }
                         else if (message == null)
@@ -95,11 +87,9 @@ namespace Bridge.ActiveMQ
                     while (_isAlive)
                     {
                         IMessage message = await consumer.ReceiveAsync();
-                        await message.AcknowledgeAsync();
                         if (message is ITextMessage textMessage)
                         {
                             var result = await callback(textMessage.Text);
-                            Console.WriteLine("Received message: " + textMessage.Text);
                         }
                         else if (message == null)
                         {

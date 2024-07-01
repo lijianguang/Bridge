@@ -10,5 +10,8 @@
 
         Task<TR?> PublishAndWaitReplyAsync<T, TR>(MQType mqType, string queueName, string actionName, T? data);
         Task<TR?> PublishAndWaitReplyAsync<TR>(MQType mqType, string queueName, string actionName);
+
+        void OnBefore(Action<RequestBody> onRequest);
+        void OnAfter(Action<ResponseBody> onResponse);
     }
 }

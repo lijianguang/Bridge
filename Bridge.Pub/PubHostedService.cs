@@ -21,75 +21,75 @@ namespace Bridge.Pub
             {
                 for (int i = 0; i < 100; i++)
                 {
-                    threads.Add(new Thread(() =>
+                    threads.Add(new Thread(async () =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test2", new List<MsgTmp>() { new MsgTmp { Name = "A", Age = 1 } });
+                        await publisher.ActiveMQ_PublishAsync(q, "Test2", new List<MsgTmp>() { new MsgTmp { Name = "A", Age = 1 } });
+                    }));
+                    threads.Add(new Thread(async () =>
+                    {
+                        var publisher = _serviceProvider.GetRequiredService<IPublisher>();
+                        await publisher.ActiveMQ_PublishAsync(q, "Test2", new List<MsgTmp>() { new MsgTmp { Name = "A", Age = 1 } });
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test2", new List<MsgTmp>() { new MsgTmp { Name = "A", Age = 1 } });
+                        publisher.ActiveMQ_PublishAsync(q, "Test3").Wait();
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test3");
+                        publisher.ActiveMQ_PublishAsync(q, "Test3").Wait();
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test3");
+                        publisher.ActiveMQ_PublishAsync(q, "Test4").Wait();
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test4");
+                        publisher.ActiveMQ_PublishAsync(q, "Test4").Wait();
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test4");
+                        publisher.ActiveMQ_PublishAsync(q, "Test5", 5).Wait();
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test5", 5);
+                        publisher.ActiveMQ_PublishAsync(q, "Test5", 5).Wait();
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test5", 5);
+                        publisher.ActiveMQ_PublishAsync(q, "Test6").Wait();
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test6");
+                        publisher.ActiveMQ_PublishAsync(q, "Test6").Wait();
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test6");
+                        publisher.ActiveMQ_PublishAsync(q, "Test7", 5).Wait();
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test7", 5);
+                        publisher.ActiveMQ_PublishAsync(q, "Test7", 5).Wait();
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test7", 5);
+                        publisher.ActiveMQ_PublishAsync(q, "Test8", 9).Wait();
                     }));
                     threads.Add(new Thread(() =>
                     {
                         var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test8", 9);
-                    }));
-                    threads.Add(new Thread(() =>
-                    {
-                        var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.PublishAsync(MQType.ActiveMQ, q, "Test8", 9);
+                        publisher.ActiveMQ_PublishAsync(q, "Test8", 9).Wait();
                     }));
                 }
             }
@@ -99,12 +99,12 @@ namespace Bridge.Pub
                 threads.Add(new Thread(() =>
                 {
                     var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                    var result1 = publisher.PublishAndWaitReplyAsync<MsgTmp, MsgTmp>(MQType.ActiveMQ, MQNames.Queue2, "Test1", new MsgTmp { Name = "A1", Age = 1 }).Result!;
+                    var result1 = publisher.ActiveMQ_PublishAndWaitReplyAsync<MsgTmp, MsgTmp>(MQNames.Queue2, "Test1", new MsgTmp { Name = "A1", Age = 1 }).Result!;
                 }));
                 threads.Add(new Thread(() =>
                 {
                     var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                    var result = publisher.PublishAndWaitReplyAsync<MsgTmp, IEnumerable<MsgTmp>>(MQType.ActiveMQ, MQNames.Queue1, "Test1", new MsgTmp { Name = "A", Age = 1 }).Result;
+                    var result = publisher.ActiveMQ_PublishAndWaitReplyAsync<MsgTmp, IEnumerable<MsgTmp>>(MQNames.Queue1, "Test1", new MsgTmp { Name = "A", Age = 1 }).Result;
                 }));
             }
 
@@ -113,13 +113,13 @@ namespace Bridge.Pub
                 threads.Add(new Thread(() =>
                 {
                     var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                    publisher.PublishMulticastAsync(MQType.ActiveMQ, MQNames.Queue3, "Test1", new MsgTmp { Name = "A", Age = 1 }).Wait();
+                    publisher.ActiveMQ_PublishMulticastAsync(MQNames.Queue3, "Test1", new MsgTmp { Name = "A", Age = 1 }).Wait();
                 }));
 
                 threads.Add(new Thread(() =>
                 {
                     var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                    publisher.PublishMulticastAsync(MQType.ActiveMQ, MQNames.Queue4, "Test1", new MsgTmp { Name = "A", Age = 1 }).Wait();
+                    publisher.ActiveMQ_PublishMulticastAsync(MQNames.Queue4, "Test1", new MsgTmp { Name = "A", Age = 1 }).Wait();
                 }));
             }
 

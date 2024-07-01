@@ -28,13 +28,11 @@ namespace Bridge.ActiveMQ
                 {
                     ITextMessage requestMessage = await session.CreateTextMessageAsync(message);
                     requestMessage.NMSReplyTo = queue;
-                    string correlationId = Guid.NewGuid().ToString();
-                    requestMessage.NMSCorrelationID = correlationId;
+                    requestMessage.NMSCorrelationID = Guid.NewGuid().ToString();
                     using (IMessageProducer producer = await session.CreateProducerAsync())
                     {
-                        NmsDestinationAccessor destinationResolver = new NmsDestinationAccessor();
-                        IDestination destination = destinationResolver.ResolveDestinationName(session, queueName);
-                        await producer.SendAsync(destination, requestMessage);
+                        await producer.SendAsync(new NmsDestinationAccessor().ResolveDestinationName(session, queueName), 
+                            requestMessage);
                     }
                     DateTime utcNow = DateTime.UtcNow;
                     IMessage reply = await consumer.ReceiveAsync(TimeSpan.FromSeconds(20));
@@ -42,9 +40,7 @@ namespace Bridge.ActiveMQ
                     {
                         throw new Exception($"Request Timeout. Waiting from {utcNow} to {DateTime.UtcNow}, Queue: {queueName}, NMSCorrelationID: {requestMessage.NMSCorrelationID}");
                     }
-                    ITextMessage replyMessage = (ITextMessage)reply;
-                    Console.WriteLine(replyMessage.Text);
-                    return replyMessage.Text;
+                    return ((ITextMessage)reply).Text;
                 }
             }
             catch (Exception ex)
@@ -68,7 +64,6 @@ namespace Bridge.ActiveMQ
                 {
                     ITextMessage textMessage = await producer.CreateTextMessageAsync(message);
                     await producer.SendAsync(textMessage);
-                    Console.WriteLine("Message sent: " + textMessage.Text);
                 }
             }
             catch (Exception ex)
@@ -92,7 +87,6 @@ namespace Bridge.ActiveMQ
                 {
                     ITextMessage textMessage = await producer.CreateTextMessageAsync(message);
                     await producer.SendAsync(textMessage);
-                    Console.WriteLine("Message sent: " + textMessage.Text);
                 }
             }
             catch (Exception ex)

@@ -2,6 +2,6 @@
 {
     public interface IReplyMessageProcesser
     {
-        T? Process<T>(string replyMessage);
+        T? Process<T>(ResponseBody responseBody);
     }
 }
