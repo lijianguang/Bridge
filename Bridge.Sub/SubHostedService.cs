@@ -21,6 +21,7 @@ namespace Bridge.Sub
         {
             var _pipelineEntry = _mqPipelineBuilder
                 .UseMiddleware<MQExceptionHandlerMiddleware>()
+                .UseMiddleware<MQLogToConsoleMiddleware>()
                 .UseMiddleware<MQAnalyseRequestBodyMiddleware>()
                 .UseMiddleware<MQEndpointRoutingMiddleware>()
                 .UseMiddleware<MQEndpointMiddleware>()

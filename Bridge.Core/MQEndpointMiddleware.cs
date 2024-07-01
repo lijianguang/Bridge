@@ -2,7 +2,7 @@
 {
     public class MQEndpointMiddleware : IMQMiddleware
     {
-        public Task InvokeAsync(MQContext context, MQDelegate next)
+        public async Task InvokeAsync(MQContext context, MQDelegate next)
         {
             var endpoint = context.Endpoint;
 
@@ -11,10 +11,10 @@
                 var mqDelegate = endpoint.MQDelegate;
                 if (mqDelegate != null)
                 {
-                    return mqDelegate(context);
+                    await mqDelegate(context);
                 }
             }
-            return next(context);
+            await next(context);
         }
     }
 }

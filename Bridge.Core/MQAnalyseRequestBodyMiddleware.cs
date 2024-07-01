@@ -10,7 +10,7 @@ namespace Bridge.Core
             _messageConverter = messageConverter;
         }
 
-        public Task InvokeAsync(MQContext context, MQDelegate next)
+        public async Task InvokeAsync(MQContext context, MQDelegate next)
         {
             if(context.Message != null)
             {
@@ -18,7 +18,7 @@ namespace Bridge.Core
                 context.Request.Payload = (type) => context.Request.Body.Payload is JToken jtoken ? jtoken.ToObject(type) : default;
             }
 
-            return next(context);
+            await next(context);
         }
     }
 }

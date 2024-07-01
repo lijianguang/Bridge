@@ -12,20 +12,20 @@
             _mqHandlerActionDescriptorProvider = mqHandlerActionDescriptorProvider;
         }
 
-        public Task InvokeAsync(MQContext context, MQDelegate next)
+        public async Task InvokeAsync(MQContext context, MQDelegate next)
         {
             var endpoint = context.Endpoint;
 
             if (endpoint != null)
             {
-                return next(context);
+                await next(context);
             }
             if(context.Request.ActionName == null)
             {
                 throw new Exception("Can't find ActionName.");
             }
             context.Endpoint = _endpointFactory.Create(_mqHandlerActionDescriptorProvider.Get(context.Request.MQType, context.Request.QueueName, context.Request.ActionName));
-            return next(context);
+            await next(context);
         }
     }
 }
