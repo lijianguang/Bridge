@@ -6,9 +6,26 @@ namespace Bridge.Sub
     public class Queue4Handler : MQHandlerBase
     {
         [MQAction("Test1")]
-        public void Test1(MsgTmp msg)
+        public async Task Test1(MsgTmp msg)
         {
-            Thread.Sleep(new Random().Next(10, 200));
+        }
+
+        [MQAction("Test2")]
+        public async Task<int> Test2(MsgTmp msg)
+        {
+            return 1;
+        }
+
+        [MQAction("Test3")]
+        public async Task<bool> Test3(IEnumerable<MsgTmp> msgs)
+        {
+            return true;
+        }
+
+        [MQAction("Test4")]
+        public async Task<IEnumerable<MsgTmp>> Test4(int i)
+        {
+            return default(IEnumerable<MsgTmp>);
         }
     }
 }
