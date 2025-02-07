@@ -23,7 +23,7 @@ namespace Bridge.Sub
         }
 
         [MQAction("Test3")]
-        public void Test3()
+        public void Test3(LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage.SalesOrderHeader so)
         {
             Thread.Sleep(new Random().Next(10, 200));
         }

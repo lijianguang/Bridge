@@ -29,8 +29,8 @@ namespace Proxy {
             await _publisher.PublishAsync(_mqType, "queue1", "Test2", msgs);
         }
         
-        public async Task Test3() {
-            await _publisher.PublishAsync(_mqType, "queue1", "Test3");
+        public async Task Test3(LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage.SalesOrderHeader so) {
+            await _publisher.PublishAsync(_mqType, "queue1", "Test3", so);
         }
         
         public async Task<Bridge.Message.MsgTmp> Test4() {
