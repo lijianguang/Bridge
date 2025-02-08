@@ -21,19 +21,19 @@ namespace Proxy {
             _mqType = Bridge.MQType.ActiveMQ;
         }
         
-        public async Task Test1(Bridge.Message.MsgTmp msg) {
+        public async Task Test1Async(Bridge.Message.MsgTmp msg) {
             await _publisher.PublishMulticastAsync(_mqType, "queue4", "Test1", msg);
         }
         
-        public async Task Test2(Bridge.Message.MsgTmp msg) {
+        public async Task Test2Async(Bridge.Message.MsgTmp msg) {
             await _publisher.PublishMulticastAsync(_mqType, "queue4", "Test2", msg);
         }
         
-        public async Task Test3(System.Collections.Generic.IEnumerable<Bridge.Message.MsgTmp> msgs) {
+        public async Task Test3Async(System.Collections.Generic.IEnumerable<Bridge.Message.MsgTmp> msgs) {
             await _publisher.PublishMulticastAsync(_mqType, "queue4", "Test3", msgs);
         }
         
-        public async Task Test4(int i) {
+        public async Task Test4Async(int i) {
             await _publisher.PublishMulticastAsync(_mqType, "queue4", "Test4", i);
         }
     }

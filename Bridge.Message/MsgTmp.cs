@@ -19,8 +19,17 @@ using System.Text.Json.Serialization;
 
 namespace Bridge.Message
 {
+    public struct strct
+    {
+        public int id;
+        private int idp;
+        public string name;
+        public string description;
+    }
     public class MsgTmp
     {
+        public strct strctf;
+        public strct strct { get; set; }
         public string? Name {  get; set; }
         public int Age {  get; set; }
         public MsgTmp1 MsgTmp1 { get; set; }

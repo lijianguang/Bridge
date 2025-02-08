@@ -2,6 +2,7 @@
 using Microsoft.CSharp;
 using System.CodeDom;
 using System.CodeDom.Compiler;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Bridge.Core
@@ -76,7 +77,44 @@ namespace Bridge.Core
                 tw.Close();
             }
         }
+        private CodeNamespace GetCodeNamespace(CodeCompileUnit compileUnit, string? codeNamespaceName)
+        {
+            codeNamespaceName = codeNamespaceName ?? string.Empty;
+            CodeNamespace? codeNamespace = null;
+            for (int i = 0; i < compileUnit.Namespaces.Count; i++)
+            {
+                if (compileUnit.Namespaces[i].Name == codeNamespaceName)
+                {
+                    codeNamespace = compileUnit.Namespaces[i];
+                }
+            }
+            if (codeNamespace == null)
+            {
+                codeNamespace = new CodeNamespace(codeNamespaceName);
+                compileUnit.Namespaces.Add(codeNamespace);
+            }
+            return codeNamespace;
+        }
+        private CodeTypeDeclaration GetCodeType(CodeCompileUnit compileUnit, string? codeNamespaceName, string codeTypeName, Action<CodeTypeDeclaration> decorateCodeTypeIfNew)
+        {
+            var codeNamespace = GetCodeNamespace(compileUnit, codeNamespaceName);
 
+            CodeTypeDeclaration? codeType = null;
+            for (int i = 0; i < codeNamespace.Types.Count; i++)
+            {
+                if (codeNamespace.Types[i].Name == codeTypeName)
+                {
+                    codeType = codeNamespace.Types[i];
+                }
+            }
+            if (codeType == null)
+            {
+                codeType = new CodeTypeDeclaration(codeTypeName);
+                codeNamespace.Types.Add(codeType);
+                decorateCodeTypeIfNew(codeType);
+            }
+            return codeType;
+        }
         private CodeCompileUnit CreateClass(string classNamespace, string className)
         {
             CodeCompileUnit compileUnit = new CodeCompileUnit();
@@ -89,212 +127,156 @@ namespace Bridge.Core
 
             return compileUnit;
         }
-        private CodeCompileUnit CreateEnum(CodeCompileUnit compileUnit, Type modelType)
-        {
-            if (modelType.Namespace != null
-                &&
-                (modelType.Namespace.Equals("System")
-                || modelType.Namespace.StartsWith("System.")))
-            {
-                return compileUnit;
-            }
 
-            CodeNamespace? codeNamespace = null;
-            for (int i = 0; i < compileUnit.Namespaces.Count; i++)
-            {
-                if (compileUnit.Namespaces[i].Name == (modelType.Namespace ?? ""))
-                {
-                    codeNamespace = compileUnit.Namespaces[i];
-                }
-            }
-            if (codeNamespace == null)
-            {
-                codeNamespace = new CodeNamespace(modelType.Namespace);
-                compileUnit.Namespaces.Add(codeNamespace);
-            }
-
-            CodeTypeDeclaration? codeType = null;
-            for (int i = 0; i < codeNamespace.Types.Count; i++)
-            {
-                if (codeNamespace.Types[i].Name == modelType.Name)
-                {
-                    codeType = codeNamespace.Types[i];
-                }
-            }
-            if (codeType == null)
-            {
-                codeType = new CodeTypeDeclaration(modelType.Name);
-                codeType.IsEnum = true;
-                AddEnumMembers(codeType, modelType);
-                codeNamespace.Types.Add(codeType);
-            }
-
-            return compileUnit;
-        }
-        private CodeCompileUnit CreateGenericModel(CodeCompileUnit compileUnit, Type modelType)
-        {
-            if (modelType.Namespace != null
-                &&
-                (modelType.Namespace.Equals("System")
-                || modelType.Namespace.StartsWith("System.")))
-            {
-                return compileUnit;
-            }
-
-            CodeNamespace? codeNamespace = null;
-            for (int i = 0; i < compileUnit.Namespaces.Count; i++)
-            {
-                if (compileUnit.Namespaces[i].Name == (modelType.Namespace ?? ""))
-                {
-                    codeNamespace = compileUnit.Namespaces[i];
-                }
-            }
-            if (codeNamespace == null)
-            {
-                codeNamespace = new CodeNamespace(modelType.Namespace);
-                compileUnit.Namespaces.Add(codeNamespace);
-            }
-
-            var genericTypeParameters = (modelType as TypeInfo)?.GenericTypeParameters;
-            var modelName = $"{modelType.Name.Split('`').First()}<{string.Join(", ", genericTypeParameters.Select(x => x.Name))}>";
-            CodeTypeDeclaration? codeType = null;
-            for (int i = 0; i < codeNamespace.Types.Count; i++)
-            {
-                if (codeNamespace.Types[i].Name == modelName)
-                {
-                    codeType = codeNamespace.Types[i];
-                }
-            }
-            if (codeType == null)
-            {
-                codeType = new CodeTypeDeclaration(modelName);
-
-                AddMembers(compileUnit, codeType, modelType);
-                codeNamespace.Types.Add(codeType);
-            }
-
-            return compileUnit;
-        }
         private CodeCompileUnit CreateModel(CodeCompileUnit compileUnit, Type modelType)
         {
-            if (modelType.IsEnum)
+            if (modelType.IsGenericType && !modelType.IsGenericTypeDefinition)
             {
-                return CreateEnum(compileUnit, modelType);
-            }
-            if (modelType.IsGenericType)
-            {
-                if(modelType.GetGenericTypeDefinition().Equals(typeof(IEnumerable<>))
-                || modelType.GetGenericTypeDefinition().Equals(typeof(IList<>))
-                || modelType.GetGenericTypeDefinition().Equals(typeof(List<>))
-                || modelType.GetGenericTypeDefinition().Equals(typeof(Nullable<>)))
+                foreach (var genericTypeArgument in modelType.GenericTypeArguments)
                 {
-                    foreach (var genericTypeArgument in modelType.GenericTypeArguments)
-                    {
-                        CreateModel(compileUnit, genericTypeArgument);
-                    }
-                    return compileUnit;
-                }
-                else
-                {
-                    foreach (var genericTypeArgument in modelType.GenericTypeArguments)
-                    {
-                        CreateModel(compileUnit, genericTypeArgument);
-                    }
-                    return CreateGenericModel(compileUnit, modelType.GetGenericTypeDefinition());
+                    CreateModel(compileUnit, genericTypeArgument);
                 }
 
+                return CreateModel(compileUnit, modelType.GetGenericTypeDefinition());
             }
+            
             if (modelType.Namespace != null
-                && (modelType.Namespace.Equals("System")
-                    || modelType.Namespace.StartsWith("System.")))
+                && (modelType.Namespace.Equals("System") || modelType.Namespace.StartsWith("System.")))
             {
                 return compileUnit;
             }
+            var modelName = modelType.Name;
 
-            CodeNamespace? codeNamespace = null;
-            for (int i = 0; i < compileUnit.Namespaces.Count; i++)
+            if (modelType.IsGenericTypeDefinition)
             {
-                if(compileUnit.Namespaces[i].Name == (modelType.Namespace ?? ""))
-                {
-                    codeNamespace = compileUnit.Namespaces[i];
-                }
-            }
-            if (codeNamespace == null)
-            {
-                codeNamespace = new CodeNamespace(modelType.Namespace);
-                compileUnit.Namespaces.Add(codeNamespace);
+                string[]? genericTypeParameterNames = (modelType as TypeInfo)?.GenericTypeParameters.Select(x => x.Name).ToArray();
+                modelName = genericTypeParameterNames is null ? 
+                    modelName : $"{modelType.Name.Split('`').First()}<{string.Join(", ", genericTypeParameterNames)}>";
             }
 
-            CodeTypeDeclaration? codeType = null;
-            for (int i = 0; i < codeNamespace.Types.Count; i++)
-            {
-                if (codeNamespace.Types[i].Name == modelType.Name)
-                {
-                    codeType = codeNamespace.Types[i];
-                }
-            }
-            if(codeType == null)
-            {
-                codeType = new CodeTypeDeclaration(modelType.Name);
-                
-                AddMembers(compileUnit, codeType, modelType);
-                codeNamespace.Types.Add(codeType);
-            }
+            var codeType = GetCodeType(compileUnit, modelType.Namespace, modelName,
+               ct =>
+               {
+                   if (modelType.IsEnum)
+                   {
+                       ct.IsEnum = true;
+                   }
+                   else if (modelType.IsValueType)
+                   {
+                       ct.IsStruct = true;
+                   }
+                   AddMembers(compileUnit, ct, modelType);
+               }
+               );
 
             return compileUnit;
         }
 
-        private CodeTypeDeclaration AddEnumMembers(CodeTypeDeclaration codeType, Type type)
+        private CodeTypeDeclaration AddLiteralMember(CodeTypeDeclaration codeType, FieldInfo literal)
         {
-            FieldInfo[] members = type.GetFields().Where(x => x.IsLiteral).ToArray();
-
-            foreach (FieldInfo member in members)
+            var codeField = new CodeMemberField
             {
-                var codeField = new CodeMemberField
-                {
-                    Name = member.Name,
-                    InitExpression = new CodePrimitiveExpression(member.GetRawConstantValue())
-                };
+                Name = literal.Name,
+                InitExpression = new CodePrimitiveExpression(literal.GetRawConstantValue())
+            };
 
-                codeType.Members.Add(codeField);
+            codeType.Members.Add(codeField);
+
+            return codeType;
+        }
+
+        private CodeTypeDeclaration AddPropertyMember(CodeTypeDeclaration codeType, PropertyInfo property)
+        {
+            var codeProperty = new CodeMemberProperty();
+            codeProperty.Name = property.Name;
+
+            codeProperty.Type = new CodeTypeReference(property.PropertyType);
+
+            codeProperty.Attributes = MemberAttributes.Final;
+
+            if (property.Attributes.HasFlag(PropertyAttributes.None))
+            {
+                codeProperty.Attributes |= MemberAttributes.Public;
             }
+
+            var fieldName = "_" + property.Name.Substring(0, 1).ToLower() + property.Name.Substring(1);
+
+            CodeMemberField field = new CodeMemberField(codeProperty.Type, fieldName);
+            field.Attributes = MemberAttributes.Private;
+
+            codeType.Members.Add(field);
+
+            codeProperty.GetStatements.Add(new CodeMethodReturnStatement(
+                new CodeFieldReferenceExpression(
+                new CodeThisReferenceExpression(), fieldName)));
+
+            codeProperty.SetStatements.Add(new CodeAssignStatement(
+                new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), fieldName),
+                new CodePropertySetValueReferenceExpression()));
+
+            codeType.Members.Add(codeProperty);
+            
+            return codeType;
+        }
+
+        private CodeTypeDeclaration AddFieldMember(CodeTypeDeclaration codeType, FieldInfo field)
+        {
+            var codeField = new CodeMemberField();
+
+            codeField.Name = field.Name;
+            codeField.Type = new CodeTypeReference(field.FieldType);
+            codeField.Attributes = MemberAttributes.Final;
+            if (field.IsPublic)
+            {
+                codeField.Attributes |= MemberAttributes.Public;
+            }
+            if (field.IsStatic)
+            {
+                codeField.Attributes |= MemberAttributes.Static;
+            }
+            if (field.IsPrivate)
+            {
+                codeField.Attributes |= MemberAttributes.Private;
+            }
+            
+            codeType.Members.Add(codeField);
+
             return codeType;
         }
 
         private CodeTypeDeclaration AddMembers(CodeCompileUnit compileUnit, CodeTypeDeclaration codeType, Type type)
-        {
+        {            
             PropertyInfo[] properties = type.GetProperties();
 
             foreach (PropertyInfo property in properties)
             {
-                var codeProperty = new CodeMemberProperty();
-                codeProperty.Name = property.Name;
-
                 if (!property.PropertyType.IsGenericParameter)
                 {
                     CreateModel(compileUnit, property.PropertyType);
                 }
-                
-                codeProperty.Type = new CodeTypeReference(property.PropertyType);
-                codeProperty.Attributes = MemberAttributes.Public | MemberAttributes.Final;
 
-                var fieldName = "_" + property.Name.Substring(0, 1).ToLower() + property.Name.Substring(1);
-
-                CodeMemberField field1 = new CodeMemberField(codeProperty.Type, fieldName);
-                field1.Attributes = MemberAttributes.Private;
-
-                codeType.Members.Add(field1);
-
-                codeProperty.GetStatements.Add(new CodeMethodReturnStatement(
-                    new CodeFieldReferenceExpression(
-                    new CodeThisReferenceExpression(), fieldName)));
-
-                codeProperty.SetStatements.Add(new CodeAssignStatement(
-                    new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), fieldName),
-                    new CodePropertySetValueReferenceExpression()));
-
-                codeType.Members.Add(codeProperty);
+                AddPropertyMember(codeType, property);
             }
+
+            FieldInfo[] fields = type.GetFields();
+
+            foreach (FieldInfo field in fields)
+            {
+                if (!field.FieldType.IsGenericParameter)
+                {
+                    CreateModel(compileUnit, field.FieldType);
+                }
+
+                if (field.IsLiteral)
+                {
+                    AddLiteralMember(codeType, field);
+                }
+                else if(!field.Attributes.HasFlag(FieldAttributes.RTSpecialName))
+                {
+                    AddFieldMember(codeType, field);
+                }
+            }
+            
             return codeType;
         }
 
@@ -324,7 +306,7 @@ namespace Bridge.Core
         private CodeMemberMethod BuildMethod(CodeTypeReference returnType, string name, (Type, string)[] parameters, Action<CodeStatementCollection> buildStatements)
         {
             CodeMemberMethod method = new CodeMemberMethod();
-            method.Name = name;
+            method.Name = name.EndsWith("Async") ? name : $"{name}Async";
             method.ReturnType = returnType;
             method.Attributes = MemberAttributes.Public | MemberAttributes.Final;
 
@@ -368,9 +350,9 @@ namespace Bridge.Core
                 CodeMethodInvokeExpression cs1 = new CodeMethodInvokeExpression(
                     new CodeMethodReferenceExpression(new CodeTypeReferenceExpression("await _publisher"), 
                         invokeMethodName, typeParameters.ToArray()),
-                    new CodeSnippetExpression("_mqType"),
-                    new CodeSnippetExpression($"\"{queueName}\""),
-                    new CodeSnippetExpression($"\"{actionName}\""));
+                    new CodeArgumentReferenceExpression("_mqType"),
+                    new CodeArgumentReferenceExpression($"\"{queueName}\""),
+                    new CodeArgumentReferenceExpression($"\"{actionName}\""));
 
                 foreach (var parameter in parameters)
                 {

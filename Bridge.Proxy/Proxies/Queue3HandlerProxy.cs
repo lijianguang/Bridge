@@ -21,7 +21,7 @@ namespace Proxy {
             _mqType = Bridge.MQType.ActiveMQ;
         }
         
-        public async Task Test1(Bridge.Message.MsgTmp msg) {
+        public async Task Test1Async(Bridge.Message.MsgTmp msg) {
             await _publisher.PublishMulticastAsync(_mqType, "queue3", "Test1", msg);
         }
     }

@@ -16,6 +16,64 @@ namespace Proxy.Model {
 namespace Bridge.Message {
     
     
+    public class MsgTmp {
+        
+        private Bridge.Message.strct _strct;
+        
+        private string _name;
+        
+        private int _age;
+        
+        private Bridge.Message.MsgTmp1 _msgTmp1;
+        
+        public Bridge.Message.strct strctf;
+        
+        public Bridge.Message.strct strct {
+            get {
+                return this._strct;
+            }
+            set {
+                this._strct = value;
+            }
+        }
+        
+        public string Name {
+            get {
+                return this._name;
+            }
+            set {
+                this._name = value;
+            }
+        }
+        
+        public int Age {
+            get {
+                return this._age;
+            }
+            set {
+                this._age = value;
+            }
+        }
+        
+        public Bridge.Message.MsgTmp1 MsgTmp1 {
+            get {
+                return this._msgTmp1;
+            }
+            set {
+                this._msgTmp1 = value;
+            }
+        }
+    }
+    
+    public struct strct {
+        
+        public int id;
+        
+        public string name;
+        
+        public string description;
+    }
+    
     public class MsgTmp1 {
         
         private B.M.MsgTmp2 _msgTmp2;
@@ -48,42 +106,6 @@ namespace Bridge.Message {
             }
             set {
                 this._t2 = value;
-            }
-        }
-    }
-    
-    public class MsgTmp {
-        
-        private string _name;
-        
-        private int _age;
-        
-        private Bridge.Message.MsgTmp1 _msgTmp1;
-        
-        public string Name {
-            get {
-                return this._name;
-            }
-            set {
-                this._name = value;
-            }
-        }
-        
-        public int Age {
-            get {
-                return this._age;
-            }
-            set {
-                this._age = value;
-            }
-        }
-        
-        public Bridge.Message.MsgTmp1 MsgTmp1 {
-            get {
-                return this._msgTmp1;
-            }
-            set {
-                this._msgTmp1 = value;
             }
         }
     }
@@ -138,6 +160,8 @@ public class LineType {
     
     private int _id;
     
+    public static LineType Vehicle;
+    
     public string Name {
         get {
             return this._name;
@@ -162,6 +186,12 @@ public class PaymentCode {
     private string _name;
     
     private int _id;
+    
+    public static PaymentCode AfterMarket;
+    
+    public static PaymentCode Customer;
+    
+    public static PaymentCode MarketCompany;
     
     public string Name {
         get {
@@ -189,6 +219,12 @@ public class PreparationStatus {
     private string _name;
     
     private int _id;
+    
+    public static PreparationStatus NotStarted;
+    
+    public static PreparationStatus InProgress;
+    
+    public static PreparationStatus Complete;
     
     public System.Nullable<int> SequenceNo {
         get {
@@ -248,30 +284,9 @@ namespace LSS.VehicleIntegrationTransaction.Model.Enums {
         
         private int _id;
         
-        public string Name {
-            get {
-                return this._name;
-            }
-            set {
-                this._name = value;
-            }
-        }
+        public static LSS.VehicleIntegrationTransaction.Model.Enums.SalesMode Direct;
         
-        public int Id {
-            get {
-                return this._id;
-            }
-            set {
-                this._id = value;
-            }
-        }
-    }
-    
-    public class Stage {
-        
-        private string _name;
-        
-        private int _id;
+        public static LSS.VehicleIntegrationTransaction.Model.Enums.SalesMode DealerSales;
         
         public string Name {
             get {
@@ -300,6 +315,14 @@ namespace LSS.VehicleIntegrationTransaction.Model.Enums {
         
         private int _id;
         
+        public static LSS.VehicleIntegrationTransaction.Model.Enums.Status Intake;
+        
+        public static LSS.VehicleIntegrationTransaction.Model.Enums.Status Open;
+        
+        public static LSS.VehicleIntegrationTransaction.Model.Enums.Status CBO;
+        
+        public static LSS.VehicleIntegrationTransaction.Model.Enums.Status Close;
+        
         public System.Collections.Generic.List<LSS.VehicleIntegrationTransaction.Model.Enums.Stage> Stages {
             get {
                 return this._stages;
@@ -308,6 +331,43 @@ namespace LSS.VehicleIntegrationTransaction.Model.Enums {
                 this._stages = value;
             }
         }
+        
+        public string Name {
+            get {
+                return this._name;
+            }
+            set {
+                this._name = value;
+            }
+        }
+        
+        public int Id {
+            get {
+                return this._id;
+            }
+            set {
+                this._id = value;
+            }
+        }
+    }
+    
+    public class Stage {
+        
+        private string _name;
+        
+        private int _id;
+        
+        public static LSS.VehicleIntegrationTransaction.Model.Enums.Stage Unallocated;
+        
+        public static LSS.VehicleIntegrationTransaction.Model.Enums.Stage PreAllocated;
+        
+        public static LSS.VehicleIntegrationTransaction.Model.Enums.Stage Allocated;
+        
+        public static LSS.VehicleIntegrationTransaction.Model.Enums.Stage Invoiced;
+        
+        public static LSS.VehicleIntegrationTransaction.Model.Enums.Stage Delivered;
+        
+        public static LSS.VehicleIntegrationTransaction.Model.Enums.Stage Cancelled;
         
         public string Name {
             get {
@@ -339,1231 +399,6 @@ namespace LSS.VehicleIntegrationTransaction.Model.Enums {
 }
 namespace LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage {
     
-    
-    public class SalesRegion {
-        
-        private string _code;
-        
-        private string _name;
-        
-        private string _companyCode;
-        
-        private long _marketId;
-        
-        private System.Nullable<System.DateTimeOffset> _lastModifiedDate;
-        
-        private string _lastModifiedBy;
-        
-        public string Code {
-            get {
-                return this._code;
-            }
-            set {
-                this._code = value;
-            }
-        }
-        
-        public string Name {
-            get {
-                return this._name;
-            }
-            set {
-                this._name = value;
-            }
-        }
-        
-        public string CompanyCode {
-            get {
-                return this._companyCode;
-            }
-            set {
-                this._companyCode = value;
-            }
-        }
-        
-        public long MarketId {
-            get {
-                return this._marketId;
-            }
-            set {
-                this._marketId = value;
-            }
-        }
-        
-        public System.Nullable<System.DateTimeOffset> LastModifiedDate {
-            get {
-                return this._lastModifiedDate;
-            }
-            set {
-                this._lastModifiedDate = value;
-            }
-        }
-        
-        public string LastModifiedBy {
-            get {
-                return this._lastModifiedBy;
-            }
-            set {
-                this._lastModifiedBy = value;
-            }
-        }
-    }
-    
-    public class DealerAddress {
-        
-        private string _addressDetail;
-        
-        private string _addressDetailLocal;
-        
-        private string _zipCode;
-        
-        private string _city;
-        
-        private string _cityLocal;
-        
-        private string _region;
-        
-        private string _state;
-        
-        private string _country;
-        
-        private long _dealerId;
-        
-        private System.Nullable<int> _addressTypeId;
-        
-        public string AddressDetail {
-            get {
-                return this._addressDetail;
-            }
-            set {
-                this._addressDetail = value;
-            }
-        }
-        
-        public string AddressDetailLocal {
-            get {
-                return this._addressDetailLocal;
-            }
-            set {
-                this._addressDetailLocal = value;
-            }
-        }
-        
-        public string ZipCode {
-            get {
-                return this._zipCode;
-            }
-            set {
-                this._zipCode = value;
-            }
-        }
-        
-        public string City {
-            get {
-                return this._city;
-            }
-            set {
-                this._city = value;
-            }
-        }
-        
-        public string CityLocal {
-            get {
-                return this._cityLocal;
-            }
-            set {
-                this._cityLocal = value;
-            }
-        }
-        
-        public string Region {
-            get {
-                return this._region;
-            }
-            set {
-                this._region = value;
-            }
-        }
-        
-        public string State {
-            get {
-                return this._state;
-            }
-            set {
-                this._state = value;
-            }
-        }
-        
-        public string Country {
-            get {
-                return this._country;
-            }
-            set {
-                this._country = value;
-            }
-        }
-        
-        public long DealerId {
-            get {
-                return this._dealerId;
-            }
-            set {
-                this._dealerId = value;
-            }
-        }
-        
-        public System.Nullable<int> AddressTypeId {
-            get {
-                return this._addressTypeId;
-            }
-            set {
-                this._addressTypeId = value;
-            }
-        }
-    }
-    
-    public class Dealer {
-        
-        private long _id;
-        
-        private string _dealerId;
-        
-        private string _dealerName;
-        
-        private string _prefix;
-        
-        private string _telephoneNumber;
-        
-        private string _fax;
-        
-        private string _email;
-        
-        private string _alias;
-        
-        private string _vATNumber;
-        
-        private string _companyName;
-        
-        private string _companyNameLocal;
-        
-        private string _companyRegNumber;
-        
-        private string _countryCode;
-        
-        private string _invoiceCurrency;
-        
-        private int _dealerType;
-        
-        private bool _ownedDealer;
-        
-        private string _deliveryTermPlace;
-        
-        private string _mainDealerId;
-        
-        private string _contactName;
-        
-        private string _contactTelephoneNumber;
-        
-        private System.Nullable<long> _salesRegionId;
-        
-        private LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage.SalesRegion _salesRegion;
-        
-        private string _salesRegionCode;
-        
-        private string _salesRegionName;
-        
-        private string _salesRegionCompanyCode;
-        
-        private int _marketId;
-        
-        private string _parmaId;
-        
-        private string _partyId;
-        
-        private string _externalDealerCode1;
-        
-        private string _externalDealerCode2;
-        
-        private string _defaultTermofDelivery;
-        
-        private string _defaultIncotermVersion;
-        
-        private string _defaultInvoiceTo;
-        
-        private string _defaultInvoiceToName;
-        
-        private string _defaultSendTo;
-        
-        private string _defaultInvoiceDeclaration;
-        
-        private System.Collections.Generic.List<LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage.DealerAddress> _addresses;
-        
-        private System.Nullable<bool> _isActive;
-        
-        private string _mainAddress;
-        
-        private string _visitAddress;
-        
-        private System.Nullable<long> _paymentTermId;
-        
-        private string _paymentTermDescription;
-        
-        private System.Nullable<int> _paymentTypeId;
-        
-        private string _paymentTypeName;
-        
-        private string _paymentTermCode;
-        
-        private System.Nullable<long> _partnerTypeId;
-        
-        private string _defaultFinancialInstituteCode;
-        
-        private string _tradingPartner;
-        
-        private System.Nullable<System.DateTimeOffset> _createdDate;
-        
-        private string _createdBy;
-        
-        private System.Nullable<System.DateTimeOffset> _lastModifiedDate;
-        
-        private string _lastModifiedBy;
-        
-        private byte[] _rowVersion;
-        
-        private string _dealerDescription;
-        
-        public long Id {
-            get {
-                return this._id;
-            }
-            set {
-                this._id = value;
-            }
-        }
-        
-        public string DealerId {
-            get {
-                return this._dealerId;
-            }
-            set {
-                this._dealerId = value;
-            }
-        }
-        
-        public string DealerName {
-            get {
-                return this._dealerName;
-            }
-            set {
-                this._dealerName = value;
-            }
-        }
-        
-        public string Prefix {
-            get {
-                return this._prefix;
-            }
-            set {
-                this._prefix = value;
-            }
-        }
-        
-        public string TelephoneNumber {
-            get {
-                return this._telephoneNumber;
-            }
-            set {
-                this._telephoneNumber = value;
-            }
-        }
-        
-        public string Fax {
-            get {
-                return this._fax;
-            }
-            set {
-                this._fax = value;
-            }
-        }
-        
-        public string Email {
-            get {
-                return this._email;
-            }
-            set {
-                this._email = value;
-            }
-        }
-        
-        public string Alias {
-            get {
-                return this._alias;
-            }
-            set {
-                this._alias = value;
-            }
-        }
-        
-        public string VATNumber {
-            get {
-                return this._vATNumber;
-            }
-            set {
-                this._vATNumber = value;
-            }
-        }
-        
-        public string CompanyName {
-            get {
-                return this._companyName;
-            }
-            set {
-                this._companyName = value;
-            }
-        }
-        
-        public string CompanyNameLocal {
-            get {
-                return this._companyNameLocal;
-            }
-            set {
-                this._companyNameLocal = value;
-            }
-        }
-        
-        public string CompanyRegNumber {
-            get {
-                return this._companyRegNumber;
-            }
-            set {
-                this._companyRegNumber = value;
-            }
-        }
-        
-        public string CountryCode {
-            get {
-                return this._countryCode;
-            }
-            set {
-                this._countryCode = value;
-            }
-        }
-        
-        public string InvoiceCurrency {
-            get {
-                return this._invoiceCurrency;
-            }
-            set {
-                this._invoiceCurrency = value;
-            }
-        }
-        
-        public int DealerType {
-            get {
-                return this._dealerType;
-            }
-            set {
-                this._dealerType = value;
-            }
-        }
-        
-        public bool OwnedDealer {
-            get {
-                return this._ownedDealer;
-            }
-            set {
-                this._ownedDealer = value;
-            }
-        }
-        
-        public string DeliveryTermPlace {
-            get {
-                return this._deliveryTermPlace;
-            }
-            set {
-                this._deliveryTermPlace = value;
-            }
-        }
-        
-        public string MainDealerId {
-            get {
-                return this._mainDealerId;
-            }
-            set {
-                this._mainDealerId = value;
-            }
-        }
-        
-        public string ContactName {
-            get {
-                return this._contactName;
-            }
-            set {
-                this._contactName = value;
-            }
-        }
-        
-        public string ContactTelephoneNumber {
-            get {
-                return this._contactTelephoneNumber;
-            }
-            set {
-                this._contactTelephoneNumber = value;
-            }
-        }
-        
-        public System.Nullable<long> SalesRegionId {
-            get {
-                return this._salesRegionId;
-            }
-            set {
-                this._salesRegionId = value;
-            }
-        }
-        
-        public LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage.SalesRegion SalesRegion {
-            get {
-                return this._salesRegion;
-            }
-            set {
-                this._salesRegion = value;
-            }
-        }
-        
-        public string SalesRegionCode {
-            get {
-                return this._salesRegionCode;
-            }
-            set {
-                this._salesRegionCode = value;
-            }
-        }
-        
-        public string SalesRegionName {
-            get {
-                return this._salesRegionName;
-            }
-            set {
-                this._salesRegionName = value;
-            }
-        }
-        
-        public string SalesRegionCompanyCode {
-            get {
-                return this._salesRegionCompanyCode;
-            }
-            set {
-                this._salesRegionCompanyCode = value;
-            }
-        }
-        
-        public int MarketId {
-            get {
-                return this._marketId;
-            }
-            set {
-                this._marketId = value;
-            }
-        }
-        
-        public string ParmaId {
-            get {
-                return this._parmaId;
-            }
-            set {
-                this._parmaId = value;
-            }
-        }
-        
-        public string PartyId {
-            get {
-                return this._partyId;
-            }
-            set {
-                this._partyId = value;
-            }
-        }
-        
-        public string ExternalDealerCode1 {
-            get {
-                return this._externalDealerCode1;
-            }
-            set {
-                this._externalDealerCode1 = value;
-            }
-        }
-        
-        public string ExternalDealerCode2 {
-            get {
-                return this._externalDealerCode2;
-            }
-            set {
-                this._externalDealerCode2 = value;
-            }
-        }
-        
-        public string DefaultTermofDelivery {
-            get {
-                return this._defaultTermofDelivery;
-            }
-            set {
-                this._defaultTermofDelivery = value;
-            }
-        }
-        
-        public string DefaultIncotermVersion {
-            get {
-                return this._defaultIncotermVersion;
-            }
-            set {
-                this._defaultIncotermVersion = value;
-            }
-        }
-        
-        public string DefaultInvoiceTo {
-            get {
-                return this._defaultInvoiceTo;
-            }
-            set {
-                this._defaultInvoiceTo = value;
-            }
-        }
-        
-        public string DefaultInvoiceToName {
-            get {
-                return this._defaultInvoiceToName;
-            }
-            set {
-                this._defaultInvoiceToName = value;
-            }
-        }
-        
-        public string DefaultSendTo {
-            get {
-                return this._defaultSendTo;
-            }
-            set {
-                this._defaultSendTo = value;
-            }
-        }
-        
-        public string DefaultInvoiceDeclaration {
-            get {
-                return this._defaultInvoiceDeclaration;
-            }
-            set {
-                this._defaultInvoiceDeclaration = value;
-            }
-        }
-        
-        public System.Collections.Generic.List<LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage.DealerAddress> Addresses {
-            get {
-                return this._addresses;
-            }
-            set {
-                this._addresses = value;
-            }
-        }
-        
-        public System.Nullable<bool> IsActive {
-            get {
-                return this._isActive;
-            }
-            set {
-                this._isActive = value;
-            }
-        }
-        
-        public string MainAddress {
-            get {
-                return this._mainAddress;
-            }
-            set {
-                this._mainAddress = value;
-            }
-        }
-        
-        public string VisitAddress {
-            get {
-                return this._visitAddress;
-            }
-            set {
-                this._visitAddress = value;
-            }
-        }
-        
-        public System.Nullable<long> PaymentTermId {
-            get {
-                return this._paymentTermId;
-            }
-            set {
-                this._paymentTermId = value;
-            }
-        }
-        
-        public string PaymentTermDescription {
-            get {
-                return this._paymentTermDescription;
-            }
-            set {
-                this._paymentTermDescription = value;
-            }
-        }
-        
-        public System.Nullable<int> PaymentTypeId {
-            get {
-                return this._paymentTypeId;
-            }
-            set {
-                this._paymentTypeId = value;
-            }
-        }
-        
-        public string PaymentTypeName {
-            get {
-                return this._paymentTypeName;
-            }
-            set {
-                this._paymentTypeName = value;
-            }
-        }
-        
-        public string PaymentTermCode {
-            get {
-                return this._paymentTermCode;
-            }
-            set {
-                this._paymentTermCode = value;
-            }
-        }
-        
-        public System.Nullable<long> PartnerTypeId {
-            get {
-                return this._partnerTypeId;
-            }
-            set {
-                this._partnerTypeId = value;
-            }
-        }
-        
-        public string DefaultFinancialInstituteCode {
-            get {
-                return this._defaultFinancialInstituteCode;
-            }
-            set {
-                this._defaultFinancialInstituteCode = value;
-            }
-        }
-        
-        public string TradingPartner {
-            get {
-                return this._tradingPartner;
-            }
-            set {
-                this._tradingPartner = value;
-            }
-        }
-        
-        public System.Nullable<System.DateTimeOffset> CreatedDate {
-            get {
-                return this._createdDate;
-            }
-            set {
-                this._createdDate = value;
-            }
-        }
-        
-        public string CreatedBy {
-            get {
-                return this._createdBy;
-            }
-            set {
-                this._createdBy = value;
-            }
-        }
-        
-        public System.Nullable<System.DateTimeOffset> LastModifiedDate {
-            get {
-                return this._lastModifiedDate;
-            }
-            set {
-                this._lastModifiedDate = value;
-            }
-        }
-        
-        public string LastModifiedBy {
-            get {
-                return this._lastModifiedBy;
-            }
-            set {
-                this._lastModifiedBy = value;
-            }
-        }
-        
-        public byte[] RowVersion {
-            get {
-                return this._rowVersion;
-            }
-            set {
-                this._rowVersion = value;
-            }
-        }
-        
-        public string DealerDescription {
-            get {
-                return this._dealerDescription;
-            }
-            set {
-                this._dealerDescription = value;
-            }
-        }
-    }
-    
-    public class CancelReason {
-        
-        private string _name;
-        
-        private long _marketId;
-        
-        private LSS.VehicleIntegrationTransaction.Model.Models.Market _market;
-        
-        private bool _isDefault;
-        
-        private bool _internal;
-        
-        private int _id;
-        
-        public string Name {
-            get {
-                return this._name;
-            }
-            set {
-                this._name = value;
-            }
-        }
-        
-        public long MarketId {
-            get {
-                return this._marketId;
-            }
-            set {
-                this._marketId = value;
-            }
-        }
-        
-        public LSS.VehicleIntegrationTransaction.Model.Models.Market Market {
-            get {
-                return this._market;
-            }
-            set {
-                this._market = value;
-            }
-        }
-        
-        public bool IsDefault {
-            get {
-                return this._isDefault;
-            }
-            set {
-                this._isDefault = value;
-            }
-        }
-        
-        public bool Internal {
-            get {
-                return this._internal;
-            }
-            set {
-                this._internal = value;
-            }
-        }
-        
-        public int Id {
-            get {
-                return this._id;
-            }
-            set {
-                this._id = value;
-            }
-        }
-    }
-    
-    public class SalesOrderLine {
-        
-        private long _salesOrderHeaderId;
-        
-        private int _salesOrderLineTypeId;
-        
-        private LineType _salesOrderLineType;
-        
-        private long _localModelId;
-        
-        private decimal _listPrice;
-        
-        private decimal _discount;
-        
-        private int _quantity;
-        
-        private decimal _salesPriceExclVAT;
-        
-        private decimal _salesPriceInclVAT;
-        
-        private decimal _cost;
-        
-        private System.Nullable<decimal> _vatTaxRate;
-        
-        private string _vatTaxRateCode;
-        
-        private string _vatTaxRateDescription;
-        
-        private System.Nullable<int> _paymentCodeId;
-        
-        private PaymentCode _paymentCode;
-        
-        private System.Nullable<long> _salesPurchaseOrderId;
-        
-        private string _salesPurchaseOrderNumber;
-        
-        private System.Nullable<decimal> _pOValue;
-        
-        private System.Nullable<decimal> _gRValue;
-        
-        private LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineVehicle _salesOrderLineVehicle;
-        
-        private LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineExternalWorkshop _externalWorkshop;
-        
-        private LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineInternalWorkshop _internalWorkshop;
-        
-        private LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineAdditionalService _additionalService;
-        
-        private System.Collections.Generic.List<LSS.VehicleSalesOrder.Model.Entities.SalesOrderLinePriceBreakDown> _salesOrderLinePriceBreakDowns;
-        
-        private bool _isObsolete;
-        
-        private System.Nullable<long> _salesOrderLinePurchaseGroupId;
-        
-        private LSS.VehicleIntegrationTransaction.SalesOrder.Model.EntityModel.SalesOrder.IPreparation _preparation;
-        
-        private LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineCAWorkShop _cAWorkShop;
-        
-        private System.Nullable<int> _sequenceNo;
-        
-        private System.Nullable<System.DateTimeOffset> _lastModifiedDate;
-        
-        private string _description;
-        
-        private string _referenceNumber;
-        
-        private byte[] _rowVersion;
-        
-        private long _id;
-        
-        public long SalesOrderHeaderId {
-            get {
-                return this._salesOrderHeaderId;
-            }
-            set {
-                this._salesOrderHeaderId = value;
-            }
-        }
-        
-        public int SalesOrderLineTypeId {
-            get {
-                return this._salesOrderLineTypeId;
-            }
-            set {
-                this._salesOrderLineTypeId = value;
-            }
-        }
-        
-        public LineType SalesOrderLineType {
-            get {
-                return this._salesOrderLineType;
-            }
-            set {
-                this._salesOrderLineType = value;
-            }
-        }
-        
-        public long LocalModelId {
-            get {
-                return this._localModelId;
-            }
-            set {
-                this._localModelId = value;
-            }
-        }
-        
-        public decimal ListPrice {
-            get {
-                return this._listPrice;
-            }
-            set {
-                this._listPrice = value;
-            }
-        }
-        
-        public decimal Discount {
-            get {
-                return this._discount;
-            }
-            set {
-                this._discount = value;
-            }
-        }
-        
-        public int Quantity {
-            get {
-                return this._quantity;
-            }
-            set {
-                this._quantity = value;
-            }
-        }
-        
-        public decimal SalesPriceExclVAT {
-            get {
-                return this._salesPriceExclVAT;
-            }
-            set {
-                this._salesPriceExclVAT = value;
-            }
-        }
-        
-        public decimal SalesPriceInclVAT {
-            get {
-                return this._salesPriceInclVAT;
-            }
-            set {
-                this._salesPriceInclVAT = value;
-            }
-        }
-        
-        public decimal Cost {
-            get {
-                return this._cost;
-            }
-            set {
-                this._cost = value;
-            }
-        }
-        
-        public System.Nullable<decimal> VatTaxRate {
-            get {
-                return this._vatTaxRate;
-            }
-            set {
-                this._vatTaxRate = value;
-            }
-        }
-        
-        public string VatTaxRateCode {
-            get {
-                return this._vatTaxRateCode;
-            }
-            set {
-                this._vatTaxRateCode = value;
-            }
-        }
-        
-        public string VatTaxRateDescription {
-            get {
-                return this._vatTaxRateDescription;
-            }
-            set {
-                this._vatTaxRateDescription = value;
-            }
-        }
-        
-        public System.Nullable<int> PaymentCodeId {
-            get {
-                return this._paymentCodeId;
-            }
-            set {
-                this._paymentCodeId = value;
-            }
-        }
-        
-        public PaymentCode PaymentCode {
-            get {
-                return this._paymentCode;
-            }
-            set {
-                this._paymentCode = value;
-            }
-        }
-        
-        public System.Nullable<long> SalesPurchaseOrderId {
-            get {
-                return this._salesPurchaseOrderId;
-            }
-            set {
-                this._salesPurchaseOrderId = value;
-            }
-        }
-        
-        public string SalesPurchaseOrderNumber {
-            get {
-                return this._salesPurchaseOrderNumber;
-            }
-            set {
-                this._salesPurchaseOrderNumber = value;
-            }
-        }
-        
-        public System.Nullable<decimal> POValue {
-            get {
-                return this._pOValue;
-            }
-            set {
-                this._pOValue = value;
-            }
-        }
-        
-        public System.Nullable<decimal> GRValue {
-            get {
-                return this._gRValue;
-            }
-            set {
-                this._gRValue = value;
-            }
-        }
-        
-        public LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineVehicle SalesOrderLineVehicle {
-            get {
-                return this._salesOrderLineVehicle;
-            }
-            set {
-                this._salesOrderLineVehicle = value;
-            }
-        }
-        
-        public LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineExternalWorkshop ExternalWorkshop {
-            get {
-                return this._externalWorkshop;
-            }
-            set {
-                this._externalWorkshop = value;
-            }
-        }
-        
-        public LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineInternalWorkshop InternalWorkshop {
-            get {
-                return this._internalWorkshop;
-            }
-            set {
-                this._internalWorkshop = value;
-            }
-        }
-        
-        public LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineAdditionalService AdditionalService {
-            get {
-                return this._additionalService;
-            }
-            set {
-                this._additionalService = value;
-            }
-        }
-        
-        public System.Collections.Generic.List<LSS.VehicleSalesOrder.Model.Entities.SalesOrderLinePriceBreakDown> SalesOrderLinePriceBreakDowns {
-            get {
-                return this._salesOrderLinePriceBreakDowns;
-            }
-            set {
-                this._salesOrderLinePriceBreakDowns = value;
-            }
-        }
-        
-        public bool IsObsolete {
-            get {
-                return this._isObsolete;
-            }
-            set {
-                this._isObsolete = value;
-            }
-        }
-        
-        public System.Nullable<long> SalesOrderLinePurchaseGroupId {
-            get {
-                return this._salesOrderLinePurchaseGroupId;
-            }
-            set {
-                this._salesOrderLinePurchaseGroupId = value;
-            }
-        }
-        
-        public LSS.VehicleIntegrationTransaction.SalesOrder.Model.EntityModel.SalesOrder.IPreparation Preparation {
-            get {
-                return this._preparation;
-            }
-            set {
-                this._preparation = value;
-            }
-        }
-        
-        public LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineCAWorkShop CAWorkShop {
-            get {
-                return this._cAWorkShop;
-            }
-            set {
-                this._cAWorkShop = value;
-            }
-        }
-        
-        public System.Nullable<int> SequenceNo {
-            get {
-                return this._sequenceNo;
-            }
-            set {
-                this._sequenceNo = value;
-            }
-        }
-        
-        public System.Nullable<System.DateTimeOffset> LastModifiedDate {
-            get {
-                return this._lastModifiedDate;
-            }
-            set {
-                this._lastModifiedDate = value;
-            }
-        }
-        
-        public string Description {
-            get {
-                return this._description;
-            }
-            set {
-                this._description = value;
-            }
-        }
-        
-        public string ReferenceNumber {
-            get {
-                return this._referenceNumber;
-            }
-            set {
-                this._referenceNumber = value;
-            }
-        }
-        
-        public byte[] RowVersion {
-            get {
-                return this._rowVersion;
-            }
-            set {
-                this._rowVersion = value;
-            }
-        }
-        
-        public long Id {
-            get {
-                return this._id;
-            }
-            set {
-                this._id = value;
-            }
-        }
-    }
     
     public class SalesOrderHeader {
         
@@ -2359,23 +1194,116 @@ namespace LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesO
             }
         }
     }
-}
-namespace LSS.VehicleIntegrationTransaction.Model.Models {
     
-    
-    public class Market {
+    public class Dealer {
         
         private long _id;
         
-        private int _marketId;
+        private string _dealerId;
         
-        private string _description;
+        private string _dealerName;
+        
+        private string _prefix;
+        
+        private string _telephoneNumber;
+        
+        private string _fax;
+        
+        private string _email;
+        
+        private string _alias;
+        
+        private string _vATNumber;
+        
+        private string _companyName;
+        
+        private string _companyNameLocal;
+        
+        private string _companyRegNumber;
         
         private string _countryCode;
         
-        private string _preferedCulture;
+        private string _invoiceCurrency;
         
-        private string _timeZoneId;
+        private int _dealerType;
+        
+        private bool _ownedDealer;
+        
+        private string _deliveryTermPlace;
+        
+        private string _mainDealerId;
+        
+        private string _contactName;
+        
+        private string _contactTelephoneNumber;
+        
+        private System.Nullable<long> _salesRegionId;
+        
+        private LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage.SalesRegion _salesRegion;
+        
+        private string _salesRegionCode;
+        
+        private string _salesRegionName;
+        
+        private string _salesRegionCompanyCode;
+        
+        private int _marketId;
+        
+        private string _parmaId;
+        
+        private string _partyId;
+        
+        private string _externalDealerCode1;
+        
+        private string _externalDealerCode2;
+        
+        private string _defaultTermofDelivery;
+        
+        private string _defaultIncotermVersion;
+        
+        private string _defaultInvoiceTo;
+        
+        private string _defaultInvoiceToName;
+        
+        private string _defaultSendTo;
+        
+        private string _defaultInvoiceDeclaration;
+        
+        private System.Collections.Generic.List<LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage.DealerAddress> _addresses;
+        
+        private System.Nullable<bool> _isActive;
+        
+        private string _mainAddress;
+        
+        private string _visitAddress;
+        
+        private System.Nullable<long> _paymentTermId;
+        
+        private string _paymentTermDescription;
+        
+        private System.Nullable<int> _paymentTypeId;
+        
+        private string _paymentTypeName;
+        
+        private string _paymentTermCode;
+        
+        private System.Nullable<long> _partnerTypeId;
+        
+        private string _defaultFinancialInstituteCode;
+        
+        private string _tradingPartner;
+        
+        private System.Nullable<System.DateTimeOffset> _createdDate;
+        
+        private string _createdBy;
+        
+        private System.Nullable<System.DateTimeOffset> _lastModifiedDate;
+        
+        private string _lastModifiedBy;
+        
+        private byte[] _rowVersion;
+        
+        private string _dealerDescription;
         
         public long Id {
             get {
@@ -2386,21 +1314,102 @@ namespace LSS.VehicleIntegrationTransaction.Model.Models {
             }
         }
         
-        public int MarketId {
+        public string DealerId {
             get {
-                return this._marketId;
+                return this._dealerId;
             }
             set {
-                this._marketId = value;
+                this._dealerId = value;
             }
         }
         
-        public string Description {
+        public string DealerName {
             get {
-                return this._description;
+                return this._dealerName;
             }
             set {
-                this._description = value;
+                this._dealerName = value;
+            }
+        }
+        
+        public string Prefix {
+            get {
+                return this._prefix;
+            }
+            set {
+                this._prefix = value;
+            }
+        }
+        
+        public string TelephoneNumber {
+            get {
+                return this._telephoneNumber;
+            }
+            set {
+                this._telephoneNumber = value;
+            }
+        }
+        
+        public string Fax {
+            get {
+                return this._fax;
+            }
+            set {
+                this._fax = value;
+            }
+        }
+        
+        public string Email {
+            get {
+                return this._email;
+            }
+            set {
+                this._email = value;
+            }
+        }
+        
+        public string Alias {
+            get {
+                return this._alias;
+            }
+            set {
+                this._alias = value;
+            }
+        }
+        
+        public string VATNumber {
+            get {
+                return this._vATNumber;
+            }
+            set {
+                this._vATNumber = value;
+            }
+        }
+        
+        public string CompanyName {
+            get {
+                return this._companyName;
+            }
+            set {
+                this._companyName = value;
+            }
+        }
+        
+        public string CompanyNameLocal {
+            get {
+                return this._companyNameLocal;
+            }
+            set {
+                this._companyNameLocal = value;
+            }
+        }
+        
+        public string CompanyRegNumber {
+            get {
+                return this._companyRegNumber;
+            }
+            set {
+                this._companyRegNumber = value;
             }
         }
         
@@ -2413,30 +1422,398 @@ namespace LSS.VehicleIntegrationTransaction.Model.Models {
             }
         }
         
-        public string PreferedCulture {
+        public string InvoiceCurrency {
             get {
-                return this._preferedCulture;
+                return this._invoiceCurrency;
             }
             set {
-                this._preferedCulture = value;
+                this._invoiceCurrency = value;
             }
         }
         
-        public string TimeZoneId {
+        public int DealerType {
             get {
-                return this._timeZoneId;
+                return this._dealerType;
             }
             set {
-                this._timeZoneId = value;
+                this._dealerType = value;
+            }
+        }
+        
+        public bool OwnedDealer {
+            get {
+                return this._ownedDealer;
+            }
+            set {
+                this._ownedDealer = value;
+            }
+        }
+        
+        public string DeliveryTermPlace {
+            get {
+                return this._deliveryTermPlace;
+            }
+            set {
+                this._deliveryTermPlace = value;
+            }
+        }
+        
+        public string MainDealerId {
+            get {
+                return this._mainDealerId;
+            }
+            set {
+                this._mainDealerId = value;
+            }
+        }
+        
+        public string ContactName {
+            get {
+                return this._contactName;
+            }
+            set {
+                this._contactName = value;
+            }
+        }
+        
+        public string ContactTelephoneNumber {
+            get {
+                return this._contactTelephoneNumber;
+            }
+            set {
+                this._contactTelephoneNumber = value;
+            }
+        }
+        
+        public System.Nullable<long> SalesRegionId {
+            get {
+                return this._salesRegionId;
+            }
+            set {
+                this._salesRegionId = value;
+            }
+        }
+        
+        public LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage.SalesRegion SalesRegion {
+            get {
+                return this._salesRegion;
+            }
+            set {
+                this._salesRegion = value;
+            }
+        }
+        
+        public string SalesRegionCode {
+            get {
+                return this._salesRegionCode;
+            }
+            set {
+                this._salesRegionCode = value;
+            }
+        }
+        
+        public string SalesRegionName {
+            get {
+                return this._salesRegionName;
+            }
+            set {
+                this._salesRegionName = value;
+            }
+        }
+        
+        public string SalesRegionCompanyCode {
+            get {
+                return this._salesRegionCompanyCode;
+            }
+            set {
+                this._salesRegionCompanyCode = value;
+            }
+        }
+        
+        public int MarketId {
+            get {
+                return this._marketId;
+            }
+            set {
+                this._marketId = value;
+            }
+        }
+        
+        public string ParmaId {
+            get {
+                return this._parmaId;
+            }
+            set {
+                this._parmaId = value;
+            }
+        }
+        
+        public string PartyId {
+            get {
+                return this._partyId;
+            }
+            set {
+                this._partyId = value;
+            }
+        }
+        
+        public string ExternalDealerCode1 {
+            get {
+                return this._externalDealerCode1;
+            }
+            set {
+                this._externalDealerCode1 = value;
+            }
+        }
+        
+        public string ExternalDealerCode2 {
+            get {
+                return this._externalDealerCode2;
+            }
+            set {
+                this._externalDealerCode2 = value;
+            }
+        }
+        
+        public string DefaultTermofDelivery {
+            get {
+                return this._defaultTermofDelivery;
+            }
+            set {
+                this._defaultTermofDelivery = value;
+            }
+        }
+        
+        public string DefaultIncotermVersion {
+            get {
+                return this._defaultIncotermVersion;
+            }
+            set {
+                this._defaultIncotermVersion = value;
+            }
+        }
+        
+        public string DefaultInvoiceTo {
+            get {
+                return this._defaultInvoiceTo;
+            }
+            set {
+                this._defaultInvoiceTo = value;
+            }
+        }
+        
+        public string DefaultInvoiceToName {
+            get {
+                return this._defaultInvoiceToName;
+            }
+            set {
+                this._defaultInvoiceToName = value;
+            }
+        }
+        
+        public string DefaultSendTo {
+            get {
+                return this._defaultSendTo;
+            }
+            set {
+                this._defaultSendTo = value;
+            }
+        }
+        
+        public string DefaultInvoiceDeclaration {
+            get {
+                return this._defaultInvoiceDeclaration;
+            }
+            set {
+                this._defaultInvoiceDeclaration = value;
+            }
+        }
+        
+        public System.Collections.Generic.List<LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage.DealerAddress> Addresses {
+            get {
+                return this._addresses;
+            }
+            set {
+                this._addresses = value;
+            }
+        }
+        
+        public System.Nullable<bool> IsActive {
+            get {
+                return this._isActive;
+            }
+            set {
+                this._isActive = value;
+            }
+        }
+        
+        public string MainAddress {
+            get {
+                return this._mainAddress;
+            }
+            set {
+                this._mainAddress = value;
+            }
+        }
+        
+        public string VisitAddress {
+            get {
+                return this._visitAddress;
+            }
+            set {
+                this._visitAddress = value;
+            }
+        }
+        
+        public System.Nullable<long> PaymentTermId {
+            get {
+                return this._paymentTermId;
+            }
+            set {
+                this._paymentTermId = value;
+            }
+        }
+        
+        public string PaymentTermDescription {
+            get {
+                return this._paymentTermDescription;
+            }
+            set {
+                this._paymentTermDescription = value;
+            }
+        }
+        
+        public System.Nullable<int> PaymentTypeId {
+            get {
+                return this._paymentTypeId;
+            }
+            set {
+                this._paymentTypeId = value;
+            }
+        }
+        
+        public string PaymentTypeName {
+            get {
+                return this._paymentTypeName;
+            }
+            set {
+                this._paymentTypeName = value;
+            }
+        }
+        
+        public string PaymentTermCode {
+            get {
+                return this._paymentTermCode;
+            }
+            set {
+                this._paymentTermCode = value;
+            }
+        }
+        
+        public System.Nullable<long> PartnerTypeId {
+            get {
+                return this._partnerTypeId;
+            }
+            set {
+                this._partnerTypeId = value;
+            }
+        }
+        
+        public string DefaultFinancialInstituteCode {
+            get {
+                return this._defaultFinancialInstituteCode;
+            }
+            set {
+                this._defaultFinancialInstituteCode = value;
+            }
+        }
+        
+        public string TradingPartner {
+            get {
+                return this._tradingPartner;
+            }
+            set {
+                this._tradingPartner = value;
+            }
+        }
+        
+        public System.Nullable<System.DateTimeOffset> CreatedDate {
+            get {
+                return this._createdDate;
+            }
+            set {
+                this._createdDate = value;
+            }
+        }
+        
+        public string CreatedBy {
+            get {
+                return this._createdBy;
+            }
+            set {
+                this._createdBy = value;
+            }
+        }
+        
+        public System.Nullable<System.DateTimeOffset> LastModifiedDate {
+            get {
+                return this._lastModifiedDate;
+            }
+            set {
+                this._lastModifiedDate = value;
+            }
+        }
+        
+        public string LastModifiedBy {
+            get {
+                return this._lastModifiedBy;
+            }
+            set {
+                this._lastModifiedBy = value;
+            }
+        }
+        
+        public byte[] RowVersion {
+            get {
+                return this._rowVersion;
+            }
+            set {
+                this._rowVersion = value;
+            }
+        }
+        
+        public string DealerDescription {
+            get {
+                return this._dealerDescription;
+            }
+            set {
+                this._dealerDescription = value;
             }
         }
     }
     
-    public class AddressType {
+    public class SalesRegion {
+        
+        private string _code;
         
         private string _name;
         
-        private int _id;
+        private string _companyCode;
+        
+        private long _marketId;
+        
+        private System.Nullable<System.DateTimeOffset> _lastModifiedDate;
+        
+        private string _lastModifiedBy;
+        
+        public string Code {
+            get {
+                return this._code;
+            }
+            set {
+                this._code = value;
+            }
+        }
         
         public string Name {
             get {
@@ -2447,17 +1824,44 @@ namespace LSS.VehicleIntegrationTransaction.Model.Models {
             }
         }
         
-        public int Id {
+        public string CompanyCode {
             get {
-                return this._id;
+                return this._companyCode;
             }
             set {
-                this._id = value;
+                this._companyCode = value;
+            }
+        }
+        
+        public long MarketId {
+            get {
+                return this._marketId;
+            }
+            set {
+                this._marketId = value;
+            }
+        }
+        
+        public System.Nullable<System.DateTimeOffset> LastModifiedDate {
+            get {
+                return this._lastModifiedDate;
+            }
+            set {
+                this._lastModifiedDate = value;
+            }
+        }
+        
+        public string LastModifiedBy {
+            get {
+                return this._lastModifiedBy;
+            }
+            set {
+                this._lastModifiedBy = value;
             }
         }
     }
     
-    public class Address {
+    public class DealerAddress {
         
         private string _addressDetail;
         
@@ -2475,9 +1879,9 @@ namespace LSS.VehicleIntegrationTransaction.Model.Models {
         
         private string _country;
         
-        private System.Nullable<int> _addressTypeId;
+        private long _dealerId;
         
-        private LSS.VehicleIntegrationTransaction.Model.Models.AddressType _addressType;
+        private System.Nullable<int> _addressTypeId;
         
         public string AddressDetail {
             get {
@@ -2551,6 +1955,15 @@ namespace LSS.VehicleIntegrationTransaction.Model.Models {
             }
         }
         
+        public long DealerId {
+            get {
+                return this._dealerId;
+            }
+            set {
+                this._dealerId = value;
+            }
+        }
+        
         public System.Nullable<int> AddressTypeId {
             get {
                 return this._addressTypeId;
@@ -2559,39 +1972,21 @@ namespace LSS.VehicleIntegrationTransaction.Model.Models {
                 this._addressTypeId = value;
             }
         }
-        
-        public LSS.VehicleIntegrationTransaction.Model.Models.AddressType AddressType {
-            get {
-                return this._addressType;
-            }
-            set {
-                this._addressType = value;
-            }
-        }
     }
     
-    public class SalesOrderCustomerContact {
-        
-        private long _id;
+    public class CancelReason {
         
         private string _name;
         
-        private string _jobTitle;
+        private long _marketId;
         
-        private string _phoneNo;
+        private LSS.VehicleIntegrationTransaction.Model.Models.Market _market;
         
-        private string _email;
+        private bool _isDefault;
         
-        private long _salesOrderCustomerId;
+        private bool _internal;
         
-        public long Id {
-            get {
-                return this._id;
-            }
-            set {
-                this._id = value;
-            }
-        }
+        private int _id;
         
         public string Name {
             get {
@@ -2602,39 +1997,497 @@ namespace LSS.VehicleIntegrationTransaction.Model.Models {
             }
         }
         
-        public string JobTitle {
+        public long MarketId {
             get {
-                return this._jobTitle;
+                return this._marketId;
             }
             set {
-                this._jobTitle = value;
+                this._marketId = value;
             }
         }
         
-        public string PhoneNo {
+        public LSS.VehicleIntegrationTransaction.Model.Models.Market Market {
             get {
-                return this._phoneNo;
+                return this._market;
             }
             set {
-                this._phoneNo = value;
+                this._market = value;
             }
         }
         
-        public string Email {
+        public bool IsDefault {
             get {
-                return this._email;
+                return this._isDefault;
             }
             set {
-                this._email = value;
+                this._isDefault = value;
             }
         }
         
-        public long SalesOrderCustomerId {
+        public bool Internal {
             get {
-                return this._salesOrderCustomerId;
+                return this._internal;
             }
             set {
-                this._salesOrderCustomerId = value;
+                this._internal = value;
+            }
+        }
+        
+        public int Id {
+            get {
+                return this._id;
+            }
+            set {
+                this._id = value;
+            }
+        }
+    }
+    
+    public class SalesOrderLine {
+        
+        private long _salesOrderHeaderId;
+        
+        private int _salesOrderLineTypeId;
+        
+        private LineType _salesOrderLineType;
+        
+        private long _localModelId;
+        
+        private decimal _listPrice;
+        
+        private decimal _discount;
+        
+        private int _quantity;
+        
+        private decimal _salesPriceExclVAT;
+        
+        private decimal _salesPriceInclVAT;
+        
+        private decimal _cost;
+        
+        private System.Nullable<decimal> _vatTaxRate;
+        
+        private string _vatTaxRateCode;
+        
+        private string _vatTaxRateDescription;
+        
+        private System.Nullable<int> _paymentCodeId;
+        
+        private PaymentCode _paymentCode;
+        
+        private System.Nullable<long> _salesPurchaseOrderId;
+        
+        private string _salesPurchaseOrderNumber;
+        
+        private System.Nullable<decimal> _pOValue;
+        
+        private System.Nullable<decimal> _gRValue;
+        
+        private LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineVehicle _salesOrderLineVehicle;
+        
+        private LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineExternalWorkshop _externalWorkshop;
+        
+        private LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineInternalWorkshop _internalWorkshop;
+        
+        private LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineAdditionalService _additionalService;
+        
+        private System.Collections.Generic.List<LSS.VehicleSalesOrder.Model.Entities.SalesOrderLinePriceBreakDown> _salesOrderLinePriceBreakDowns;
+        
+        private bool _isObsolete;
+        
+        private System.Nullable<long> _salesOrderLinePurchaseGroupId;
+        
+        private LSS.VehicleIntegrationTransaction.SalesOrder.Model.EntityModel.SalesOrder.IPreparation _preparation;
+        
+        private LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineCAWorkShop _cAWorkShop;
+        
+        private System.Nullable<int> _sequenceNo;
+        
+        private System.Nullable<System.DateTimeOffset> _lastModifiedDate;
+        
+        private string _description;
+        
+        private string _referenceNumber;
+        
+        private byte[] _rowVersion;
+        
+        private long _id;
+        
+        public long SalesOrderHeaderId {
+            get {
+                return this._salesOrderHeaderId;
+            }
+            set {
+                this._salesOrderHeaderId = value;
+            }
+        }
+        
+        public int SalesOrderLineTypeId {
+            get {
+                return this._salesOrderLineTypeId;
+            }
+            set {
+                this._salesOrderLineTypeId = value;
+            }
+        }
+        
+        public LineType SalesOrderLineType {
+            get {
+                return this._salesOrderLineType;
+            }
+            set {
+                this._salesOrderLineType = value;
+            }
+        }
+        
+        public long LocalModelId {
+            get {
+                return this._localModelId;
+            }
+            set {
+                this._localModelId = value;
+            }
+        }
+        
+        public decimal ListPrice {
+            get {
+                return this._listPrice;
+            }
+            set {
+                this._listPrice = value;
+            }
+        }
+        
+        public decimal Discount {
+            get {
+                return this._discount;
+            }
+            set {
+                this._discount = value;
+            }
+        }
+        
+        public int Quantity {
+            get {
+                return this._quantity;
+            }
+            set {
+                this._quantity = value;
+            }
+        }
+        
+        public decimal SalesPriceExclVAT {
+            get {
+                return this._salesPriceExclVAT;
+            }
+            set {
+                this._salesPriceExclVAT = value;
+            }
+        }
+        
+        public decimal SalesPriceInclVAT {
+            get {
+                return this._salesPriceInclVAT;
+            }
+            set {
+                this._salesPriceInclVAT = value;
+            }
+        }
+        
+        public decimal Cost {
+            get {
+                return this._cost;
+            }
+            set {
+                this._cost = value;
+            }
+        }
+        
+        public System.Nullable<decimal> VatTaxRate {
+            get {
+                return this._vatTaxRate;
+            }
+            set {
+                this._vatTaxRate = value;
+            }
+        }
+        
+        public string VatTaxRateCode {
+            get {
+                return this._vatTaxRateCode;
+            }
+            set {
+                this._vatTaxRateCode = value;
+            }
+        }
+        
+        public string VatTaxRateDescription {
+            get {
+                return this._vatTaxRateDescription;
+            }
+            set {
+                this._vatTaxRateDescription = value;
+            }
+        }
+        
+        public System.Nullable<int> PaymentCodeId {
+            get {
+                return this._paymentCodeId;
+            }
+            set {
+                this._paymentCodeId = value;
+            }
+        }
+        
+        public PaymentCode PaymentCode {
+            get {
+                return this._paymentCode;
+            }
+            set {
+                this._paymentCode = value;
+            }
+        }
+        
+        public System.Nullable<long> SalesPurchaseOrderId {
+            get {
+                return this._salesPurchaseOrderId;
+            }
+            set {
+                this._salesPurchaseOrderId = value;
+            }
+        }
+        
+        public string SalesPurchaseOrderNumber {
+            get {
+                return this._salesPurchaseOrderNumber;
+            }
+            set {
+                this._salesPurchaseOrderNumber = value;
+            }
+        }
+        
+        public System.Nullable<decimal> POValue {
+            get {
+                return this._pOValue;
+            }
+            set {
+                this._pOValue = value;
+            }
+        }
+        
+        public System.Nullable<decimal> GRValue {
+            get {
+                return this._gRValue;
+            }
+            set {
+                this._gRValue = value;
+            }
+        }
+        
+        public LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineVehicle SalesOrderLineVehicle {
+            get {
+                return this._salesOrderLineVehicle;
+            }
+            set {
+                this._salesOrderLineVehicle = value;
+            }
+        }
+        
+        public LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineExternalWorkshop ExternalWorkshop {
+            get {
+                return this._externalWorkshop;
+            }
+            set {
+                this._externalWorkshop = value;
+            }
+        }
+        
+        public LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineInternalWorkshop InternalWorkshop {
+            get {
+                return this._internalWorkshop;
+            }
+            set {
+                this._internalWorkshop = value;
+            }
+        }
+        
+        public LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineAdditionalService AdditionalService {
+            get {
+                return this._additionalService;
+            }
+            set {
+                this._additionalService = value;
+            }
+        }
+        
+        public System.Collections.Generic.List<LSS.VehicleSalesOrder.Model.Entities.SalesOrderLinePriceBreakDown> SalesOrderLinePriceBreakDowns {
+            get {
+                return this._salesOrderLinePriceBreakDowns;
+            }
+            set {
+                this._salesOrderLinePriceBreakDowns = value;
+            }
+        }
+        
+        public bool IsObsolete {
+            get {
+                return this._isObsolete;
+            }
+            set {
+                this._isObsolete = value;
+            }
+        }
+        
+        public System.Nullable<long> SalesOrderLinePurchaseGroupId {
+            get {
+                return this._salesOrderLinePurchaseGroupId;
+            }
+            set {
+                this._salesOrderLinePurchaseGroupId = value;
+            }
+        }
+        
+        public LSS.VehicleIntegrationTransaction.SalesOrder.Model.EntityModel.SalesOrder.IPreparation Preparation {
+            get {
+                return this._preparation;
+            }
+            set {
+                this._preparation = value;
+            }
+        }
+        
+        public LSS.VehicleSalesOrder.Model.Entities.SalesOrderLineCAWorkShop CAWorkShop {
+            get {
+                return this._cAWorkShop;
+            }
+            set {
+                this._cAWorkShop = value;
+            }
+        }
+        
+        public System.Nullable<int> SequenceNo {
+            get {
+                return this._sequenceNo;
+            }
+            set {
+                this._sequenceNo = value;
+            }
+        }
+        
+        public System.Nullable<System.DateTimeOffset> LastModifiedDate {
+            get {
+                return this._lastModifiedDate;
+            }
+            set {
+                this._lastModifiedDate = value;
+            }
+        }
+        
+        public string Description {
+            get {
+                return this._description;
+            }
+            set {
+                this._description = value;
+            }
+        }
+        
+        public string ReferenceNumber {
+            get {
+                return this._referenceNumber;
+            }
+            set {
+                this._referenceNumber = value;
+            }
+        }
+        
+        public byte[] RowVersion {
+            get {
+                return this._rowVersion;
+            }
+            set {
+                this._rowVersion = value;
+            }
+        }
+        
+        public long Id {
+            get {
+                return this._id;
+            }
+            set {
+                this._id = value;
+            }
+        }
+    }
+}
+namespace LSS.VehicleIntegrationTransaction.Model.Models {
+    
+    
+    public class Market {
+        
+        private long _id;
+        
+        private int _marketId;
+        
+        private string _description;
+        
+        private string _countryCode;
+        
+        private string _preferedCulture;
+        
+        private string _timeZoneId;
+        
+        public long Id {
+            get {
+                return this._id;
+            }
+            set {
+                this._id = value;
+            }
+        }
+        
+        public int MarketId {
+            get {
+                return this._marketId;
+            }
+            set {
+                this._marketId = value;
+            }
+        }
+        
+        public string Description {
+            get {
+                return this._description;
+            }
+            set {
+                this._description = value;
+            }
+        }
+        
+        public string CountryCode {
+            get {
+                return this._countryCode;
+            }
+            set {
+                this._countryCode = value;
+            }
+        }
+        
+        public string PreferedCulture {
+            get {
+                return this._preferedCulture;
+            }
+            set {
+                this._preferedCulture = value;
+            }
+        }
+        
+        public string TimeZoneId {
+            get {
+                return this._timeZoneId;
+            }
+            set {
+                this._timeZoneId = value;
             }
         }
     }
@@ -2836,6 +2689,217 @@ namespace LSS.VehicleIntegrationTransaction.Model.Models {
             }
             set {
                 this._salesOrderCustomerContacts = value;
+            }
+        }
+    }
+    
+    public class Address {
+        
+        private string _addressDetail;
+        
+        private string _addressDetailLocal;
+        
+        private string _zipCode;
+        
+        private string _city;
+        
+        private string _cityLocal;
+        
+        private string _region;
+        
+        private string _state;
+        
+        private string _country;
+        
+        private System.Nullable<int> _addressTypeId;
+        
+        private LSS.VehicleIntegrationTransaction.Model.Models.AddressType _addressType;
+        
+        public string AddressDetail {
+            get {
+                return this._addressDetail;
+            }
+            set {
+                this._addressDetail = value;
+            }
+        }
+        
+        public string AddressDetailLocal {
+            get {
+                return this._addressDetailLocal;
+            }
+            set {
+                this._addressDetailLocal = value;
+            }
+        }
+        
+        public string ZipCode {
+            get {
+                return this._zipCode;
+            }
+            set {
+                this._zipCode = value;
+            }
+        }
+        
+        public string City {
+            get {
+                return this._city;
+            }
+            set {
+                this._city = value;
+            }
+        }
+        
+        public string CityLocal {
+            get {
+                return this._cityLocal;
+            }
+            set {
+                this._cityLocal = value;
+            }
+        }
+        
+        public string Region {
+            get {
+                return this._region;
+            }
+            set {
+                this._region = value;
+            }
+        }
+        
+        public string State {
+            get {
+                return this._state;
+            }
+            set {
+                this._state = value;
+            }
+        }
+        
+        public string Country {
+            get {
+                return this._country;
+            }
+            set {
+                this._country = value;
+            }
+        }
+        
+        public System.Nullable<int> AddressTypeId {
+            get {
+                return this._addressTypeId;
+            }
+            set {
+                this._addressTypeId = value;
+            }
+        }
+        
+        public LSS.VehicleIntegrationTransaction.Model.Models.AddressType AddressType {
+            get {
+                return this._addressType;
+            }
+            set {
+                this._addressType = value;
+            }
+        }
+    }
+    
+    public class AddressType {
+        
+        private string _name;
+        
+        private int _id;
+        
+        public static LSS.VehicleIntegrationTransaction.Model.Models.AddressType MainAddress;
+        
+        public static LSS.VehicleIntegrationTransaction.Model.Models.AddressType VisitAddress;
+        
+        public string Name {
+            get {
+                return this._name;
+            }
+            set {
+                this._name = value;
+            }
+        }
+        
+        public int Id {
+            get {
+                return this._id;
+            }
+            set {
+                this._id = value;
+            }
+        }
+    }
+    
+    public class SalesOrderCustomerContact {
+        
+        private long _id;
+        
+        private string _name;
+        
+        private string _jobTitle;
+        
+        private string _phoneNo;
+        
+        private string _email;
+        
+        private long _salesOrderCustomerId;
+        
+        public long Id {
+            get {
+                return this._id;
+            }
+            set {
+                this._id = value;
+            }
+        }
+        
+        public string Name {
+            get {
+                return this._name;
+            }
+            set {
+                this._name = value;
+            }
+        }
+        
+        public string JobTitle {
+            get {
+                return this._jobTitle;
+            }
+            set {
+                this._jobTitle = value;
+            }
+        }
+        
+        public string PhoneNo {
+            get {
+                return this._phoneNo;
+            }
+            set {
+                this._phoneNo = value;
+            }
+        }
+        
+        public string Email {
+            get {
+                return this._email;
+            }
+            set {
+                this._email = value;
+            }
+        }
+        
+        public long SalesOrderCustomerId {
+            get {
+                return this._salesOrderCustomerId;
+            }
+            set {
+                this._salesOrderCustomerId = value;
             }
         }
     }
