@@ -1,4 +1,5 @@
-﻿using Bridge.ActiveMQ;
+﻿using Bridge;
+using Bridge.ActiveMQ;
 using Bridge.Core;
 using Bridge.Pub;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +15,17 @@ var app = Host.CreateDefaultBuilder(args)
     {
         services.AddHostedService<PubHostedService>();
 
-        services.AddBridgeServices();
+        services.AddBridgeServices((publisher) =>
+        {
+            publisher.OnBefore(request =>
+            {
+
+            });
+            publisher.OnAfter(response =>
+            {
+
+            });
+        });
 
         services.AddActiveMQServices(context.Configuration);
 

@@ -1,12 +1,21 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Bridge.Abstraction;
 
 namespace Bridge.Core
 {
     public static class BridgeServiceCollectionExtensions
     {
-        public static void AddBridgeServices(this IServiceCollection services)
+        internal static void Configuration<T>(this T t, Action<T>? configure)
+        {
+            if (configure != null)
+            {
+                configure(t);
+            }
+        }
+        public static void AddBridgeServices(this IServiceCollection services, 
+            Action<IPublisher>? configurePublisher = null)
         {
             services.AddSingleton<ILauncher, Launcher>();
 
@@ -25,7 +34,14 @@ namespace Bridge.Core
 
             services.AddTransient<IMessageConverter, MessageConverter>();
 
-            services.AddTransient<IPublisher, Publisher>();
+            services.AddTransient<IPublisherFactory, PublisherFactory>();
+            services.AddTransient<IPublisher>((sp) =>
+            {
+                var publisherFactory = sp.GetRequiredService<IPublisherFactory>();
+                var publisher = publisherFactory.GetPublisher();
+                publisher.Configuration(configurePublisher);
+                return publisher;
+            });
             services.AddTransient<IProducerFactory, ProducerFactory>();
             services.AddSingleton<IProducerDescriptorProvider, ProducerDescriptorProvider>();
             services.AddTransient<IReplyMessageProcesser, ReplyMessageProcesser>();
