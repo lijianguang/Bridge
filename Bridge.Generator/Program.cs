@@ -9,7 +9,9 @@ namespace Bridge.Generator
         {
             var generator = new ProxyGenerator();
 
-            generator.Generate(typeof(Queue1Handler).Assembly, "C:\\Study\\Bridge\\Bridge.Proxy\\Proxies");
+            generator.Generate(typeof(Queue1Handler).Assembly, 
+                "C:\\Study\\Bridge\\Bridge.Proxy\\Proxies",
+                "C:\\Study\\Bridge\\Bridge.Proxy\\Proxies2");
         }
     }
 }

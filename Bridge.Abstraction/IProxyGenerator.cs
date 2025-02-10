@@ -4,6 +4,6 @@ namespace Bridge.Abstraction
 {
     public interface IProxyGenerator
     {
-        void Generate(Assembly assembly, string outPath);
+        void Generate(Assembly assembly, params string[] outPaths);
     }
 }

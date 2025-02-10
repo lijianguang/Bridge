@@ -9,7 +9,7 @@ namespace Bridge.Core
 {
     public class ProxyGenerator : IProxyGenerator
     {
-        public void Generate(Assembly assembly, string outputPath)
+        public void Generate(Assembly assembly, params string[] outputPaths)
         {
             List<Type> allMQHandlers = assembly.GetTypes().Where(t => t.IsSubclassOf(typeof(MQHandlerBase))).ToList();
 
@@ -69,10 +69,16 @@ namespace Bridge.Core
                             }
                         }
                     }
-                    GenerateCSFile(outputPath, $"{mqHandler.Name}Proxy", compileUnit);
+                    foreach(var path in outputPaths)
+                    {
+                        GenerateCSFile(path, $"{mqHandler.Name}Proxy", compileUnit);
+                    }
                 }
             }
-            GenerateCSFile(outputPath, $"ProxyModel", modelCompileUnit);
+            foreach (var path in outputPaths)
+            {
+                GenerateCSFile(path, $"ProxyModel", modelCompileUnit);
+            }
         }
 
         private void GenerateCSFile(string outputPath, string fileName, CodeCompileUnit compileUnit)
