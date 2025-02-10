@@ -7,12 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Proxy.Model {
-    
-    
-    public class ProxyModel {
-    }
-}
 namespace Bridge.Message {
     
     

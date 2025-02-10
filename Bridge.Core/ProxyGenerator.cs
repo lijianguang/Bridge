@@ -2,8 +2,8 @@
 using Microsoft.CSharp;
 using System.CodeDom;
 using System.CodeDom.Compiler;
-using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Bridge.Core
 {
@@ -13,23 +13,32 @@ namespace Bridge.Core
         {
             List<Type> allMQHandlers = assembly.GetTypes().Where(t => t.IsSubclassOf(typeof(MQHandlerBase))).ToList();
 
-            var modelCompileUnit = CreateClass("Proxy.Model", $"ProxyModel");
+            var modelCompileUnit = CreateCodeCompileUnit();
 
             foreach (Type mqHandler in allMQHandlers)
             {
                 var mqHandlerAttribute = mqHandler.GetCustomAttribute<MQHandlerAttribute>();
                 if(mqHandlerAttribute != null)
                 {
-                    var compileUnit = CreateClass("Proxy", $"{mqHandler.Name}Proxy");
+                    var compileUnit = CreateCodeCompileUnit();
 
-                    AddField(compileUnit, typeof(IPublisher), "_publisher");
-                    AddField(compileUnit, typeof(MQType), "_mqType");
+                    var codeNamespace = GetCodeNamespace(compileUnit, "Proxy");
+
+                    var codeType = GetCodeType(codeNamespace, $"{mqHandler.Name}Proxy", default);
+
+                    AddPrivateField(codeType, typeof(IPublisher), "_publisher");
+                    AddPrivateField(codeType, typeof(MQType), "_mqType");
 
                     var mqType = mqHandlerAttribute.MQType;
                     var queueName = mqHandlerAttribute.QueueName;
                     var isMulticast = mqHandlerAttribute.IsMulticast;
 
-                    AddContructor(compileUnit, mqType, new[] { (typeof(IPublisher), "publisher") });
+                    AddContructor(codeType, new[] { (typeof(IPublisher), "publisher") },
+                        statements =>
+                        {
+                            statements.Add(new CodeExpressionStatement(new CodeSnippetExpression("_publisher = publisher")));
+                            statements.Add(new CodeExpressionStatement(new CodeSnippetExpression($"_mqType = {mqType.GetType().Namespace}.{mqType.GetType().Name}.{mqType.ToString()}")));
+                        });
 
                     MethodInfo[] methods = mqHandler.GetMethods();
 
@@ -48,7 +57,7 @@ namespace Bridge.Core
                             {
                                 returnType = typeof(void);
                             }
-                            AddMethod(compileUnit, returnType, isMulticast, method.Name, queueName, actionName, parameters: method.GetParameters().Select(m => (m.ParameterType, m.Name!)).ToArray());
+                            AddMethod(codeType, returnType, isMulticast, method.Name, queueName, actionName, parameters: method.GetParameters().Select(m => (m.ParameterType, m.Name!)).ToArray());
                             
                             if (!returnType.Equals(typeof(void)))
                             {
@@ -77,10 +86,12 @@ namespace Bridge.Core
                 tw.Close();
             }
         }
+
         private CodeNamespace GetCodeNamespace(CodeCompileUnit compileUnit, string? codeNamespaceName)
         {
             codeNamespaceName = codeNamespaceName ?? string.Empty;
             CodeNamespace? codeNamespace = null;
+            
             for (int i = 0; i < compileUnit.Namespaces.Count; i++)
             {
                 if (compileUnit.Namespaces[i].Name == codeNamespaceName)
@@ -95,10 +106,9 @@ namespace Bridge.Core
             }
             return codeNamespace;
         }
-        private CodeTypeDeclaration GetCodeType(CodeCompileUnit compileUnit, string? codeNamespaceName, string codeTypeName, Action<CodeTypeDeclaration> decorateCodeTypeIfNew)
-        {
-            var codeNamespace = GetCodeNamespace(compileUnit, codeNamespaceName);
 
+        private CodeTypeDeclaration GetCodeType(CodeNamespace codeNamespace, string codeTypeName, Action<CodeTypeDeclaration>? decorateCodeTypeIfNew)
+        {
             CodeTypeDeclaration? codeType = null;
             for (int i = 0; i < codeNamespace.Types.Count; i++)
             {
@@ -111,21 +121,17 @@ namespace Bridge.Core
             {
                 codeType = new CodeTypeDeclaration(codeTypeName);
                 codeNamespace.Types.Add(codeType);
-                decorateCodeTypeIfNew(codeType);
+                if(decorateCodeTypeIfNew != null)
+                {
+                    decorateCodeTypeIfNew(codeType);
+                }
             }
             return codeType;
         }
-        private CodeCompileUnit CreateClass(string classNamespace, string className)
+
+        private CodeCompileUnit CreateCodeCompileUnit()
         {
-            CodeCompileUnit compileUnit = new CodeCompileUnit();
-
-            CodeNamespace codeNamespace = new CodeNamespace(classNamespace);
-
-            compileUnit.Namespaces.Add(codeNamespace);
-            CodeTypeDeclaration class1 = new CodeTypeDeclaration(className);
-            codeNamespace.Types.Add(class1);
-
-            return compileUnit;
+            return new CodeCompileUnit();
         }
 
         private CodeCompileUnit CreateModel(CodeCompileUnit compileUnit, Type modelType)
@@ -153,8 +159,8 @@ namespace Bridge.Core
                 modelName = genericTypeParameterNames is null ? 
                     modelName : $"{modelType.Name.Split('`').First()}<{string.Join(", ", genericTypeParameterNames)}>";
             }
-
-            var codeType = GetCodeType(compileUnit, modelType.Namespace, modelName,
+            var codeNamespace = GetCodeNamespace(compileUnit, modelType.Namespace);
+            var codeType = GetCodeType(codeNamespace, modelName,
                ct =>
                {
                    if (modelType.IsEnum)
@@ -280,27 +286,29 @@ namespace Bridge.Core
             return codeType;
         }
 
-        private CodeCompileUnit AddField(CodeCompileUnit compileUnit, Type type, string name)
+        private CodeMemberField AddPrivateField(CodeTypeDeclaration codeType, Type type, string name)
         {
-            CodeMemberField field1 = new CodeMemberField(type, name);
-            field1.Attributes = MemberAttributes.Private;
-            compileUnit.Namespaces[0].Types[0].Members.Add(field1);
-            return compileUnit;
+            CodeMemberField field = new CodeMemberField(type, name);
+            field.Attributes = MemberAttributes.Private;
+            codeType.Members.Add(field);
+            return field;
         }
 
-        private CodeCompileUnit AddContructor(CodeCompileUnit compileUnit, MQType mqType, (Type, string)[] parameters)
+        private CodeConstructor AddContructor(CodeTypeDeclaration codeType, (Type, string)[] parameters, Action<CodeStatementCollection>? buildStatements)
         {
-            CodeConstructor stringConstructor = new CodeConstructor();
-            stringConstructor.Attributes = MemberAttributes.Public;
+            CodeConstructor constructor = new CodeConstructor();
+            constructor.Attributes = MemberAttributes.Public;
             foreach (var parameter in parameters)
             {
-                stringConstructor.Parameters.Add(new CodeParameterDeclarationExpression(parameter.Item1, parameter.Item2));
+                constructor.Parameters.Add(new CodeParameterDeclarationExpression(parameter.Item1, parameter.Item2));
             }
-            stringConstructor.Statements.Add(new CodeExpressionStatement(new CodeSnippetExpression("_publisher = publisher")));
-            stringConstructor.Statements.Add(new CodeExpressionStatement(new CodeSnippetExpression($"_mqType = {mqType.GetType().Namespace}.{mqType.GetType().Name}.{mqType.ToString()}")));
+            if(buildStatements != null)
+            {
+                buildStatements(constructor.Statements);
+            }
 
-            compileUnit.Namespaces[0].Types[0].Members.Add(stringConstructor);
-            return compileUnit;
+            codeType.Members.Add(constructor);
+            return constructor;
         }
 
         private CodeMemberMethod BuildMethod(CodeTypeReference returnType, string name, (Type, string)[] parameters, Action<CodeStatementCollection> buildStatements)
@@ -319,7 +327,7 @@ namespace Bridge.Core
             return method;
         }
 
-        private CodeCompileUnit AddMethod(CodeCompileUnit compileUnit, Type returnType, bool isMulticast, string name, string queueName, string actionName, (Type, string)[] parameters)
+        private CodeMemberMethod AddMethod(CodeTypeDeclaration codeType, Type returnType, bool isMulticast, string name, string queueName, string actionName, (Type, string)[] parameters)
         {
             var codeReturn = returnType.Equals(typeof(void)) || isMulticast ?
                 new CodeTypeReference("async Task") : new CodeTypeReference("async Task", new CodeTypeReference(returnType));
@@ -368,9 +376,9 @@ namespace Bridge.Core
                 }
             });
 
-            compileUnit.Namespaces[0].Types[0].Members.Add(method);
+            codeType.Members.Add(method);
 
-            return compileUnit;
+            return method;
         }
     }
 }
