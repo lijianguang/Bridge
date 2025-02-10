@@ -1,5 +1,6 @@
 ﻿using Bridge.Abstraction;
 using Microsoft.CSharp;
+using Microsoft.VisualBasic.FileIO;
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Reflection;
@@ -9,6 +10,12 @@ namespace Bridge.Core
 {
     public class ProxyGenerator : IProxyGenerator
     {
+        private string _namespacePrefix = string.Empty;
+        public IProxyGenerator SetNamespacePrefix(string namespacePrefix)
+        {
+            _namespacePrefix = namespacePrefix;
+            return this;
+        }
         public void Generate(Assembly assembly, params string[] outputPaths)
         {
             List<Type> allMQHandlers = assembly.GetTypes().Where(t => t.IsSubclassOf(typeof(MQHandlerBase))).ToList();
@@ -21,8 +28,8 @@ namespace Bridge.Core
                 if(mqHandlerAttribute != null)
                 {
                     var compileUnit = CreateCodeCompileUnit();
-
-                    var codeNamespace = GetCodeNamespace(compileUnit, "Proxy");
+                    
+                    var codeNamespace = GetCodeNamespace(compileUnit, "");
 
                     var codeType = GetCodeType(codeNamespace, $"{mqHandler.Name}Proxy", default);
 
@@ -37,7 +44,7 @@ namespace Bridge.Core
                         statements =>
                         {
                             statements.Add(new CodeExpressionStatement(new CodeSnippetExpression("_publisher = publisher")));
-                            statements.Add(new CodeExpressionStatement(new CodeSnippetExpression($"_mqType = {mqType.GetType().Namespace}.{mqType.GetType().Name}.{mqType.ToString()}")));
+                            statements.Add(new CodeExpressionStatement(new CodeSnippetExpression($"_mqType = global::{mqType.GetType().FullName}.{mqType.ToString()}")));
                         });
 
                     MethodInfo[] methods = mqHandler.GetMethods();
@@ -95,7 +102,10 @@ namespace Bridge.Core
 
         private CodeNamespace GetCodeNamespace(CodeCompileUnit compileUnit, string? codeNamespaceName)
         {
-            codeNamespaceName = codeNamespaceName ?? string.Empty;
+            codeNamespaceName = string.IsNullOrEmpty(codeNamespaceName)  ? "" : codeNamespaceName;
+            codeNamespaceName = string.IsNullOrEmpty(_namespacePrefix) ? codeNamespaceName : $"{_namespacePrefix}.{codeNamespaceName}";
+            codeNamespaceName = codeNamespaceName.TrimStart('.').TrimEnd('.');
+
             CodeNamespace? codeNamespace = null;
             
             for (int i = 0; i < compileUnit.Namespaces.Count; i++)
@@ -294,7 +304,9 @@ namespace Bridge.Core
 
         private CodeMemberField AddPrivateField(CodeTypeDeclaration codeType, Type type, string name)
         {
-            CodeMemberField field = new CodeMemberField(type, name);
+            CodeMemberField field = new CodeMemberField();
+            field.Type = new CodeTypeReference($"global::{type.FullName}");
+            field.Name = name;
             field.Attributes = MemberAttributes.Private;
             codeType.Members.Add(field);
             return field;
@@ -306,7 +318,7 @@ namespace Bridge.Core
             constructor.Attributes = MemberAttributes.Public;
             foreach (var parameter in parameters)
             {
-                constructor.Parameters.Add(new CodeParameterDeclarationExpression(parameter.Item1, parameter.Item2));
+                constructor.Parameters.Add(new CodeParameterDeclarationExpression($"global::{parameter.Item1.FullName}", parameter.Item2));
             }
             if(buildStatements != null)
             {

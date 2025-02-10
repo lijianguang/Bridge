@@ -7,18 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Proxy {
+namespace Sub2 {
     
     
     public class Queue3HandlerProxy {
         
-        private Bridge.IPublisher _publisher;
+        private global::Bridge.IPublisher _publisher;
         
-        private Bridge.MQType _mqType;
+        private global::Bridge.MQType _mqType;
         
-        public Queue3HandlerProxy(Bridge.IPublisher publisher) {
+        public Queue3HandlerProxy(global::Bridge.IPublisher publisher) {
             _publisher = publisher;
-            _mqType = Bridge.MQType.ActiveMQ;
+            _mqType = global::Bridge.MQType.ActiveMQ;
         }
         
         public async Task Test1Async(Bridge.Message.MsgTmp msg) {

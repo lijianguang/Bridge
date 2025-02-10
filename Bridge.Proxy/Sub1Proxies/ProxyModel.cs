@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Bridge.Message {
+namespace Sub1.Bridge.Message {
     
     
     public class MsgTmp {
@@ -104,7 +104,7 @@ namespace Bridge.Message {
         }
     }
 }
-namespace B.M {
+namespace Sub1.B.M {
     
     
     public class MsgTmp2 {
@@ -121,142 +121,144 @@ namespace B.M {
         }
     }
 }
-
-
-public class TEST<T1, T2> {
+namespace Sub1 {
     
-    private T1 _t;
     
-    private T2 _t2;
-    
-    public T1 t {
-        get {
-            return this._t;
+    public class TEST<T1, T2> {
+        
+        private T1 _t;
+        
+        private T2 _t2;
+        
+        public T1 t {
+            get {
+                return this._t;
+            }
+            set {
+                this._t = value;
+            }
         }
-        set {
-            this._t = value;
+        
+        public T2 t2 {
+            get {
+                return this._t2;
+            }
+            set {
+                this._t2 = value;
+            }
         }
     }
     
-    public T2 t2 {
-        get {
-            return this._t2;
+    public class LineType {
+        
+        private string _name;
+        
+        private int _id;
+        
+        public static LineType Vehicle;
+        
+        public string Name {
+            get {
+                return this._name;
+            }
+            set {
+                this._name = value;
+            }
         }
-        set {
-            this._t2 = value;
+        
+        public int Id {
+            get {
+                return this._id;
+            }
+            set {
+                this._id = value;
+            }
         }
+    }
+    
+    public class PaymentCode {
+        
+        private string _name;
+        
+        private int _id;
+        
+        public static PaymentCode AfterMarket;
+        
+        public static PaymentCode Customer;
+        
+        public static PaymentCode MarketCompany;
+        
+        public string Name {
+            get {
+                return this._name;
+            }
+            set {
+                this._name = value;
+            }
+        }
+        
+        public int Id {
+            get {
+                return this._id;
+            }
+            set {
+                this._id = value;
+            }
+        }
+    }
+    
+    public class PreparationStatus {
+        
+        private System.Nullable<int> _sequenceNo;
+        
+        private string _name;
+        
+        private int _id;
+        
+        public static PreparationStatus NotStarted;
+        
+        public static PreparationStatus InProgress;
+        
+        public static PreparationStatus Complete;
+        
+        public System.Nullable<int> SequenceNo {
+            get {
+                return this._sequenceNo;
+            }
+            set {
+                this._sequenceNo = value;
+            }
+        }
+        
+        public string Name {
+            get {
+                return this._name;
+            }
+            set {
+                this._name = value;
+            }
+        }
+        
+        public int Id {
+            get {
+                return this._id;
+            }
+            set {
+                this._id = value;
+            }
+        }
+    }
+    
+    public enum SalesOrderLinePriceBreakDownType {
+        
+        Model = 1,
+        
+        Option = 2,
+        
+        CA = 3,
     }
 }
-
-public class LineType {
-    
-    private string _name;
-    
-    private int _id;
-    
-    public static LineType Vehicle;
-    
-    public string Name {
-        get {
-            return this._name;
-        }
-        set {
-            this._name = value;
-        }
-    }
-    
-    public int Id {
-        get {
-            return this._id;
-        }
-        set {
-            this._id = value;
-        }
-    }
-}
-
-public class PaymentCode {
-    
-    private string _name;
-    
-    private int _id;
-    
-    public static PaymentCode AfterMarket;
-    
-    public static PaymentCode Customer;
-    
-    public static PaymentCode MarketCompany;
-    
-    public string Name {
-        get {
-            return this._name;
-        }
-        set {
-            this._name = value;
-        }
-    }
-    
-    public int Id {
-        get {
-            return this._id;
-        }
-        set {
-            this._id = value;
-        }
-    }
-}
-
-public class PreparationStatus {
-    
-    private System.Nullable<int> _sequenceNo;
-    
-    private string _name;
-    
-    private int _id;
-    
-    public static PreparationStatus NotStarted;
-    
-    public static PreparationStatus InProgress;
-    
-    public static PreparationStatus Complete;
-    
-    public System.Nullable<int> SequenceNo {
-        get {
-            return this._sequenceNo;
-        }
-        set {
-            this._sequenceNo = value;
-        }
-    }
-    
-    public string Name {
-        get {
-            return this._name;
-        }
-        set {
-            this._name = value;
-        }
-    }
-    
-    public int Id {
-        get {
-            return this._id;
-        }
-        set {
-            this._id = value;
-        }
-    }
-}
-
-public enum SalesOrderLinePriceBreakDownType {
-    
-    Model = 1,
-    
-    Option = 2,
-    
-    CA = 3,
-}
-namespace LSS.VehicleIntegrationTransaction.Model.Enums {
+namespace Sub1.LSS.VehicleIntegrationTransaction.Model.Enums {
     
     
     public enum InventoryStatus {
@@ -391,7 +393,7 @@ namespace LSS.VehicleIntegrationTransaction.Model.Enums {
         Institute = 3,
     }
 }
-namespace LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage {
+namespace Sub1.LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage {
     
     
     public class SalesOrderHeader {
@@ -2414,7 +2416,7 @@ namespace LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesO
         }
     }
 }
-namespace LSS.VehicleIntegrationTransaction.Model.Models {
+namespace Sub1.LSS.VehicleIntegrationTransaction.Model.Models {
     
     
     public class Market {
@@ -2898,7 +2900,7 @@ namespace LSS.VehicleIntegrationTransaction.Model.Models {
         }
     }
 }
-namespace LSS.VehicleSalesOrder.Model.Entities {
+namespace Sub1.LSS.VehicleSalesOrder.Model.Entities {
     
     
     public class SalesOrderLineVehicle {
@@ -4008,7 +4010,7 @@ namespace LSS.VehicleSalesOrder.Model.Entities {
         }
     }
 }
-namespace LSS.VehicleIntegrationTransaction.SalesOrder.Model.EntityModel.SalesOrder {
+namespace Sub1.LSS.VehicleIntegrationTransaction.SalesOrder.Model.EntityModel.SalesOrder {
     
     
     public class IPreparation {
@@ -4080,7 +4082,7 @@ namespace LSS.VehicleIntegrationTransaction.SalesOrder.Model.EntityModel.SalesOr
         }
     }
 }
-namespace LSS.VehicleIntegrationTransaction.Model.Values {
+namespace Sub1.LSS.VehicleIntegrationTransaction.Model.Values {
     
     
     public class SalesOrderInvoiceTo {
@@ -4229,7 +4231,7 @@ namespace LSS.VehicleIntegrationTransaction.Model.Values {
         }
     }
 }
-namespace LSS.VehicleIntegrationTransaction.Model.EntityModel {
+namespace Sub1.LSS.VehicleIntegrationTransaction.Model.EntityModel {
     
     
     public class PartnerType {
@@ -4290,7 +4292,7 @@ namespace LSS.VehicleIntegrationTransaction.Model.EntityModel {
         }
     }
 }
-namespace LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage1 {
+namespace Sub1.LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage1 {
     
     
     public class SalesOrderDeliveryAddress {
@@ -4472,7 +4474,7 @@ namespace LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesO
         }
     }
 }
-namespace LSS.VehicleIntegrationTransaction.SalesOrder.Model.EntityModel {
+namespace Sub1.LSS.VehicleIntegrationTransaction.SalesOrder.Model.EntityModel {
     
     
     public class Incoterm {

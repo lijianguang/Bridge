@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Bridge.Abstraction\Bridge.Abstraction.csproj" />
     <ProjectReference Include="..\Bridge.Core\Bridge.Core.csproj" />
+    <ProjectReference Include="..\Bridge.Sub2\Bridge.Sub2.csproj" />
     <ProjectReference Include="..\Bridge.Sub\Bridge.Sub.csproj" />
   </ItemGroup>
 

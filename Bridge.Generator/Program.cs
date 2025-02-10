@@ -7,10 +7,17 @@ namespace Bridge.Generator
     {
         static void Main(string[] args)
         {
-            var generator = new ProxyGenerator();
+            var generator1 = new ProxyGenerator();
+            generator1.SetNamespacePrefix("Sub1")
+                .Generate(typeof(Queue1Handler).Assembly,
+                "C:\\Study\\Bridge\\Bridge.Proxy\\Sub1Proxies",
+                "C:\\Study\\Bridge\\Bridge.Pub\\Sub1Proxies");
 
-            generator.Generate(typeof(Queue1Handler).Assembly, 
-                "C:\\Study\\Bridge\\Bridge.Proxy\\Proxies");
+            var generator2 = new ProxyGenerator();
+            generator2.SetNamespacePrefix("Sub2")
+                .Generate(typeof(Bridge.Sub1.Queue3Handler).Assembly,
+                "C:\\Study\\Bridge\\Bridge.Proxy\\Sub2Proxies",
+                "C:\\Study\\Bridge\\Bridge.Pub\\Sub2Proxies");
         }
     }
 }

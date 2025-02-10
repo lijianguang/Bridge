@@ -1,7 +1,8 @@
 ﻿using Bridge.ActiveMQ;
-using Bridge.Message;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sub1;
+using Sub1.Bridge.Message;
 using System.Diagnostics;
 
 namespace Bridge.Pub
@@ -16,122 +17,82 @@ namespace Bridge.Pub
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _serviceProvider.GetRequiredService<IPublisher>();
-                        var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-                        publisher.ActiveMQ_PublishAsync("", "Test3").Wait();
+           
+            var queue1HandlerProxy = _serviceProvider.GetRequiredService<Queue1HandlerProxy>();
+            var queue2HandlerProxy = _serviceProvider.GetRequiredService<Queue2HandlerProxy>();
+            var queue3HandlerProxy = _serviceProvider.GetRequiredService<Queue3HandlerProxy>();
+            var queue4HandlerProxy = _serviceProvider.GetRequiredService<Queue4HandlerProxy>();
+
             var threads = new List<Thread>();
-            //foreach (var q in new[] { MQNames.Queue1, MQNames.Queue2 })
-            //{
-            //    for (int i = 0; i < 100; i++)
-            //    {
-            //        threads.Add(new Thread(async () =>
-            //        {
-            //            var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-            //            await publisher.ActiveMQ_PublishAsync(q, "Test2", new List<MsgTmp>() { new MsgTmp { Name = "A", Age = 1 } });
-            //        }));
-            //        threads.Add(new Thread(async () =>
-            //        {
-            //            var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-            //            await publisher.ActiveMQ_PublishAsync(q, "Test2", new List<MsgTmp>() { new MsgTmp { Name = "A", Age = 1 } });
-            //        }));
-            //        threads.Add(new Thread(() =>
-            //        {
-            //            var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-            //            publisher.ActiveMQ_PublishAsync(q, "Test3").Wait();
-            //        }));
-            //        threads.Add(new Thread(() =>
-            //        {
-            //            var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-            //            publisher.ActiveMQ_PublishAsync(q, "Test3").Wait();
-            //        }));
-            //        threads.Add(new Thread(() =>
-            //        {
-            //            var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-            //            publisher.ActiveMQ_PublishAsync(q, "Test4").Wait();
-            //        }));
-            //        threads.Add(new Thread(() =>
-            //        {
-            //            var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-            //            publisher.ActiveMQ_PublishAsync(q, "Test4").Wait();
-            //        }));
-            //        threads.Add(new Thread(() =>
-            //        {
-            //            var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-            //            publisher.ActiveMQ_PublishAsync(q, "Test5", 5).Wait();
-            //        }));
-            //        threads.Add(new Thread(() =>
-            //        {
-            //            var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-            //            publisher.ActiveMQ_PublishAsync(q, "Test5", 5).Wait();
-            //        }));
-            //        threads.Add(new Thread(() =>
-            //        {
-            //            var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-            //            publisher.ActiveMQ_PublishAsync(q, "Test6").Wait();
-            //        }));
-            //        threads.Add(new Thread(() =>
-            //        {
-            //            var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-            //            publisher.ActiveMQ_PublishAsync(q, "Test6").Wait();
-            //        }));
-            //        threads.Add(new Thread(() =>
-            //        {
-            //            var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-            //            publisher.ActiveMQ_PublishAsync(q, "Test7", 5).Wait();
-            //        }));
-            //        threads.Add(new Thread(() =>
-            //        {
-            //            var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-            //            publisher.ActiveMQ_PublishAsync(q, "Test7", 5).Wait();
-            //        }));
-            //        threads.Add(new Thread(() =>
-            //        {
-            //            var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-            //            publisher.ActiveMQ_PublishAsync(q, "Test8", 9).Wait();
-            //        }));
-            //        threads.Add(new Thread(() =>
-            //        {
-            //            var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-            //            publisher.ActiveMQ_PublishAsync(q, "Test8", 9).Wait();
-            //        }));
-            //    }
-            //}
+           
+            for (int i = 0; i < 100; i++)
+            {
+                threads.Add(new Thread(async () =>
+                {
+                    await queue1HandlerProxy.Test2Async(new List<MsgTmp>() { new MsgTmp { Name = "A", Age = 1 } });
+                }));
+                threads.Add(new Thread(async () =>
+                {
+                    await queue1HandlerProxy.Test2Async(new List<MsgTmp>() { new MsgTmp { Name = "A", Age = 1 } });
+                }));
+                threads.Add(new Thread(async () =>
+                {
+                    await queue1HandlerProxy.Test3Async(new Sub1.LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage.SalesOrderHeader());
+                }));
+                threads.Add(new Thread(async () =>
+                {
+                    await queue1HandlerProxy.Test4Async();
+                }));
+                threads.Add(new Thread(async () =>
+                {
+                    await queue1HandlerProxy.Test5Async(5);
+                }));
+                threads.Add(new Thread(async () =>
+                {
+                    await queue1HandlerProxy.Test6Async(12);
+                }));
+                threads.Add(new Thread(async () =>
+                {
+                    await queue1HandlerProxy.Test7Async("name");
+                }));
+                threads.Add(new Thread(async () =>
+                {
+                    await queue1HandlerProxy.Test8Async("name");
+                }));
+            }
+            
+            for (int i = 0; i < 100; i++)
+            {
+                threads.Add(new Thread(async () =>
+                {
+                    var ret = await queue2HandlerProxy.Test1Async(new MsgTmp { Name = "A1", Age = 1 });
 
-            //for (int i = 0; i < 100; i++)
-            //{
-            //    threads.Add(new Thread(() =>
-            //    {
-            //        var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-            //        var result1 = publisher.ActiveMQ_PublishAndWaitReplyAsync<MsgTmp, MsgTmp>(MQNames.Queue2, "Test1", new MsgTmp { Name = "A1", Age = 1 }).Result!;
-            //    }));
-            //    threads.Add(new Thread(() =>
-            //    {
-            //        var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-            //        var result = publisher.ActiveMQ_PublishAndWaitReplyAsync<MsgTmp, IEnumerable<MsgTmp>>(MQNames.Queue1, "Test1", new MsgTmp { Name = "A", Age = 1 }).Result;
-            //    }));
-            //}
+                }));
+                threads.Add(new Thread(() =>
+                {
+                    var ret = queue1HandlerProxy.Test1Async(new MsgTmp { Name = "A", Age = 1 }).Result;
+                }));
+            }
 
-            //for (int i = 0; i < 100; i++)
-            //{
-            //    threads.Add(new Thread(() =>
-            //    {
-            //        var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-            //        publisher.ActiveMQ_PublishMulticastAsync(MQNames.Queue3, "Test1", new MsgTmp { Name = "A", Age = 1 }).Wait();
-            //    }));
+            for (int i = 0; i < 100; i++)
+            {
+                threads.Add(new Thread(() =>
+                {
+                    queue3HandlerProxy.Test1Async(new MsgTmp { Name = "A", Age = 1 }).Wait();
+                }));
 
-            //    threads.Add(new Thread(() =>
-            //    {
-            //        var publisher = _serviceProvider.GetRequiredService<IPublisher>();
-            //        publisher.ActiveMQ_PublishMulticastAsync(MQNames.Queue4, "Test1", new MsgTmp { Name = "A", Age = 1 }).Wait();
-            //    }));
-            //}
+                threads.Add(new Thread(() =>
+                {
+                    queue3HandlerProxy.Test1Async(new MsgTmp { Name = "A", Age = 1 }).Wait();
+                }));
+            }
 
             var timer = new Stopwatch();
             timer.Start();
 
             threads.ForEach(t =>
             {
-                Thread.Sleep(new Random().Next(1, 10));
+                Thread.Sleep(new Random().Next(1, 100));
                 t.Start();
             });
 
