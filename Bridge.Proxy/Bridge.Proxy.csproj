@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Proxies\" />
+    <Compile Remove="Proxies\**" />
+    <EmbeddedResource Remove="Proxies\**" />
+    <None Remove="Proxies\**" />
   </ItemGroup>
 
   <ItemGroup>
