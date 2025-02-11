@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Bridge.Abstraction\Bridge.Abstraction.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Sub1Proxies\" />
+  </ItemGroup>
+
 </Project>

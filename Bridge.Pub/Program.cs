@@ -21,8 +21,8 @@ var app = Host.CreateDefaultBuilder(args)
         {
             publisher.OnBefore(request =>
             {
-               
                 request.Headers.Add("token","token1");
+                request.Headers.Add("marketId", "8");
                 Console.WriteLine(JsonConvert.SerializeObject(request));
             });
             publisher.OnAfter(response =>

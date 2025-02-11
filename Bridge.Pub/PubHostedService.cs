@@ -25,54 +25,54 @@ namespace Bridge.Pub
 
             var threads = new List<Thread>();
            
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 100; i++)
             {
                 threads.Add(new Thread(async () =>
                 {
                     await queue1HandlerProxy.Test1Async(new MsgTmp { Name = "A", Age = 1 });
                 }));
-                //threads.Add(new Thread(async () =>
-                //{
-                //    await queue1HandlerProxy.Test2Async(new List<MsgTmp>() { new MsgTmp { Name = "A", Age = 1 } });
-                //}));
-                //threads.Add(new Thread(async () =>
-                //{
-                //    await queue1HandlerProxy.Test3Async(new Sub1.LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage.SalesOrderHeader());
-                //}));
-                //threads.Add(new Thread(async () =>
-                //{
-                //    await queue1HandlerProxy.Test4Async();
-                //}));
-                //threads.Add(new Thread(async () =>
-                //{
-                //    await queue1HandlerProxy.Test5Async(5);
-                //}));
-                //threads.Add(new Thread(async () =>
-                //{
-                //    await queue1HandlerProxy.Test6Async(12);
-                //}));
-                //threads.Add(new Thread(async () =>
-                //{
-                //    await queue1HandlerProxy.Test7Async("name");
-                //}));
-                //threads.Add(new Thread(async () =>
-                //{
-                //    await queue1HandlerProxy.Test8Async("name");
-                //}));
+                threads.Add(new Thread(async () =>
+                {
+                    await queue1HandlerProxy.Test2Async(new List<MsgTmp>() { new MsgTmp { Name = "A", Age = 1 } });
+                }));
+                threads.Add(new Thread(async () =>
+                {
+                    await queue1HandlerProxy.Test3Async(new Sub1.LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage.SalesOrderHeader());
+                }));
+                threads.Add(new Thread(async () =>
+                {
+                    await queue1HandlerProxy.Test4Async();
+                }));
+                threads.Add(new Thread(async () =>
+                {
+                    await queue1HandlerProxy.Test5Async(5);
+                }));
+                threads.Add(new Thread(async () =>
+                {
+                    await queue1HandlerProxy.Test6Async(12);
+                }));
+                threads.Add(new Thread(async () =>
+                {
+                    await queue1HandlerProxy.Test7Async("name");
+                }));
+                threads.Add(new Thread(async () =>
+                {
+                    await queue1HandlerProxy.Test8Async("name");
+                }));
             }
-            
-            //for (int i = 0; i < 100; i++)
-            //{
-            //    threads.Add(new Thread(async () =>
-            //    {
-            //        var ret = await queue2HandlerProxy.Test1Async(new MsgTmp { Name = "A1", Age = 1 });
 
-            //    }));
-            //    threads.Add(new Thread(() =>
-            //    {
-            //        var ret = queue1HandlerProxy.Test1Async(new MsgTmp { Name = "A", Age = 1 }).Result;
-            //    }));
-            //}
+            for (int i = 0; i < 100; i++)
+            {
+                threads.Add(new Thread(async () =>
+                {
+                    var ret = await queue2HandlerProxy.Test1Async(new MsgTmp { Name = "A1", Age = 1 });
+
+                }));
+                threads.Add(new Thread(() =>
+                {
+                    var ret = queue1HandlerProxy.Test1Async(new MsgTmp { Name = "A", Age = 1 }).Result;
+                }));
+            }
 
             //for (int i = 0; i < 100; i++)
             //{

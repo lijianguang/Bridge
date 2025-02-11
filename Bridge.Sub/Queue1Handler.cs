@@ -3,14 +3,15 @@
 namespace Bridge.Sub
 {
     [MQHandler(MQType.ActiveMQ, MQNames.Queue1)]
-    public class Queue1Handler : MQHandlerBase
+    public class Queue1Handler : Sub1MQHandlerBase
     {
         public Queue1Handler() { }
 
         [MQAction("Test1")]
         public IEnumerable<MsgTmp> Test1(MsgTmp msg)
         {
-            var cont = this.Context.Request.Headers.TryGetValue("token", out string tk);
+            var token = this.Token;
+            var marketId = this.MarketId;
             Thread.Sleep(new Random().Next(10, 200));
             msg.Name = "updated";
             msg.Age = 99;
