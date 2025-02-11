@@ -10,6 +10,6 @@
         }
 
         public MQContext MQContext { get { return _context; } }
-        public ResponseBody? Body { get; set; }
+        public ResponseBody? Body { get; internal set; }
     }
 }

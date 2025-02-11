@@ -8,18 +8,24 @@ namespace Bridge.Core
         private readonly IServiceProvider _serviceProvider;
         private readonly MQHandlerActionDescriptor _mqHandlerActionDescriptor;
         private readonly object?[] _models;
+        private readonly MQContext _mqContext;
 
-        public HandlerActionInvoker(IServiceProvider serviceProvider, MQHandlerActionDescriptor descriptor, object?[] models) 
+        public HandlerActionInvoker(MQContext mqContext, MQHandlerActionDescriptor descriptor, object?[] models) 
         {
-            _serviceProvider = serviceProvider;
+            _serviceProvider = mqContext.RequestServices!;
             _mqHandlerActionDescriptor = descriptor;
             _models = models;
+            _mqContext = mqContext;
         }
 
         public async Task<object?> InvokeAsync()
         {
             var factory = _serviceProvider.GetRequiredService<IMQHandlerFactoryProvider>().CreateControllerFactory(_mqHandlerActionDescriptor);
             var handler = factory(_serviceProvider); 
+            if(handler is MQHandlerBase mqHandler)
+            {
+                mqHandler.Context = _mqContext;
+            }
             var parameterDefaultValues = ParameterDefaultValues
                 .GetParameterDefaultValues(_mqHandlerActionDescriptor.ActionMethodInfo);
             var objectMethodExecutor = ObjectMethodExecutor.Create(

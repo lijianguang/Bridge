@@ -25,7 +25,7 @@
 
         public string? Message { get { return _message; } }
 
-        public MQEndpoint? Endpoint { get; set; }
-        public IServiceProvider? RequestServices { get; set; }
+        public MQEndpoint? Endpoint { get; internal set; }
+        public IServiceProvider? RequestServices { get; internal set; }
     }
 }

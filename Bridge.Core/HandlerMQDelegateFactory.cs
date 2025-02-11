@@ -19,7 +19,7 @@
                     models = [];
                 }
 
-                var invoker = new HandlerActionInvoker(context.RequestServices!, descriptor, models);
+                var invoker = new HandlerActionInvoker(context, descriptor, models);
                 context.Response.Body = new ResponseBody() { Payload =  await invoker.InvokeAsync(), StatusCode = MQStatusCode.OK };
             };
         }
