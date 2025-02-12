@@ -14,7 +14,7 @@ namespace Bridge.Proxy.Generator
 
             var generator2 = new ProxyGenerator();
             generator2.SetNamespacePrefix("Sub2")
-                .Generate(typeof(Bridge.Sub1.Queue3Handler).Assembly,
+                .Generate(typeof(Bridge.Sub1.Queue3MulticastHandler).Assembly,
                 "C:\\Study\\Bridge\\Bridge.Pub\\Sub2Proxies");
         }
     }

@@ -24,4 +24,9 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Sub1Proxies\" />
+    <Folder Include="Sub2Proxies\" />
+  </ItemGroup>
+
 </Project>

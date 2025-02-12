@@ -18,10 +18,10 @@ namespace Bridge.Pub
         {
            
             var queue1HandlerProxy = _serviceProvider.GetRequiredService<Queue1HandlerProxy>();
-            var queue2HandlerProxy = _serviceProvider.GetRequiredService<Queue2HandlerProxy>();
-            var queue3HandlerProxy = _serviceProvider.GetRequiredService<Queue3HandlerProxy>();
-            var queue4HandlerProxy = _serviceProvider.GetRequiredService<Queue4HandlerProxy>();
+            var queue3HandlerProxy = _serviceProvider.GetRequiredService<Queue3MulticastHandlerProxy>();
             var queue5HandlerProxy = _serviceProvider.GetRequiredService<Queue5HandlerProxy>();
+
+            queue3HandlerProxy.Test1Async(new MsgTmp { Name= "Queue3MulticastHandlerProxy" }).Wait();
 
             var retfor5 = queue5HandlerProxy.Action1Async(new MsgTmp { Name = "A", Age = 1 }).Result;
             var retforaction2 = queue5HandlerProxy.Action2Async("action2").Result;

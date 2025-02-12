@@ -10,13 +10,13 @@
 namespace Sub1 {
     
     
-    public class Queue3HandlerProxy : global::Bridge.Abstraction.IHandlerProxy {
+    public class Queue3MulticastHandlerProxy : global::Bridge.Abstraction.IHandlerProxy {
         
         private global::Bridge.IPublisher _publisher;
         
         private global::Bridge.MQType _mqType;
         
-        public Queue3HandlerProxy(global::Bridge.IPublisher publisher) {
+        public Queue3MulticastHandlerProxy(global::Bridge.IPublisher publisher) {
             _publisher = publisher;
             _mqType = global::Bridge.MQType.ActiveMQ;
         }
