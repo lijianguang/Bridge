@@ -70,5 +70,10 @@ namespace Bridge.Sub
         {
             return test;
         }
+        [MQAction("Action13")]
+        public strct Action13(strct test)
+        {
+            return test;
+        }
     }
 }

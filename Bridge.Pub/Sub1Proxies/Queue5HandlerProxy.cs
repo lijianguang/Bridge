@@ -68,5 +68,9 @@ namespace Sub1 {
         public async Task<Bridge.Message.strct> Action12Async(Bridge.Message.strct test) {
             return await _publisher.PublishAndWaitReplyAsync<Bridge.Message.strct, Bridge.Message.strct>(_mqType, "queue5", "Action12", test);
         }
+        
+        public async Task<Bridge.Message.strct> Action13Async(Bridge.Message.strct test) {
+            return await _publisher.PublishAndWaitReplyAsync<Bridge.Message.strct, Bridge.Message.strct>(_mqType, "queue5", "Action13", test);
+        }
     }
 }

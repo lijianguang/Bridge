@@ -54,7 +54,7 @@ namespace Bridge.Pub
                 name = "12" 
             }).Result;
 
-            
+            _ = queue5HandlerProxy.Action13Async(new strct { });
             return Task.CompletedTask;
         }
 
