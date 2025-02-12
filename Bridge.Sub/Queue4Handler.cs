@@ -1,8 +1,8 @@
-﻿using Bridge.Message;
+﻿using Bridge.Sub.Models;
 
 namespace Bridge.Sub
 {
-    [MQHandler(MQType.ActiveMQ, MQNames.Queue4, true)]
+    [MQHandler(MQType.ActiveMQ, "queue4", true)]
     public class Queue4Handler : MQHandlerBase
     {
         [MQAction("Test1")]

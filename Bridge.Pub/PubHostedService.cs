@@ -2,8 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sub1;
-using Sub1.Bridge.Message;
-using System.Diagnostics;
+using Sub1.Bridge.Sub.Models;
 
 namespace Bridge.Pub
 {

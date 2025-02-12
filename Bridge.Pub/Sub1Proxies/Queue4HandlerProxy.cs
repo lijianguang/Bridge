@@ -21,15 +21,15 @@ namespace Sub1 {
             _mqType = global::Bridge.MQType.ActiveMQ;
         }
         
-        public async Task Test1Async(Bridge.Message.MsgTmp msg) {
+        public async Task Test1Async(Bridge.Sub.Models.MsgTmp msg) {
             await _publisher.PublishMulticastAsync(_mqType, "queue4", "Test1", msg);
         }
         
-        public async Task Test2Async(Bridge.Message.MsgTmp msg) {
+        public async Task Test2Async(Bridge.Sub.Models.MsgTmp msg) {
             await _publisher.PublishMulticastAsync(_mqType, "queue4", "Test2", msg);
         }
         
-        public async Task Test3Async(System.Collections.Generic.IEnumerable<Bridge.Message.MsgTmp> msgs) {
+        public async Task Test3Async(System.Collections.Generic.IEnumerable<Bridge.Sub.Models.MsgTmp> msgs) {
             await _publisher.PublishMulticastAsync(_mqType, "queue4", "Test3", msgs);
         }
         

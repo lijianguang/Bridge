@@ -7,22 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sub1.Bridge.Message {
+namespace Sub1.Bridge.Sub.Models {
     
     
     public class MsgTmp {
         
-        private Bridge.Message.strct _strct;
+        private Bridge.Sub.Models.strct _strct;
         
         private string _name;
         
         private int _age;
         
-        private Bridge.Message.MsgTmp1 _msgTmp1;
+        private Bridge.Sub.Models.MsgTmp1 _msgTmp1;
         
-        public Bridge.Message.strct strctf;
+        public Bridge.Sub.Models.strct strctf;
         
-        public Bridge.Message.strct strct {
+        public Bridge.Sub.Models.strct strct {
             get {
                 return this._strct;
             }
@@ -49,7 +49,7 @@ namespace Sub1.Bridge.Message {
             }
         }
         
-        public Bridge.Message.MsgTmp1 MsgTmp1 {
+        public Bridge.Sub.Models.MsgTmp1 MsgTmp1 {
             get {
                 return this._msgTmp1;
             }

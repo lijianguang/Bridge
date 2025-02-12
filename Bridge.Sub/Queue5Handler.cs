@@ -1,4 +1,4 @@
-﻿using Bridge.Message;
+﻿using Bridge.Sub.Models;
 namespace Bridge.Sub
 {
     [MQHandler(MQType.ActiveMQ, "queue5")]

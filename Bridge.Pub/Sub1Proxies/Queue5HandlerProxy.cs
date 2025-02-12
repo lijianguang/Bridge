@@ -21,8 +21,8 @@ namespace Sub1 {
             _mqType = global::Bridge.MQType.ActiveMQ;
         }
         
-        public async Task<System.Collections.Generic.IEnumerable<Bridge.Message.MsgTmp>> Action1Async(Bridge.Message.MsgTmp msg) {
-            return await _publisher.PublishAndWaitReplyAsync<Bridge.Message.MsgTmp, System.Collections.Generic.IEnumerable<Bridge.Message.MsgTmp>>(_mqType, "queue5", "Action1", msg);
+        public async Task<System.Collections.Generic.IEnumerable<Bridge.Sub.Models.MsgTmp>> Action1Async(Bridge.Sub.Models.MsgTmp msg) {
+            return await _publisher.PublishAndWaitReplyAsync<Bridge.Sub.Models.MsgTmp, System.Collections.Generic.IEnumerable<Bridge.Sub.Models.MsgTmp>>(_mqType, "queue5", "Action1", msg);
         }
         
         public async Task<string> Action2Async(string name) {
@@ -57,20 +57,20 @@ namespace Sub1 {
             return await _publisher.PublishAndWaitReplyAsync<System.Nullable<System.DateTime>, System.Nullable<System.DateTime>>(_mqType, "queue5", "Action9", dt);
         }
         
-        public async Task<TEST<string, Bridge.Message.MsgTmp>> Action10Async(TEST<string, Bridge.Message.MsgTmp> test) {
-            return await _publisher.PublishAndWaitReplyAsync<TEST<string, Bridge.Message.MsgTmp>, TEST<string, Bridge.Message.MsgTmp>>(_mqType, "queue5", "Action10", test);
+        public async Task<TEST<string, Bridge.Sub.Models.MsgTmp>> Action10Async(TEST<string, Bridge.Sub.Models.MsgTmp> test) {
+            return await _publisher.PublishAndWaitReplyAsync<TEST<string, Bridge.Sub.Models.MsgTmp>, TEST<string, Bridge.Sub.Models.MsgTmp>>(_mqType, "queue5", "Action10", test);
         }
         
-        public async Task<TEST<Bridge.Message.strct, Bridge.Message.MsgTmp>> Action11Async(TEST<Bridge.Message.strct, Bridge.Message.MsgTmp> test) {
-            return await _publisher.PublishAndWaitReplyAsync<TEST<Bridge.Message.strct, Bridge.Message.MsgTmp>, TEST<Bridge.Message.strct, Bridge.Message.MsgTmp>>(_mqType, "queue5", "Action11", test);
+        public async Task<TEST<Bridge.Sub.Models.strct, Bridge.Sub.Models.MsgTmp>> Action11Async(TEST<Bridge.Sub.Models.strct, Bridge.Sub.Models.MsgTmp> test) {
+            return await _publisher.PublishAndWaitReplyAsync<TEST<Bridge.Sub.Models.strct, Bridge.Sub.Models.MsgTmp>, TEST<Bridge.Sub.Models.strct, Bridge.Sub.Models.MsgTmp>>(_mqType, "queue5", "Action11", test);
         }
         
-        public async Task<Bridge.Message.strct> Action12Async(Bridge.Message.strct test) {
-            return await _publisher.PublishAndWaitReplyAsync<Bridge.Message.strct, Bridge.Message.strct>(_mqType, "queue5", "Action12", test);
+        public async Task<Bridge.Sub.Models.strct> Action12Async(Bridge.Sub.Models.strct test) {
+            return await _publisher.PublishAndWaitReplyAsync<Bridge.Sub.Models.strct, Bridge.Sub.Models.strct>(_mqType, "queue5", "Action12", test);
         }
         
-        public async Task<Bridge.Message.strct> Action13Async(Bridge.Message.strct test) {
-            return await _publisher.PublishAndWaitReplyAsync<Bridge.Message.strct, Bridge.Message.strct>(_mqType, "queue5", "Action13", test);
+        public async Task<Bridge.Sub.Models.strct> Action13Async(Bridge.Sub.Models.strct test) {
+            return await _publisher.PublishAndWaitReplyAsync<Bridge.Sub.Models.strct, Bridge.Sub.Models.strct>(_mqType, "queue5", "Action13", test);
         }
     }
 }

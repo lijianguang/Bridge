@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bridge.Core", "Bridge.Core\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "UnitTest.Bridge\UnitTest.csproj", "{3111AB19-6444-46F3-93D9-80E7D0BE5351}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bridge.Message", "Bridge.Message\Bridge.Message.csproj", "{DB82E769-DBAD-4841-A8D2-D5F36C2756DD}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bridge.ActiveMQ", "Bridge.ActiveMQ\Bridge.ActiveMQ.csproj", "{57263955-9E84-4DA8-944C-165E7D1447AE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bridge.Sub", "Bridge.Sub\Bridge.Sub.csproj", "{2F963D0B-3030-41AB-9F8E-B6CA9A18E574}"
@@ -39,10 +37,6 @@ Global
 		{3111AB19-6444-46F3-93D9-80E7D0BE5351}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3111AB19-6444-46F3-93D9-80E7D0BE5351}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3111AB19-6444-46F3-93D9-80E7D0BE5351}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DB82E769-DBAD-4841-A8D2-D5F36C2756DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DB82E769-DBAD-4841-A8D2-D5F36C2756DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DB82E769-DBAD-4841-A8D2-D5F36C2756DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DB82E769-DBAD-4841-A8D2-D5F36C2756DD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{57263955-9E84-4DA8-944C-165E7D1447AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{57263955-9E84-4DA8-944C-165E7D1447AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57263955-9E84-4DA8-944C-165E7D1447AE}.Release|Any CPU.ActiveCfg = Release|Any CPU

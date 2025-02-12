@@ -21,7 +21,7 @@ namespace Sub1 {
             _mqType = global::Bridge.MQType.ActiveMQ;
         }
         
-        public async Task Test1Async(Bridge.Message.MsgTmp msg) {
+        public async Task Test1Async(Bridge.Sub.Models.MsgTmp msg) {
             await _publisher.PublishMulticastAsync(_mqType, "queue3", "Test1", msg);
         }
     }
