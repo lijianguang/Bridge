@@ -1,4 +1,5 @@
-﻿using Bridge.ActiveMQ;
+﻿using Amqp.Framing;
+using Bridge.ActiveMQ;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sub1;
@@ -16,45 +17,105 @@ namespace Bridge.Pub
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-           
             var queue1HandlerProxy = _serviceProvider.GetRequiredService<Queue1HandlerProxy>();
             var queue3HandlerProxy = _serviceProvider.GetRequiredService<Queue3MulticastHandlerProxy>();
             var queue5HandlerProxy = _serviceProvider.GetRequiredService<Queue5HandlerProxy>();
 
-            queue3HandlerProxy.Test1Async(new MsgTmp { Name= "Queue3MulticastHandlerProxy" }).Wait();
-
-            var retfor5 = queue5HandlerProxy.Action1Async(new MsgTmp { Name = "A", Age = 1 }).Result;
-            var retforaction2 = queue5HandlerProxy.Action2Async("action2").Result;
-            var retforaction3 = queue5HandlerProxy.Action3Async(5).Result;
-            var retforaction4 = queue5HandlerProxy.Action4Async(true).Result;
-            var retforaction5 = queue5HandlerProxy.Action5Async(DateTime.Now).Result;
-            var retforaction6 = queue5HandlerProxy.Action6Async("action6").Result;
-            var retforaction61 = queue5HandlerProxy.Action6Async(null).Result;
-            var retforaction7 = queue5HandlerProxy.Action7Async(5).Result;
-            var retforaction71 = queue5HandlerProxy.Action7Async(null).Result;
-            var retforaction8 = queue5HandlerProxy.Action8Async(true).Result;
-            var retforaction81 = queue5HandlerProxy.Action8Async(null).Result;
-            var retforaction9 = queue5HandlerProxy.Action9Async(DateTime.Now).Result;
-            var retforaction91 = queue5HandlerProxy.Action9Async(null).Result;
-            var retforaction10 = queue5HandlerProxy.Action10Async(new TEST<string, MsgTmp>
+            while (true)
             {
-                t = "10",
-                t2 = new MsgTmp { Age =10}
-            }).Result;
-            var retforaction101 = queue5HandlerProxy.Action10Async(null).Result;
-            var retforaction11 = queue5HandlerProxy.Action11Async(new TEST<strct, MsgTmp>
-            {
-                t = new strct { name="11"},
-                t2 = new MsgTmp { Age = 10 }
-            }).Result;
-            var retforaction111 = queue5HandlerProxy.Action11Async(null).Result;
-            var retforaction12 = queue5HandlerProxy.Action12Async(new strct
-            { 
-                name = "12" 
-            }).Result;
+                Begin:
+                Console.WriteLine("please enter the queue name:");
 
-            _ = queue5HandlerProxy.Action13Async(new strct { });
-            return Task.CompletedTask;
+                var queueName = Console.ReadLine();
+                if (string.IsNullOrEmpty(queueName))
+                {
+                    goto Begin;
+                }
+
+                switch (queueName)
+                {
+                    case "queue1":
+                        break;
+                    case "queue3":
+                        Q3ActionNameBegin:
+                        Console.WriteLine($"please enter the {queueName}'s action name:");
+                        var q3ActionName = Console.ReadLine();
+                        switch (q3ActionName)
+                        {
+                            case "test1":
+                                _ = queue3HandlerProxy.Test1Async(new MsgTmp { });
+                                break;
+                            default:
+                                goto Q3ActionNameBegin;
+                        }
+                        break;
+                    case "queue5":
+                        ActionNameBegin:
+                        Console.WriteLine($"please enter the {queueName}'s action name:");
+                        var actionName = Console.ReadLine();
+                        switch (actionName)
+                        {
+                            case "action1":
+                                var queue5Action1Result = queue5HandlerProxy.Action1Async(new MsgTmp { }).Result;
+                                break;
+                            case "action2":
+                                var queue5Action2Result = queue5HandlerProxy.Action2Async("action2").Result;
+                                break;
+                            case "action3":
+                                var queue5Action3Result = queue5HandlerProxy.Action3Async(5).Result;
+                                break;
+                            case "action4":
+                                var queue5Action4Result = queue5HandlerProxy.Action4Async(true).Result;
+                                break;
+                            case "action5":
+                                var queue5Action5Result = queue5HandlerProxy.Action5Async(DateTime.Now).Result;
+                                break;
+                            case "action6":
+                                var queue5Action6Result = queue5HandlerProxy.Action6Async(null).Result;
+                                var queue5Action61Result = queue5HandlerProxy.Action6Async("action6").Result;
+                                break;
+                            case "action7":
+                                var queue5Action7Result = queue5HandlerProxy.Action7Async(5).Result;
+                                var queue5Action71Result = queue5HandlerProxy.Action7Async(null).Result;
+                                break;
+                            case "action8":
+                                var queue5Action8Result = queue5HandlerProxy.Action8Async(true).Result;
+                                var queue5Action8Resul1 = queue5HandlerProxy.Action8Async(null).Result;
+                                break;
+                            case "action9":
+                                var queue5Action9Result = queue5HandlerProxy.Action9Async(DateTime.Now).Result;
+                                var queue5Action91Result = queue5HandlerProxy.Action9Async(null).Result;
+                                break;
+                            case "action10":
+                                var queue5Action10Result = queue5HandlerProxy.Action10Async(new TEST<string, MsgTmp>
+                                {
+                                    t = "10",
+                                    t2 = new MsgTmp { Age = 10 }
+                                }).Result;
+                                break;
+                            case "action11":
+                                var queue5Action11Result = queue5HandlerProxy.Action11Async(new TEST<strct, MsgTmp>
+                                {
+                                    t = new strct { name = "11" },
+                                    t2 = new MsgTmp { Age = 10 }
+                                }).Result;
+                                break;
+                            case "action12":
+                                var queue5Action12Result = queue5HandlerProxy.Action12Async(new strct
+                                {
+                                    name = "12"
+                                }).Result;
+                                break;
+                            default:
+                                Console.WriteLine($"can't find the {queueName}'s action: {actionName}");
+                                goto ActionNameBegin;
+                        }
+                        break;
+                    default:
+                        Console.WriteLine($"can't find the queue: {queueName}");
+                        goto Begin;
+                }
+            }
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
