@@ -11,11 +11,13 @@ namespace Bridge.Core
     public class ProxyGenerator : IProxyGenerator
     {
         private string _namespacePrefix = string.Empty;
+
         public IProxyGenerator SetNamespacePrefix(string namespacePrefix)
         {
             _namespacePrefix = namespacePrefix;
             return this;
         }
+
         public void Generate(Assembly assembly, params string[] outputPaths)
         {
             List<Type> allMQHandlers = assembly.GetTypes().Where(t => t.IsSubclassOf(typeof(MQHandlerBase))).ToList();
