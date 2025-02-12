@@ -31,10 +31,7 @@ var app = Host.CreateDefaultBuilder(args)
             });
         });
 
-        services.AddTransient<Queue1HandlerProxy>();
-        services.AddTransient<Queue2HandlerProxy>();
-        services.AddTransient<Queue3HandlerProxy>();
-        services.AddTransient<Queue4HandlerProxy>();
+        services.AddHandlerProxies();
 
         services.AddActiveMQServices(context.Configuration);
 

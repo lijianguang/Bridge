@@ -10,19 +10,19 @@
 namespace Sub1 {
     
     
-    public class Queue3HandlerProxy : global::Bridge.Abstraction.IHandlerProxy {
+    public class Queue5HandlerProxy : global::Bridge.Abstraction.IHandlerProxy {
         
         private global::Bridge.IPublisher _publisher;
         
         private global::Bridge.MQType _mqType;
         
-        public Queue3HandlerProxy(global::Bridge.IPublisher publisher) {
+        public Queue5HandlerProxy(global::Bridge.IPublisher publisher) {
             _publisher = publisher;
             _mqType = global::Bridge.MQType.ActiveMQ;
         }
         
-        public async Task Test1Async(Bridge.Message.MsgTmp msg) {
-            await _publisher.PublishMulticastAsync(_mqType, "queue3", "Test1", msg);
+        public async Task<System.Collections.Generic.IEnumerable<Bridge.Message.MsgTmp>> Action1Async(Bridge.Message.MsgTmp msg) {
+            return await _publisher.PublishAndWaitReplyAsync<Bridge.Message.MsgTmp, System.Collections.Generic.IEnumerable<Bridge.Message.MsgTmp>>(_mqType, "queue5", "Action1", msg);
         }
     }
 }

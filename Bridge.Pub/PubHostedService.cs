@@ -22,9 +22,13 @@ namespace Bridge.Pub
             var queue2HandlerProxy = _serviceProvider.GetRequiredService<Queue2HandlerProxy>();
             var queue3HandlerProxy = _serviceProvider.GetRequiredService<Queue3HandlerProxy>();
             var queue4HandlerProxy = _serviceProvider.GetRequiredService<Queue4HandlerProxy>();
+            var queue5HandlerProxy = _serviceProvider.GetRequiredService<Queue5HandlerProxy>();
 
             var threads = new List<Thread>();
-           
+
+            var retfor5 = queue5HandlerProxy.Action1Async(new MsgTmp { Name = "A", Age = 1 }).Result;
+
+
             for (int i = 0; i < 100; i++)
             {
                 threads.Add(new Thread(async () =>

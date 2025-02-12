@@ -1,7 +1,7 @@
 ﻿using Bridge.Core;
 using Bridge.Sub;
 
-namespace Bridge.Generator
+namespace Bridge.Proxy.Generator
 {
     internal class Program
     {

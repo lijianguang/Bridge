@@ -33,6 +33,8 @@ namespace Bridge.Core
 
                     var codeType = GetCodeType(codeNamespace, $"{mqHandler.Name}Proxy", default);
 
+                    codeType.BaseTypes.Add(new CodeTypeReference($"global::{typeof(IHandlerProxy).FullName}"));
+
                     AddPrivateField(codeType, typeof(IPublisher), "_publisher");
                     AddPrivateField(codeType, typeof(MQType), "_mqType");
 

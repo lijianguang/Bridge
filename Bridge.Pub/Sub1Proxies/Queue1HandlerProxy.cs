@@ -10,7 +10,7 @@
 namespace Sub1 {
     
     
-    public class Queue1HandlerProxy {
+    public class Queue1HandlerProxy : global::Bridge.Abstraction.IHandlerProxy {
         
         private global::Bridge.IPublisher _publisher;
         

@@ -19,9 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bridge.Pub", "Bridge.Pub\Br
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bridge.Sub2", "Bridge.Sub2\Bridge.Sub2.csproj", "{EC023B90-B70D-4538-800B-65B80A20141B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bridge.Generator", "Bridge.Generator\Bridge.Generator.csproj", "{2FA86E10-1B72-4A1F-AF77-78B15D1759FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bridge.Proxy.Generator", "Bridge.Generator\Bridge.Proxy.Generator.csproj", "{2FA86E10-1B72-4A1F-AF77-78B15D1759FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Proxy", "Bridge.Proxy\Bridge.Proxy.csproj", "{44D3A31C-3B74-42AB-A33C-43506E48DC35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bridge.Proxy", "Bridge.Proxy\Bridge.Proxy.csproj", "{44D3A31C-3B74-42AB-A33C-43506E48DC35}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

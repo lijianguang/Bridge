@@ -51,6 +51,11 @@ namespace Bridge.Core
             services.AddSingleton<IConsumerDescriptorProvider, ConsumerDescriptorProvider>();
         }
 
+        public static void AddHandlerProxies(this IServiceCollection services)
+        {
+            services.AddAllImplementedClasses(typeof(IHandlerProxy), (t) => new ServiceDescriptor(t, t, ServiceLifetime.Transient));
+        }
+
         public static void AddMiddlewares(this IServiceCollection services, ServiceLifetime lifetime = ServiceLifetime.Transient)
         {
             services.AddAllImplementedClasses(typeof(IMQMiddleware), (t) => new ServiceDescriptor(typeof(IMQMiddleware), t, lifetime));
