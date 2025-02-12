@@ -27,6 +27,7 @@ var app = Host.CreateDefaultBuilder(args)
             });
             publisher.OnAfter(response =>
             {
+                Console.WriteLine(JsonConvert.SerializeObject(response));
 
             });
         });

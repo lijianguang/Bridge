@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System.ComponentModel;
 
 namespace Bridge.Core
 {
@@ -15,7 +16,30 @@ namespace Bridge.Core
             if(context.Message != null)
             {
                 context.Request.Body = _messageConverter.Deserialize<RequestBody>(context.Message);
-                context.Request.Payload = (type) => context.Request.Body.Payload is JToken jtoken ? jtoken.ToObject(type) : default;
+                context.Request.Payload = (type) => {
+                    if(context.Request.Body.Payload is JToken jtoken)
+                    {
+                        return jtoken.ToObject(type);
+                    }
+
+                    if(context.Request.Body.Payload is null)
+                    {
+                        return default;
+                    }
+
+                    if (context.Request.Body.Payload.GetType().Equals(type))
+                    {
+                        return context.Request.Body.Payload;
+                    }
+
+                    var underlyingType = Nullable.GetUnderlyingType(type);
+                    if(underlyingType != null)
+                    {
+                        return TypeDescriptor.GetConverter(type).ConvertFrom(Convert.ChangeType(context.Request.Body.Payload, underlyingType));
+                    }
+                                        
+                    return Convert.ChangeType(context.Request.Body.Payload, type);
+                };
             }
 
             await next(context);

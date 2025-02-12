@@ -24,100 +24,37 @@ namespace Bridge.Pub
             var queue4HandlerProxy = _serviceProvider.GetRequiredService<Queue4HandlerProxy>();
             var queue5HandlerProxy = _serviceProvider.GetRequiredService<Queue5HandlerProxy>();
 
-            var threads = new List<Thread>();
-
             var retfor5 = queue5HandlerProxy.Action1Async(new MsgTmp { Name = "A", Age = 1 }).Result;
-
-
-            for (int i = 0; i < 100; i++)
+            var retforaction2 = queue5HandlerProxy.Action2Async("action2").Result;
+            var retforaction3 = queue5HandlerProxy.Action3Async(5).Result;
+            var retforaction4 = queue5HandlerProxy.Action4Async(true).Result;
+            var retforaction5 = queue5HandlerProxy.Action5Async(DateTime.Now).Result;
+            var retforaction6 = queue5HandlerProxy.Action6Async("action6").Result;
+            var retforaction61 = queue5HandlerProxy.Action6Async(null).Result;
+            var retforaction7 = queue5HandlerProxy.Action7Async(5).Result;
+            var retforaction71 = queue5HandlerProxy.Action7Async(null).Result;
+            var retforaction8 = queue5HandlerProxy.Action8Async(true).Result;
+            var retforaction81 = queue5HandlerProxy.Action8Async(null).Result;
+            var retforaction9 = queue5HandlerProxy.Action9Async(DateTime.Now).Result;
+            var retforaction91 = queue5HandlerProxy.Action9Async(null).Result;
+            var retforaction10 = queue5HandlerProxy.Action10Async(new TEST<string, MsgTmp>
             {
-                threads.Add(new Thread(async () =>
-                {
-                    await queue1HandlerProxy.Test1Async(new MsgTmp { Name = "A", Age = 1 });
-                }));
-                threads.Add(new Thread(async () =>
-                {
-                    await queue1HandlerProxy.Test2Async(new List<MsgTmp>() { new MsgTmp { Name = "A", Age = 1 } });
-                }));
-                threads.Add(new Thread(async () =>
-                {
-                    await queue1HandlerProxy.Test3Async(new Sub1.LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage.SalesOrderHeader());
-                }));
-                threads.Add(new Thread(async () =>
-                {
-                    await queue1HandlerProxy.Test4Async();
-                }));
-                threads.Add(new Thread(async () =>
-                {
-                    await queue1HandlerProxy.Test5Async(5);
-                }));
-                threads.Add(new Thread(async () =>
-                {
-                    await queue1HandlerProxy.Test6Async(12);
-                }));
-                threads.Add(new Thread(async () =>
-                {
-                    await queue1HandlerProxy.Test7Async("name");
-                }));
-                threads.Add(new Thread(async () =>
-                {
-                    await queue1HandlerProxy.Test8Async("name");
-                }));
-            }
-
-            for (int i = 0; i < 100; i++)
+                t = "10",
+                t2 = new MsgTmp { Age =10}
+            }).Result;
+            var retforaction101 = queue5HandlerProxy.Action10Async(null).Result;
+            var retforaction11 = queue5HandlerProxy.Action11Async(new TEST<strct, MsgTmp>
             {
-                threads.Add(new Thread(async () =>
-                {
-                    var ret = await queue2HandlerProxy.Test1Async(new MsgTmp { Name = "A1", Age = 1 });
+                t = new strct { name="11"},
+                t2 = new MsgTmp { Age = 10 }
+            }).Result;
+            var retforaction111 = queue5HandlerProxy.Action11Async(null).Result;
+            var retforaction12 = queue5HandlerProxy.Action12Async(new strct
+            { 
+                name = "12" 
+            }).Result;
 
-                }));
-                threads.Add(new Thread(() =>
-                {
-                    var ret = queue1HandlerProxy.Test1Async(new MsgTmp { Name = "A", Age = 1 }).Result;
-                }));
-            }
-
-            //for (int i = 0; i < 100; i++)
-            //{
-            //    threads.Add(new Thread(() =>
-            //    {
-            //        queue3HandlerProxy.Test1Async(new MsgTmp { Name = "A", Age = 1 }).Wait();
-            //    }));
-
-            //    threads.Add(new Thread(() =>
-            //    {
-            //        queue3HandlerProxy.Test1Async(new MsgTmp { Name = "A", Age = 1 }).Wait();
-            //    }));
-            //}
-
-            var timer = new Stopwatch();
-            timer.Start();
-
-            threads.ForEach(t =>
-            {
-                Thread.Sleep(new Random().Next(1, 100));
-                t.Start();
-            });
-
-            checkAlive:
-            var existAlive = false;
-            threads.ForEach(t =>
-            {
-                if (t.ThreadState != System.Threading.ThreadState.Stopped)
-                {
-                    existAlive = true;
-                }
-            });
-            if (existAlive)
-            {
-                goto checkAlive;
-            }
-
-            timer.Stop();
-            TimeSpan timeTaken = timer.Elapsed;
-            string foo = "Time taken: " + timeTaken.ToString(@"m\:ss\.fff");
-            Console.WriteLine(foo);
+            
             return Task.CompletedTask;
         }
 

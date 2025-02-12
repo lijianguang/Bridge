@@ -24,5 +24,49 @@ namespace Sub1 {
         public async Task<System.Collections.Generic.IEnumerable<Bridge.Message.MsgTmp>> Action1Async(Bridge.Message.MsgTmp msg) {
             return await _publisher.PublishAndWaitReplyAsync<Bridge.Message.MsgTmp, System.Collections.Generic.IEnumerable<Bridge.Message.MsgTmp>>(_mqType, "queue5", "Action1", msg);
         }
+        
+        public async Task<string> Action2Async(string name) {
+            return await _publisher.PublishAndWaitReplyAsync<string, string>(_mqType, "queue5", "Action2", name);
+        }
+        
+        public async Task<int> Action3Async(int age) {
+            return await _publisher.PublishAndWaitReplyAsync<int, int>(_mqType, "queue5", "Action3", age);
+        }
+        
+        public async Task<bool> Action4Async(bool isT) {
+            return await _publisher.PublishAndWaitReplyAsync<bool, bool>(_mqType, "queue5", "Action4", isT);
+        }
+        
+        public async Task<System.DateTime> Action5Async(System.DateTime dt) {
+            return await _publisher.PublishAndWaitReplyAsync<System.DateTime, System.DateTime>(_mqType, "queue5", "Action5", dt);
+        }
+        
+        public async Task<string> Action6Async(string name) {
+            return await _publisher.PublishAndWaitReplyAsync<string, string>(_mqType, "queue5", "Action6", name);
+        }
+        
+        public async Task<System.Nullable<int>> Action7Async(System.Nullable<int> age) {
+            return await _publisher.PublishAndWaitReplyAsync<System.Nullable<int>, System.Nullable<int>>(_mqType, "queue5", "Action7", age);
+        }
+        
+        public async Task<System.Nullable<bool>> Action8Async(System.Nullable<bool> isT) {
+            return await _publisher.PublishAndWaitReplyAsync<System.Nullable<bool>, System.Nullable<bool>>(_mqType, "queue5", "Action8", isT);
+        }
+        
+        public async Task<System.Nullable<System.DateTime>> Action9Async(System.Nullable<System.DateTime> dt) {
+            return await _publisher.PublishAndWaitReplyAsync<System.Nullable<System.DateTime>, System.Nullable<System.DateTime>>(_mqType, "queue5", "Action9", dt);
+        }
+        
+        public async Task<TEST<string, Bridge.Message.MsgTmp>> Action10Async(TEST<string, Bridge.Message.MsgTmp> test) {
+            return await _publisher.PublishAndWaitReplyAsync<TEST<string, Bridge.Message.MsgTmp>, TEST<string, Bridge.Message.MsgTmp>>(_mqType, "queue5", "Action10", test);
+        }
+        
+        public async Task<TEST<Bridge.Message.strct, Bridge.Message.MsgTmp>> Action11Async(TEST<Bridge.Message.strct, Bridge.Message.MsgTmp> test) {
+            return await _publisher.PublishAndWaitReplyAsync<TEST<Bridge.Message.strct, Bridge.Message.MsgTmp>, TEST<Bridge.Message.strct, Bridge.Message.MsgTmp>>(_mqType, "queue5", "Action11", test);
+        }
+        
+        public async Task<Bridge.Message.strct> Action12Async(Bridge.Message.strct test) {
+            return await _publisher.PublishAndWaitReplyAsync<Bridge.Message.strct, Bridge.Message.strct>(_mqType, "queue5", "Action12", test);
+        }
     }
 }
