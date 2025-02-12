@@ -1,5 +1,5 @@
 ﻿using Bridge.Sub.Models;
-namespace Bridge.Sub
+namespace Bridge.Sub.Handlers
 {
     [MQHandler(MQType.ActiveMQ, "queue5")]
     public class Queue5Handler : Sub1MQHandlerBase
@@ -7,8 +7,8 @@ namespace Bridge.Sub
         [MQAction("Action1")]
         public IEnumerable<MsgTmp> Action1(MsgTmp msg)
         {
-            var token = this.Token;
-            var marketId = this.MarketId;
+            var token = Token;
+            var marketId = MarketId;
 
             msg.Name = "Action1";
             msg.Age = 99;
@@ -22,7 +22,7 @@ namespace Bridge.Sub
         [MQAction("Action3")]
         public int Action3(int age)
         {
-            return age+1;
+            return age + 1;
         }
         [MQAction("Action4")]
         public bool Action4(bool isT)
@@ -43,7 +43,7 @@ namespace Bridge.Sub
         [MQAction("Action7")]
         public int? Action7(int? age)
         {
-            return age+1;
+            return age + 1;
         }
         [MQAction("Action8")]
         public bool? Action8(bool? isT)
@@ -56,7 +56,7 @@ namespace Bridge.Sub
             return dt?.AddDays(1);
         }
         [MQAction("Action10")]
-        public TEST<string, MsgTmp> Action10(TEST<string,MsgTmp> test)
+        public TEST<string, MsgTmp> Action10(TEST<string, MsgTmp> test)
         {
             return test;
         }

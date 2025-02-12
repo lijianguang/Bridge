@@ -1,6 +1,6 @@
 ﻿using Bridge.Sub.Models;
 
-namespace Bridge.Sub
+namespace Bridge.Sub.Handlers
 {
     [MQHandler(MQType.ActiveMQ, "queue1")]
     public class Queue1Handler : Sub1MQHandlerBase
@@ -10,12 +10,12 @@ namespace Bridge.Sub
         [MQAction("Test1")]
         public IEnumerable<MsgTmp> Test1(MsgTmp msg)
         {
-            var token = this.Token;
-            var marketId = this.MarketId;
+            var token = Token;
+            var marketId = MarketId;
             Thread.Sleep(new Random().Next(10, 200));
             msg.Name = "updated";
             msg.Age = 99;
-            return new List<MsgTmp>() { msg,msg };
+            return new List<MsgTmp>() { msg, msg };
         }
 
         [MQAction("Test2")]
