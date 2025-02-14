@@ -10,67 +10,91 @@
 namespace Sub1 {
     
     
-    public class Queue5HandlerProxy : global::Bridge.Abstraction.IHandlerProxy {
+    // This proxy's target message queue is ActiveMQ and queue name is queue5
+    public class ActiveMQ_Queue5_Proxy : global::Bridge.Abstraction.IHandlerProxy {
         
         private global::Bridge.IPublisher _publisher;
         
         private global::Bridge.MQType _mqType;
         
-        public Queue5HandlerProxy(global::Bridge.IPublisher publisher) {
+        public ActiveMQ_Queue5_Proxy(global::Bridge.IPublisher publisher) {
             _publisher = publisher;
             _mqType = global::Bridge.MQType.ActiveMQ;
         }
         
+        // This method's action is Action1
         public async Task<System.Collections.Generic.IEnumerable<Bridge.Sub.Models.MsgTmp>> Action1Async(Bridge.Sub.Models.MsgTmp msg) {
             return await _publisher.PublishAndWaitReplyAsync<Bridge.Sub.Models.MsgTmp, System.Collections.Generic.IEnumerable<Bridge.Sub.Models.MsgTmp>>(_mqType, "queue5", "Action1", msg);
         }
         
+        // This method's action is Action2
         public async Task<string> Action2Async(string name) {
             return await _publisher.PublishAndWaitReplyAsync<string, string>(_mqType, "queue5", "Action2", name);
         }
         
+        // This method's action is Action3
         public async Task<int> Action3Async(int age) {
             return await _publisher.PublishAndWaitReplyAsync<int, int>(_mqType, "queue5", "Action3", age);
         }
         
+        // This method's action is Action4
         public async Task<bool> Action4Async(bool isT) {
             return await _publisher.PublishAndWaitReplyAsync<bool, bool>(_mqType, "queue5", "Action4", isT);
         }
         
+        // This method's action is Action5
         public async Task<System.DateTime> Action5Async(System.DateTime dt) {
             return await _publisher.PublishAndWaitReplyAsync<System.DateTime, System.DateTime>(_mqType, "queue5", "Action5", dt);
         }
         
+        // This method's action is Action6
         public async Task<string> Action6Async(string name) {
             return await _publisher.PublishAndWaitReplyAsync<string, string>(_mqType, "queue5", "Action6", name);
         }
         
+        // This method's action is Action7
         public async Task<System.Nullable<int>> Action7Async(System.Nullable<int> age) {
             return await _publisher.PublishAndWaitReplyAsync<System.Nullable<int>, System.Nullable<int>>(_mqType, "queue5", "Action7", age);
         }
         
+        // This method's action is Action8
         public async Task<System.Nullable<bool>> Action8Async(System.Nullable<bool> isT) {
             return await _publisher.PublishAndWaitReplyAsync<System.Nullable<bool>, System.Nullable<bool>>(_mqType, "queue5", "Action8", isT);
         }
         
+        // This method's action is Action9
         public async Task<System.Nullable<System.DateTime>> Action9Async(System.Nullable<System.DateTime> dt) {
             return await _publisher.PublishAndWaitReplyAsync<System.Nullable<System.DateTime>, System.Nullable<System.DateTime>>(_mqType, "queue5", "Action9", dt);
         }
         
+        // This method's action is Action10
         public async Task<TEST<string, Bridge.Sub.Models.MsgTmp>> Action10Async(TEST<string, Bridge.Sub.Models.MsgTmp> test) {
             return await _publisher.PublishAndWaitReplyAsync<TEST<string, Bridge.Sub.Models.MsgTmp>, TEST<string, Bridge.Sub.Models.MsgTmp>>(_mqType, "queue5", "Action10", test);
         }
         
+        // This method's action is Action11
         public async Task<TEST<Bridge.Sub.Models.strct, Bridge.Sub.Models.MsgTmp>> Action11Async(TEST<Bridge.Sub.Models.strct, Bridge.Sub.Models.MsgTmp> test) {
             return await _publisher.PublishAndWaitReplyAsync<TEST<Bridge.Sub.Models.strct, Bridge.Sub.Models.MsgTmp>, TEST<Bridge.Sub.Models.strct, Bridge.Sub.Models.MsgTmp>>(_mqType, "queue5", "Action11", test);
         }
         
+        // This method's action is Action12
         public async Task<Bridge.Sub.Models.strct> Action12Async(Bridge.Sub.Models.strct test) {
             return await _publisher.PublishAndWaitReplyAsync<Bridge.Sub.Models.strct, Bridge.Sub.Models.strct>(_mqType, "queue5", "Action12", test);
         }
         
+        // This method's action is Action13
         public async Task<Bridge.Sub.Models.strct> Action13Async(Bridge.Sub.Models.strct test) {
             return await _publisher.PublishAndWaitReplyAsync<Bridge.Sub.Models.strct, Bridge.Sub.Models.strct>(_mqType, "queue5", "Action13", test);
+        }
+        
+        // This method's action is Action14
+        public async Task Action14Async() {
+            await _publisher.PublishAsync(_mqType, "queue5", "Action14");
+        }
+        
+        // This method's action is Action15
+        public async Task<string> Action15Async(string name) {
+            return await _publisher.PublishAndWaitReplyAsync<string, string>(_mqType, "queue5", "Action15", name);
         }
     }
 }

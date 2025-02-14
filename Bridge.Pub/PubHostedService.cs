@@ -17,9 +17,12 @@ namespace Bridge.Pub
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            var queue1HandlerProxy = _serviceProvider.GetRequiredService<Queue1HandlerProxy>();
-            var queue3HandlerProxy = _serviceProvider.GetRequiredService<Queue3MulticastHandlerProxy>();
-            var queue5HandlerProxy = _serviceProvider.GetRequiredService<Queue5HandlerProxy>();
+            var queue1HandlerProxy = _serviceProvider.GetRequiredService<ActiveMQ_Queue1_Proxy>();
+            var queue3HandlerProxy = _serviceProvider.GetRequiredService<Sub1.ActiveMQ_Queue3Multicast_Proxy>();
+            var queue5HandlerProxy = _serviceProvider.GetRequiredService<ActiveMQ_Queue5_Proxy>();
+
+            queue5HandlerProxy.Action14Async().Wait();
+            var ret = queue5HandlerProxy.Action15Async(null).Result;
 
             while (true)
             {
@@ -87,14 +90,14 @@ namespace Bridge.Pub
                                 var queue5Action91Result = queue5HandlerProxy.Action9Async(null).Result;
                                 break;
                             case "action10":
-                                var queue5Action10Result = queue5HandlerProxy.Action10Async(new TEST<string, MsgTmp>
+                                var queue5Action10Result = queue5HandlerProxy.Action10Async(new Sub1.TEST<string, MsgTmp>
                                 {
                                     t = "10",
                                     t2 = new MsgTmp { Age = 10 }
                                 }).Result;
                                 break;
                             case "action11":
-                                var queue5Action11Result = queue5HandlerProxy.Action11Async(new TEST<strct, MsgTmp>
+                                var queue5Action11Result = queue5HandlerProxy.Action11Async(new Sub1.TEST<strct, MsgTmp>
                                 {
                                     t = new strct { name = "11" },
                                     t2 = new MsgTmp { Age = 10 }

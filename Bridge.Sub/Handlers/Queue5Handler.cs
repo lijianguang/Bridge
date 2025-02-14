@@ -75,5 +75,15 @@ namespace Bridge.Sub.Handlers
         {
             return test;
         }
+        [MQAction("Action14")]
+        public void Action14()
+        {
+            throw new Exception("action14 throw");
+        }
+        [MQAction("Action15")]
+        public string Action15(string name)
+        {
+            return name.Trim();
+        }
     }
 }

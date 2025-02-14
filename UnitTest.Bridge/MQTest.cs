@@ -27,8 +27,7 @@ namespace UnitTest.Bridge
 
                     services.AddActiveMQServices(hostContext.Configuration);
 
-                    services.AddTransient<Queue1Handler>();
-                    services.AddTransient<Queue2Handler>();
+                    services.AddAllHandlerProxies();
 
                 });
             var host = builder.Build();

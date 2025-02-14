@@ -32,7 +32,7 @@ var app = Host.CreateDefaultBuilder(args)
             });
         });
 
-        services.AddHandlerProxies();
+        services.AddAllHandlerProxies();
 
         services.AddActiveMQServices(context.Configuration);
 

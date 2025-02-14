@@ -10,17 +10,19 @@
 namespace Sub2 {
     
     
-    public class Queue3MulticastHandlerProxy : global::Bridge.Abstraction.IHandlerProxy {
+    // This proxy's target message queue is ActiveMQ and queue name is queue3
+    public class ActiveMQ_Queue3Multicast_Proxy : global::Bridge.Abstraction.IHandlerProxy {
         
         private global::Bridge.IPublisher _publisher;
         
         private global::Bridge.MQType _mqType;
         
-        public Queue3MulticastHandlerProxy(global::Bridge.IPublisher publisher) {
+        public ActiveMQ_Queue3Multicast_Proxy(global::Bridge.IPublisher publisher) {
             _publisher = publisher;
             _mqType = global::Bridge.MQType.ActiveMQ;
         }
         
+        // This method's action is Test1
         public async Task Test1Async(Bridge.Sub2.Models.MsgTmp msg) {
             await _publisher.PublishMulticastAsync(_mqType, "queue3", "Test1", msg);
         }

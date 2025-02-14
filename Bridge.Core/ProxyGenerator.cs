@@ -29,20 +29,22 @@ namespace Bridge.Core
                 var mqHandlerAttribute = mqHandler.GetCustomAttribute<MQHandlerAttribute>();
                 if(mqHandlerAttribute != null)
                 {
-                    var compileUnit = CreateCodeCompileUnit();
-                    
-                    var codeNamespace = GetCodeNamespace(compileUnit, "");
-
-                    var codeType = GetCodeType(codeNamespace, $"{mqHandler.Name}Proxy", default);
-
-                    codeType.BaseTypes.Add(new CodeTypeReference($"global::{typeof(IHandlerProxy).FullName}"));
-
-                    AddPrivateField(codeType, typeof(IPublisher), "_publisher");
-                    AddPrivateField(codeType, typeof(MQType), "_mqType");
-
                     var mqType = mqHandlerAttribute.MQType;
                     var queueName = mqHandlerAttribute.QueueName;
                     var isMulticast = mqHandlerAttribute.IsMulticast;
+
+                    var compileUnit = CreateCodeCompileUnit();
+                    
+                    var codeNamespace = GetCodeNamespace(compileUnit, "");
+                    var proxyName = $"{mqType}_{(mqHandler.Name.EndsWith("Handler") ? mqHandler.Name.Substring(0, mqHandler.Name.Length - 7) : mqHandler.Name)}_Proxy";
+                    var codeType = GetCodeType(codeNamespace, proxyName, default);
+
+                    codeType.BaseTypes.Add(new CodeTypeReference($"global::{typeof(IHandlerProxy).FullName}"));
+
+                    codeType.Comments.Add(new CodeCommentStatement($"This proxy's target message queue is {mqType} and queue name is {queueName}"));
+
+                    AddPrivateField(codeType, typeof(IPublisher), "_publisher");
+                    AddPrivateField(codeType, typeof(MQType), "_mqType");
 
                     AddContructor(codeType, new[] { (typeof(IPublisher), "publisher") },
                         statements =>
@@ -82,7 +84,7 @@ namespace Bridge.Core
                     }
                     foreach(var path in outputPaths)
                     {
-                        GenerateCSFile(path, $"{mqHandler.Name}Proxy", compileUnit);
+                        GenerateCSFile(path, proxyName, compileUnit);
                     }
                 }
             }
@@ -397,7 +399,7 @@ namespace Bridge.Core
                     statements.Add(new CodeMethodReturnStatement(cs1));
                 }
             });
-
+            method.Comments.Add(new CodeCommentStatement($"This method's action is {actionName}"));
             codeType.Members.Add(method);
 
             return method;
