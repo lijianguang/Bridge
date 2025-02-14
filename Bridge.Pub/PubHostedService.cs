@@ -21,7 +21,7 @@ namespace Bridge.Pub
             var queue3HandlerProxy = _serviceProvider.GetRequiredService<Sub1.ActiveMQ_Queue3Multicast_Proxy>();
             var queue5HandlerProxy = _serviceProvider.GetRequiredService<ActiveMQ_Queue5_Proxy>();
 
-            queue5HandlerProxy.Action14Async().Wait();
+            queue5HandlerProxy.Action14Async(false).Wait();
             var ret = queue5HandlerProxy.Action15Async(null).Result;
 
             while (true)

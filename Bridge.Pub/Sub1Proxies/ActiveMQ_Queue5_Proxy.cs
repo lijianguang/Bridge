@@ -88,8 +88,8 @@ namespace Sub1 {
         }
         
         // This method's action is Action14
-        public async Task Action14Async() {
-            await _publisher.PublishAsync(_mqType, "queue5", "Action14");
+        public async Task Action14Async(bool needReply = false) {
+            await _publisher.PublishAsync(_mqType, "queue5", "Action14", needReply);
         }
         
         // This method's action is Action15

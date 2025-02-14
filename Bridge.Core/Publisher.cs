@@ -15,20 +15,34 @@
             _replyMessageProcesser = replyMessageProcesser;
         }
 
-        public async Task PublishAsync<T>(MQType mqType, string queueName, string actionName, T? data)
+        public async Task PublishAsync<T>(MQType mqType, string queueName, string actionName, T? data, bool needReply = false)
         {
-            var requestBody = new RequestBody { ActionName = actionName, NeedReply = false, Payload = data };
-            if(_onBefore!= null)
+            var requestBody = new RequestBody { ActionName = actionName, NeedReply = needReply, Payload = data };
+            if(_onBefore != null)
             {
                 _onBefore(requestBody);
             }
-            await _mqProducerFactory.Create(mqType)
-                .SendAsync(queueName, _messageConverter.Serialize(requestBody));
+            if (needReply)
+            {
+                var replyMessage = await _mqProducerFactory.Create(mqType)
+                    .SendAndWaitReplyAsync(queueName, _messageConverter.Serialize(requestBody));
+                var responseBody = _messageConverter.Deserialize<ResponseBody>(replyMessage);
+                if (_onAfter != null)
+                {
+                    _onAfter(responseBody);
+                }
+                _replyMessageProcesser.Process<object>(responseBody);
+            }
+            else
+            {
+                await _mqProducerFactory.Create(mqType)
+                    .SendAsync(queueName, _messageConverter.Serialize(requestBody));
+            }
         }
 
-        public async Task PublishAsync(MQType mqType, string queueName, string actionName)
+        public async Task PublishAsync(MQType mqType, string queueName, string actionName, bool needReply = false)
         {
-            await PublishAsync(mqType, queueName, actionName, default(object));
+            await PublishAsync(mqType, queueName, actionName, default(object), needReply);
         }
 
         public async Task<TR?> PublishAndWaitReplyAsync<T, TR>(MQType mqType, string queueName, string actionName, T? data)
@@ -38,10 +52,8 @@
             {
                 _onBefore(requestBody);
             }
-
             var replyMessage = await _mqProducerFactory.Create(mqType)
                 .SendAndWaitReplyAsync(queueName, _messageConverter.Serialize(requestBody));
-
             var responseBody = _messageConverter.Deserialize<ResponseBody>(replyMessage);
             if (_onAfter != null)
             {

@@ -28,13 +28,13 @@ namespace Sub1 {
         }
         
         // This method's action is Test2
-        public async Task Test2Async(System.Collections.Generic.IEnumerable<Bridge.Sub.Models.MsgTmp> msgs) {
-            await _publisher.PublishAsync(_mqType, "queue1", "Test2", msgs);
+        public async Task Test2Async(System.Collections.Generic.IEnumerable<Bridge.Sub.Models.MsgTmp> msgs, bool needReply = false) {
+            await _publisher.PublishAsync(_mqType, "queue1", "Test2", msgs, needReply);
         }
         
         // This method's action is Test3
-        public async Task Test3Async(LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage.SalesOrderHeader so) {
-            await _publisher.PublishAsync(_mqType, "queue1", "Test3", so);
+        public async Task Test3Async(LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage.SalesOrderHeader so, bool needReply = false) {
+            await _publisher.PublishAsync(_mqType, "queue1", "Test3", so, needReply);
         }
         
         // This method's action is Test4

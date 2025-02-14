@@ -4,6 +4,7 @@ using Microsoft.VisualBasic.FileIO;
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Reflection;
+using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 
 namespace Bridge.Core
@@ -392,6 +393,10 @@ namespace Bridge.Core
                 }
                 if(returnType.Equals(typeof(void)) || isMulticast)
                 {
+                    if (!isMulticast)
+                    {
+                        cs1.Parameters.Add(new CodeArgumentReferenceExpression("needReply"));
+                    }
                     statements.Add(cs1);
                 }
                 else
@@ -399,6 +404,12 @@ namespace Bridge.Core
                     statements.Add(new CodeMethodReturnStatement(cs1));
                 }
             });
+
+            if (returnType.Equals(typeof(void)) && !isMulticast)
+            {
+                method.Parameters.Add(new CodeParameterDeclarationExpression(typeof(bool),"needReply = false"));
+            }
+
             method.Comments.Add(new CodeCommentStatement($"This method's action is {actionName}"));
             codeType.Members.Add(method);
 
