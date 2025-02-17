@@ -1,11 +1,8 @@
 ﻿using Bridge.Abstraction;
 using Microsoft.CSharp;
-using Microsoft.VisualBasic.FileIO;
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Reflection;
-using System.Reflection.Metadata;
-using System.Runtime.CompilerServices;
 
 namespace Bridge.Core
 {
