@@ -2,6 +2,7 @@
 using Bridge.ActiveMQ;
 using Bridge.Core;
 using Bridge.Pub;
+using Bridge.RabbitMQ;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -35,6 +36,7 @@ var app = Host.CreateDefaultBuilder(args)
         services.AddAllHandlerProxies();
 
         services.AddActiveMQServices(context.Configuration);
+        services.AddRabbitMQServices(context.Configuration);
 
     })
     .Build();

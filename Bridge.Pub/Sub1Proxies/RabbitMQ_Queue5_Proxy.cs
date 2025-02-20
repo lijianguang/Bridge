@@ -10,16 +10,16 @@
 namespace Sub1 {
     
     
-    // This proxy's target message queue is ActiveMQ and queue name is queue5
-    public class ActiveMQ_Queue5_Proxy : global::Bridge.Abstraction.IHandlerProxy {
+    // This proxy's target message queue is RabbitMQ and queue name is queue5
+    public class RabbitMQ_Queue5_Proxy : global::Bridge.Abstraction.IHandlerProxy {
         
         private global::Bridge.IPublisher _publisher;
         
         private global::Bridge.MQType _mqType;
         
-        public ActiveMQ_Queue5_Proxy(global::Bridge.IPublisher publisher) {
+        public RabbitMQ_Queue5_Proxy(global::Bridge.IPublisher publisher) {
             _publisher = publisher;
-            _mqType = global::Bridge.MQType.ActiveMQ;
+            _mqType = global::Bridge.MQType.RabbitMQ;
         }
         
         // This method's action is Action1

@@ -19,10 +19,10 @@ namespace Bridge.Pub
         {
             var queue1HandlerProxy = _serviceProvider.GetRequiredService<ActiveMQ_Queue1_Proxy>();
             var queue3HandlerProxy = _serviceProvider.GetRequiredService<Sub1.ActiveMQ_Queue3Multicast_Proxy>();
-            var queue5HandlerProxy = _serviceProvider.GetRequiredService<ActiveMQ_Queue5_Proxy>();
+            var queue5HandlerProxy = _serviceProvider.GetRequiredService<RabbitMQ_Queue5_Proxy>();
 
-            queue5HandlerProxy.Action14Async(false).Wait();
-            var ret = queue5HandlerProxy.Action15Async(null).Result;
+            var ret0 = queue5HandlerProxy.Action2Async("hello").Result;
+            var ret = queue5HandlerProxy.Action3Async(18).Result;
 
             while (true)
             {

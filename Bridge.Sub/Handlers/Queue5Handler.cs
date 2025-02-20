@@ -1,7 +1,7 @@
 ﻿using Bridge.Sub.Models;
 namespace Bridge.Sub.Handlers
 {
-    [MQHandler(MQType.ActiveMQ, "queue5")]
+    [MQHandler(MQType.RabbitMQ, "queue5")]
     public class Queue5Handler : Sub1MQHandlerBase
     {
         [MQAction("Action1")]
