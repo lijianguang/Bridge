@@ -1,17 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.CodeDom" Version="9.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Bridge.Abstraction\Bridge.Abstraction.csproj" />
-    <ProjectReference Include="..\Bridge.Sub2\Bridge.Sub2.csproj" />
-    <ProjectReference Include="..\Bridge.Sub\Bridge.Sub.csproj" />
-    <ProjectReference Include="..\Bridge.Tools\Bridge.Tools.csproj" />
   </ItemGroup>
 
 </Project>
