@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bridge.Server1", "Bridge.Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bridge.Server2", "Bridge.Server2\Bridge.Server2.csproj", "{94A9D699-B26F-4399-B71F-D529E7E41CAB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{12F740FE-E717-402C-A0D9-5FF03D41C2EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +74,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2FA86E10-1B72-4A1F-AF77-78B15D1759FD} = {12F740FE-E717-402C-A0D9-5FF03D41C2EE}
+		{EBE365D4-8DF2-478A-BA1D-9205CB74EC62} = {12F740FE-E717-402C-A0D9-5FF03D41C2EE}
+		{339B6465-D822-4485-AD10-88AB119B548A} = {12F740FE-E717-402C-A0D9-5FF03D41C2EE}
+		{94A9D699-B26F-4399-B71F-D529E7E41CAB} = {12F740FE-E717-402C-A0D9-5FF03D41C2EE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F4502F99-CF79-4E9F-AD80-EA6DB64CA8E1}

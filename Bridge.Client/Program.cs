@@ -1,7 +1,7 @@
 ﻿using Bridge;
 using Bridge.ActiveMQ;
 using Bridge.Core;
-using Bridge.Pub;
+using Bridge.Client;
 using Bridge.RabbitMQ;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +15,7 @@ var app = Host.CreateDefaultBuilder(args)
     })
     .ConfigureServices((context, services) =>
     {
-        services.AddHostedService<PubHostedService>();
+        services.AddHostedService<ClientHostedService>();
 
         services.AddBridgeServices((publisher) =>
         {

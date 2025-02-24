@@ -5,12 +5,12 @@ using Microsoft.Extensions.Hosting;
 using Server1;
 using Server1.Bridge.Server1.Models;
 
-namespace Bridge.Pub
+namespace Bridge.Client
 {
-    public class PubHostedService : IHostedService
+    public class ClientHostedService : IHostedService
     {
         private readonly IServiceProvider _serviceProvider;
-        public PubHostedService(IServiceProvider serviceProvider)
+        public ClientHostedService(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
