@@ -1,5 +1,6 @@
 ﻿using Bridge.ActiveMQ;
 using Bridge.Core;
+using Bridge.RabbitMQ;
 using Microsoft.Extensions.Hosting;
 
 namespace Bridge.Server1
@@ -33,6 +34,7 @@ namespace Bridge.Server1
         public Task StopAsync(CancellationToken cancellationToken)
         {
             _serviceProvider.ReleaseActiveMQResource();
+            _serviceProvider.ReleaseRabbitMQResource();
             return _launcher.StopAsync();
         }
     }
