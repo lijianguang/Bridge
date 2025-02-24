@@ -1,8 +1,8 @@
-﻿using Bridge.Sub.Models;
-namespace Bridge.Sub.Handlers
+﻿using Bridge.Server1.Models;
+namespace Bridge.Server1.Handlers
 {
     [MQHandler(MQType.RabbitMQ, "queue5")]
-    public class Queue5Handler : Sub1MQHandlerBase
+    public class Queue5Handler : Server1MQHandlerBase
     {
         [MQAction("Action1")]
         public IEnumerable<MsgTmp> Action1(MsgTmp msg)

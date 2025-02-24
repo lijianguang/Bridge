@@ -15,7 +15,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
-namespace Bridge.Sub2.Models
+namespace Bridge.Server1.Models
 {
     public struct strct
     {

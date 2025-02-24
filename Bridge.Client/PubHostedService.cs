@@ -2,8 +2,8 @@
 using Bridge.ActiveMQ;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Sub1;
-using Sub1.Bridge.Sub.Models;
+using Server1;
+using Server1.Bridge.Server1.Models;
 
 namespace Bridge.Pub
 {
@@ -18,7 +18,7 @@ namespace Bridge.Pub
         public Task StartAsync(CancellationToken cancellationToken)
         {
             var queue1HandlerProxy = _serviceProvider.GetRequiredService<ActiveMQ_Queue1_Proxy>();
-            var queue3HandlerProxy = _serviceProvider.GetRequiredService<Sub1.ActiveMQ_Queue3Multicast_Proxy>();
+            var queue3HandlerProxy = _serviceProvider.GetRequiredService<Server1.ActiveMQ_Queue3Multicast_Proxy>();
             var queue5HandlerProxy = _serviceProvider.GetRequiredService<RabbitMQ_Queue5_Proxy>();
 
             var ret0 = queue5HandlerProxy.Action2Async("hello").Result;
@@ -90,14 +90,14 @@ namespace Bridge.Pub
                                 var queue5Action91Result = queue5HandlerProxy.Action9Async(null).Result;
                                 break;
                             case "action10":
-                                var queue5Action10Result = queue5HandlerProxy.Action10Async(new Sub1.TEST<string, MsgTmp>
+                                var queue5Action10Result = queue5HandlerProxy.Action10Async(new Server1.TEST<string, MsgTmp>
                                 {
                                     t = "10",
                                     t2 = new MsgTmp { Age = 10 }
                                 }).Result;
                                 break;
                             case "action11":
-                                var queue5Action11Result = queue5HandlerProxy.Action11Async(new Sub1.TEST<strct, MsgTmp>
+                                var queue5Action11Result = queue5HandlerProxy.Action11Async(new Server1.TEST<strct, MsgTmp>
                                 {
                                     t = new strct { name = "11" },
                                     t2 = new MsgTmp { Age = 10 }

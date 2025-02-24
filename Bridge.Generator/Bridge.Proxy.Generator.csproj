@@ -9,8 +9,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Bridge.Abstraction\Bridge.Abstraction.csproj" />
-    <ProjectReference Include="..\Bridge.Sub2\Bridge.Sub2.csproj" />
-    <ProjectReference Include="..\Bridge.Sub\Bridge.Sub.csproj" />
+    <ProjectReference Include="..\Bridge.Server1\Bridge.Server1.csproj" />
+    <ProjectReference Include="..\Bridge.Server2\Bridge.Server2.csproj" />
     <ProjectReference Include="..\Bridge.Tools\Bridge.Tools.csproj" />
   </ItemGroup>
 

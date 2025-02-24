@@ -2,15 +2,15 @@
 using Bridge.Core;
 using Microsoft.Extensions.Hosting;
 
-namespace Bridge.Sub2
+namespace Bridge.Server1
 {
-    public class SubHostedService : IHostedService
+    public class Server1HostedService : IHostedService
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly ILauncher _launcher;
         private readonly IMQPipelineBuilder _mqPipelineBuilder;
 
-        public SubHostedService(IServiceProvider serviceProvider, ILauncher launcher, IMQPipelineBuilder mqPipelineBuilder) 
+        public Server1HostedService(IServiceProvider serviceProvider, ILauncher launcher, IMQPipelineBuilder mqPipelineBuilder) 
         {
             _serviceProvider = serviceProvider;
             _launcher = launcher;
@@ -21,6 +21,7 @@ namespace Bridge.Sub2
         {
             var _pipelineEntry = _mqPipelineBuilder
                 .UseMiddleware<MQExceptionHandlerMiddleware>()
+                .UseMiddleware<MQLogToConsoleMiddleware>()
                 .UseMiddleware<MQAnalyseRequestBodyMiddleware>()
                 .UseMiddleware<MQEndpointRoutingMiddleware>()
                 .UseMiddleware<MQEndpointMiddleware>()

@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Sub1Proxies\" />
-    <Folder Include="Sub2Proxies\" />
+    <Folder Include="Server1Proxies\" />
+    <Folder Include="Server2Proxies\" />
   </ItemGroup>
 
 </Project>

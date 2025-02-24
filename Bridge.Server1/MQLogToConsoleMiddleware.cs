@@ -1,4 +1,4 @@
-﻿namespace Bridge.Sub
+﻿namespace Bridge.Server1
 {
     public class MQLogToConsoleMiddleware : IMQMiddleware
     {

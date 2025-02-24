@@ -7,22 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sub1.Bridge.Sub.Models {
+namespace Server1.Bridge.Server1.Models {
     
     
     public class MsgTmp {
         
-        private Bridge.Sub.Models.strct _strct;
+        private Bridge.Server1.Models.strct _strct;
         
         private string _name;
         
         private int _age;
         
-        private Bridge.Sub.Models.MsgTmp1 _msgTmp1;
+        private Bridge.Server1.Models.MsgTmp1 _msgTmp1;
         
-        public Bridge.Sub.Models.strct strctf;
+        public Bridge.Server1.Models.strct strctf;
         
-        public Bridge.Sub.Models.strct strct {
+        public Bridge.Server1.Models.strct strct {
             get {
                 return this._strct;
             }
@@ -49,7 +49,7 @@ namespace Sub1.Bridge.Sub.Models {
             }
         }
         
-        public Bridge.Sub.Models.MsgTmp1 MsgTmp1 {
+        public Bridge.Server1.Models.MsgTmp1 MsgTmp1 {
             get {
                 return this._msgTmp1;
             }
@@ -104,7 +104,7 @@ namespace Sub1.Bridge.Sub.Models {
         }
     }
 }
-namespace Sub1.B.M {
+namespace Server1.B.M {
     
     
     public class MsgTmp2 {
@@ -121,7 +121,7 @@ namespace Sub1.B.M {
         }
     }
 }
-namespace Sub1 {
+namespace Server1 {
     
     
     public class TEST<T1, T2> {
@@ -258,7 +258,7 @@ namespace Sub1 {
         CA = 3,
     }
 }
-namespace Sub1.LSS.VehicleIntegrationTransaction.Model.Enums {
+namespace Server1.LSS.VehicleIntegrationTransaction.Model.Enums {
     
     
     public enum InventoryStatus {
@@ -393,7 +393,7 @@ namespace Sub1.LSS.VehicleIntegrationTransaction.Model.Enums {
         Institute = 3,
     }
 }
-namespace Sub1.LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage {
+namespace Server1.LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage {
     
     
     public class SalesOrderHeader {
@@ -2416,7 +2416,7 @@ namespace Sub1.LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.S
         }
     }
 }
-namespace Sub1.LSS.VehicleIntegrationTransaction.Model.Models {
+namespace Server1.LSS.VehicleIntegrationTransaction.Model.Models {
     
     
     public class Market {
@@ -2900,7 +2900,7 @@ namespace Sub1.LSS.VehicleIntegrationTransaction.Model.Models {
         }
     }
 }
-namespace Sub1.LSS.VehicleSalesOrder.Model.Entities {
+namespace Server1.LSS.VehicleSalesOrder.Model.Entities {
     
     
     public class SalesOrderLineVehicle {
@@ -4010,7 +4010,7 @@ namespace Sub1.LSS.VehicleSalesOrder.Model.Entities {
         }
     }
 }
-namespace Sub1.LSS.VehicleIntegrationTransaction.SalesOrder.Model.EntityModel.SalesOrder {
+namespace Server1.LSS.VehicleIntegrationTransaction.SalesOrder.Model.EntityModel.SalesOrder {
     
     
     public class IPreparation {
@@ -4082,7 +4082,7 @@ namespace Sub1.LSS.VehicleIntegrationTransaction.SalesOrder.Model.EntityModel.Sa
         }
     }
 }
-namespace Sub1.LSS.VehicleIntegrationTransaction.Model.Values {
+namespace Server1.LSS.VehicleIntegrationTransaction.Model.Values {
     
     
     public class SalesOrderInvoiceTo {
@@ -4231,7 +4231,7 @@ namespace Sub1.LSS.VehicleIntegrationTransaction.Model.Values {
         }
     }
 }
-namespace Sub1.LSS.VehicleIntegrationTransaction.Model.EntityModel {
+namespace Server1.LSS.VehicleIntegrationTransaction.Model.EntityModel {
     
     
     public class PartnerType {
@@ -4292,7 +4292,7 @@ namespace Sub1.LSS.VehicleIntegrationTransaction.Model.EntityModel {
         }
     }
 }
-namespace Sub1.LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage1 {
+namespace Server1.LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.SalesOrderMessage1 {
     
     
     public class SalesOrderDeliveryAddress {
@@ -4474,7 +4474,7 @@ namespace Sub1.LSS.VehicleIntegrationTransaction.SalesOrder.Model.MessageModel.S
         }
     }
 }
-namespace Sub1.LSS.VehicleIntegrationTransaction.SalesOrder.Model.EntityModel {
+namespace Server1.LSS.VehicleIntegrationTransaction.SalesOrder.Model.EntityModel {
     
     
     public class Incoterm {

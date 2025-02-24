@@ -1,6 +1,6 @@
-﻿namespace Bridge.Sub
+﻿namespace Bridge.Server1
 {
-    public class Sub1MQHandlerBase : MQHandlerBase
+    public class Server1MQHandlerBase : MQHandlerBase
     {
         private const string TOKEN_KEY = "token";
         private const string MARKETID_KEY = "marketId";

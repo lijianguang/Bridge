@@ -1,6 +1,6 @@
-﻿using Bridge.Sub2.Models;
+﻿using Bridge.Server2.Models;
 
-namespace Bridge.Sub2.Handlers
+namespace Bridge.Server2.Handlers
 {
     [MQHandler(MQType.ActiveMQ, "queue3", true)]
     public class Queue3MulticastHandler : MQHandlerBase

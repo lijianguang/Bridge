@@ -22,7 +22,7 @@
     <ProjectReference Include="..\Bridge.Abstraction\Bridge.Abstraction.csproj" />
     <ProjectReference Include="..\Bridge.ActiveMQ\Bridge.ActiveMQ.csproj" />
     <ProjectReference Include="..\Bridge.Core\Bridge.Core.csproj" />
-    <ProjectReference Include="..\Bridge.Sub\Bridge.Sub.csproj" />
+    <ProjectReference Include="..\Bridge.Server1\Bridge.Server1.csproj" />
   </ItemGroup>
 
   <ItemGroup>

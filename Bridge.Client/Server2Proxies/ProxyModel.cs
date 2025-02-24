@@ -7,22 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sub2.Bridge.Sub2.Models {
+namespace Server2.Bridge.Server2.Models {
     
     
     public class MsgTmp {
         
-        private Bridge.Sub2.Models.strct _strct;
+        private Bridge.Server2.Models.strct _strct;
         
         private string _name;
         
         private int _age;
         
-        private Bridge.Sub2.Models.MsgTmp1 _msgTmp1;
+        private Bridge.Server2.Models.MsgTmp1 _msgTmp1;
         
-        public Bridge.Sub2.Models.strct strctf;
+        public Bridge.Server2.Models.strct strctf;
         
-        public Bridge.Sub2.Models.strct strct {
+        public Bridge.Server2.Models.strct strct {
             get {
                 return this._strct;
             }
@@ -49,7 +49,7 @@ namespace Sub2.Bridge.Sub2.Models {
             }
         }
         
-        public Bridge.Sub2.Models.MsgTmp1 MsgTmp1 {
+        public Bridge.Server2.Models.MsgTmp1 MsgTmp1 {
             get {
                 return this._msgTmp1;
             }
@@ -104,7 +104,7 @@ namespace Sub2.Bridge.Sub2.Models {
         }
     }
 }
-namespace Sub2.B.M {
+namespace Server2.B.M {
     
     
     public class MsgTmp2 {
@@ -121,7 +121,7 @@ namespace Sub2.B.M {
         }
     }
 }
-namespace Sub2 {
+namespace Server2 {
     
     
     public class TEST<T1, T2> {
@@ -149,7 +149,7 @@ namespace Sub2 {
         }
     }
 }
-namespace Sub2.LSS.VehicleIntegrationTransaction.Model.Enums {
+namespace Server2.LSS.VehicleIntegrationTransaction.Model.Enums {
     
     
     public enum InventoryStatus {

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sub1 {
+namespace Server1 {
     
     
     // This proxy's target message queue is RabbitMQ and queue name is queue5
@@ -23,8 +23,8 @@ namespace Sub1 {
         }
         
         // This method's action is Action1
-        public async Task<System.Collections.Generic.IEnumerable<Bridge.Sub.Models.MsgTmp>> Action1Async(Bridge.Sub.Models.MsgTmp msg) {
-            return await _publisher.PublishAndWaitReplyAsync<Bridge.Sub.Models.MsgTmp, System.Collections.Generic.IEnumerable<Bridge.Sub.Models.MsgTmp>>(_mqType, "queue5", "Action1", msg);
+        public async Task<System.Collections.Generic.IEnumerable<Bridge.Server1.Models.MsgTmp>> Action1Async(Bridge.Server1.Models.MsgTmp msg) {
+            return await _publisher.PublishAndWaitReplyAsync<Bridge.Server1.Models.MsgTmp, System.Collections.Generic.IEnumerable<Bridge.Server1.Models.MsgTmp>>(_mqType, "queue5", "Action1", msg);
         }
         
         // This method's action is Action2
@@ -68,23 +68,23 @@ namespace Sub1 {
         }
         
         // This method's action is Action10
-        public async Task<TEST<string, Bridge.Sub.Models.MsgTmp>> Action10Async(TEST<string, Bridge.Sub.Models.MsgTmp> test) {
-            return await _publisher.PublishAndWaitReplyAsync<TEST<string, Bridge.Sub.Models.MsgTmp>, TEST<string, Bridge.Sub.Models.MsgTmp>>(_mqType, "queue5", "Action10", test);
+        public async Task<TEST<string, Bridge.Server1.Models.MsgTmp>> Action10Async(TEST<string, Bridge.Server1.Models.MsgTmp> test) {
+            return await _publisher.PublishAndWaitReplyAsync<TEST<string, Bridge.Server1.Models.MsgTmp>, TEST<string, Bridge.Server1.Models.MsgTmp>>(_mqType, "queue5", "Action10", test);
         }
         
         // This method's action is Action11
-        public async Task<TEST<Bridge.Sub.Models.strct, Bridge.Sub.Models.MsgTmp>> Action11Async(TEST<Bridge.Sub.Models.strct, Bridge.Sub.Models.MsgTmp> test) {
-            return await _publisher.PublishAndWaitReplyAsync<TEST<Bridge.Sub.Models.strct, Bridge.Sub.Models.MsgTmp>, TEST<Bridge.Sub.Models.strct, Bridge.Sub.Models.MsgTmp>>(_mqType, "queue5", "Action11", test);
+        public async Task<TEST<Bridge.Server1.Models.strct, Bridge.Server1.Models.MsgTmp>> Action11Async(TEST<Bridge.Server1.Models.strct, Bridge.Server1.Models.MsgTmp> test) {
+            return await _publisher.PublishAndWaitReplyAsync<TEST<Bridge.Server1.Models.strct, Bridge.Server1.Models.MsgTmp>, TEST<Bridge.Server1.Models.strct, Bridge.Server1.Models.MsgTmp>>(_mqType, "queue5", "Action11", test);
         }
         
         // This method's action is Action12
-        public async Task<Bridge.Sub.Models.strct> Action12Async(Bridge.Sub.Models.strct test) {
-            return await _publisher.PublishAndWaitReplyAsync<Bridge.Sub.Models.strct, Bridge.Sub.Models.strct>(_mqType, "queue5", "Action12", test);
+        public async Task<Bridge.Server1.Models.strct> Action12Async(Bridge.Server1.Models.strct test) {
+            return await _publisher.PublishAndWaitReplyAsync<Bridge.Server1.Models.strct, Bridge.Server1.Models.strct>(_mqType, "queue5", "Action12", test);
         }
         
         // This method's action is Action13
-        public async Task<Bridge.Sub.Models.strct> Action13Async(Bridge.Sub.Models.strct test) {
-            return await _publisher.PublishAndWaitReplyAsync<Bridge.Sub.Models.strct, Bridge.Sub.Models.strct>(_mqType, "queue5", "Action13", test);
+        public async Task<Bridge.Server1.Models.strct> Action13Async(Bridge.Server1.Models.strct test) {
+            return await _publisher.PublishAndWaitReplyAsync<Bridge.Server1.Models.strct, Bridge.Server1.Models.strct>(_mqType, "queue5", "Action13", test);
         }
         
         // This method's action is Action14

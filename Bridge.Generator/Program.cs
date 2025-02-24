@@ -1,5 +1,5 @@
 ﻿using Bridge.Core;
-using Bridge.Sub.Handlers;
+using Bridge.Server1.Handlers;
 
 namespace Bridge.Proxy.Generator
 {
@@ -8,14 +8,14 @@ namespace Bridge.Proxy.Generator
         static void Main(string[] args)
         {
             var generator1 = new ProxyGenerator();
-            generator1.SetNamespacePrefix("Sub1")
+            generator1.SetNamespacePrefix("Server1")
                 .Generate(typeof(Queue1Handler).Assembly,
-                "C:\\Study\\Bridge\\Bridge.Pub\\Sub1Proxies");
+                "C:\\Study\\Bridge\\Bridge.Client\\Server1Proxies");
 
             var generator2 = new ProxyGenerator();
-            generator2.SetNamespacePrefix("Sub2")
-                .Generate(typeof(Sub2.Handlers.Queue3MulticastHandler).Assembly,
-                "C:\\Study\\Bridge\\Bridge.Pub\\Sub2Proxies");
+            generator2.SetNamespacePrefix("Server2")
+                .Generate(typeof(Server2.Handlers.Queue3MulticastHandler).Assembly,
+                "C:\\Study\\Bridge\\Bridge.Client\\Server2Proxies");
         }
     }
 }

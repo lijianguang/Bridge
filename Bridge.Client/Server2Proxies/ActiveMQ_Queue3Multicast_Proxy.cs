@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sub2 {
+namespace Server2 {
     
     
     // This proxy's target message queue is ActiveMQ and queue name is queue3
@@ -23,7 +23,7 @@ namespace Sub2 {
         }
         
         // This method's action is Test1
-        public async Task Test1Async(Bridge.Sub2.Models.MsgTmp msg) {
+        public async Task Test1Async(Bridge.Server2.Models.MsgTmp msg) {
             await _publisher.PublishMulticastAsync(_mqType, "queue3", "Test1", msg);
         }
     }
