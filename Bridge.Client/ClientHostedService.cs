@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Server1;
-using Server1.Bridge.Server1.Models;
 
 namespace Bridge.Client
 {
